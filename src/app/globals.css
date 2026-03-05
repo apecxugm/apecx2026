@@ -14,13 +14,13 @@
   --color-neutral-100: #ffffff;
   --color-neutral-200: #e8e8e8;
   --color-neutral-300: #d2d2d2;
-  --color-neutral-400: #a4a4a4;
-  --color-neutral-500: #8e8e8e;
-  --color-neutral-600: #777777;
-  --color-neutral-700: #606060;
-  --color-neutral-800: #4a4a4a;
-  --color-neutral-900: #333333;
-  --color-neutral-1000: #bbbbbb;
+  --color-neutral-400: #bbbbbb;
+  --color-neutral-500: #a4a4a4;
+  --color-neutral-600: #8e8e8e;
+  --color-neutral-700: #777777;
+  --color-neutral-800: #606060;
+  --color-neutral-900: #4a4a4a;
+  --color-neutral-1000: #333333;
 
   --color-primary-100: #ebb7f3;
   --color-primary-200: #e193ec;
@@ -78,33 +78,132 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #f9dff6;
+    --foreground: #430d4b;
   }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-plus-jakarta-sans); 
+  font-family: var(--font-plus-jakarta-sans);
 }
 
 h1 {
-  font-size: 61px;
-  font-weight: 700;
-}
-
-h2 { /* di figma h4 */
-  font-size: 38px; 
-  font-weight: 700;
-}
-
-h3 { /* di figma h5 */
   font-size: 32px;
+  font-weight: 800;
+}
+
+h2 {
+  /* di figma h4 */
+  font-size: 26px;
   font-weight: 700;
 }
 
-h4 { /* di figma h7 */
+h3 {
+  /* di figma h5 */
+  font-size: 26px;
+  font-weight: 700;
+}
+
+h4 {
+  /* di figma h7 */
   font-size: 22px;
   font-weight: 700;
+}
+
+.trapesium {
+  position: relative;
+  width: 352px;
+  height: 478px;
+
+  clip-path: polygon(12% 0%, 88% 0%, 100% 100%, 0% 100%);
+
+  z-index: 5;
+}
+
+.top-trapesium {
+  top: 0px;
+  left: 0;
+  width: 270px;
+  height: 144px;
+  clip-path: polygon(0% 0%, 100% 0%, 84.5% 100%, 15.5% 100%);
+}
+
+.bottom-trapesium {
+  bottom: 0px;
+  left: 0;
+  width: 1440px;
+  height: 116px;
+  clip-path: polygon(25% 0%, 75% 0%, 100% 100%, 0% 100%);
+}
+
+.side-trapesium-left,
+.side-trapesium-right {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 400px;
+
+  z-index: 10;
+}
+
+.side-trapesium-left {
+  left: 0;
+  background: linear-gradient(280deg, #ffffff 15%, #7d1772 40%, #430d4b 70%);
+  clip-path: polygon(57% 0%, 89% 13%, 70% 87%, 0% 100%);
+}
+
+/* KANAN */
+.side-trapesium-right {
+  right: 0;
+  background: linear-gradient(80deg, #ffffff 15%, #7d1772 40%, #430d4b 70%);
+
+  clip-path: polygon(11% 13%, 43% 0%, 100% 100%, 30% 87%);
+}
+
+.hero-wrapper {
+  position: relative;
+  width: 1280px;
+  height: 710px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  clip-path: polygon(18% 0, 82% 0, 100% 100%, 0% 100%);
+
+  overflow: hidden;
+}
+
+/* Desktop */
+@media (min-width: 768px) {
+  .trapesium {
+    width: 730px;
+    height: 600px;
+
+    clip-path: polygon(11% 0%, 89% 0%, 100% 100%, 0% 100%);
+  }
+  .top-trapesium {
+    width: 824px;
+    height: 110px;
+  }
+
+  h1 {
+    font-size: 61px;
+  }
+
+  h2 {
+    /* di figma h4 */
+    font-size: 38px;
+  }
+
+  h3 {
+    /* di figma h5 */
+    font-size: 32px;
+  }
+
+  h4 {
+    /* di figma h7 */
+    font-size: 22px;
+  }
 }
