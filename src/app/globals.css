@@ -89,6 +89,39 @@ body {
   font-family: var(--font-plus-jakarta-sans);
 }
 
+@keyframes floating {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.floating {
+  animation: floating 3s ease-in-out infinite;
+}
+
+@keyframes black-to-current {
+  from {
+    filter: brightness(0) saturate(0.2);
+  }
+  to {
+    filter: brightness(1) saturate(1);
+  }
+}
+
+.black-current-transition {
+  background-image: var(
+    --black-current-gradient,
+    linear-gradient(to bottom, #27aaff, #004a7a)
+  );
+  animation: black-to-current 2s cubic-bezier(0.22, 1, 0.36, 1) 1 forwards;
+}
+
 h1 {
   font-size: 32px;
   font-weight: 800;
@@ -110,69 +143,6 @@ h4 {
   /* di figma h7 */
   font-size: 22px;
   font-weight: 700;
-}
-
-.trapesium {
-  position: relative;
-  width: 352px;
-  height: 478px;
-
-  clip-path: polygon(12% 0%, 88% 0%, 100% 100%, 0% 100%);
-
-  z-index: 5;
-}
-
-.top-trapesium {
-  top: 0px;
-  left: 0;
-  width: 270px;
-  height: 144px;
-  clip-path: polygon(0% 0%, 100% 0%, 84.5% 100%, 15.5% 100%);
-}
-
-.bottom-trapesium {
-  bottom: 0px;
-  left: 0;
-  width: 1440px;
-  height: 116px;
-  clip-path: polygon(25% 0%, 75% 0%, 100% 100%, 0% 100%);
-}
-
-.side-trapesium-left,
-.side-trapesium-right {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 400px;
-
-  z-index: 10;
-}
-
-.side-trapesium-left {
-  left: 0;
-  background: linear-gradient(280deg, #ffffff 15%, #7d1772 40%, #430d4b 70%);
-  clip-path: polygon(57% 0%, 89% 13%, 70% 87%, 0% 100%);
-}
-
-/* KANAN */
-.side-trapesium-right {
-  right: 0;
-  background: linear-gradient(80deg, #ffffff 15%, #7d1772 40%, #430d4b 70%);
-
-  clip-path: polygon(11% 13%, 43% 0%, 100% 100%, 30% 87%);
-}
-
-.hero-wrapper {
-  position: relative;
-  width: 1280px;
-  height: 710px;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  clip-path: polygon(18% 0, 82% 0, 100% 100%, 0% 100%);
-
-  overflow: hidden;
 }
 
 /* Desktop */
