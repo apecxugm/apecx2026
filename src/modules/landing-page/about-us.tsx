@@ -3,8 +3,8 @@ import Container from '@/src/components/ui/container';
 
 const AboutUs = () => {
   return (
-    <section className="relative items-center justify-center">
-      <Container className="relative bg-primary-800 bg-[radial-gradient(79.61%_44.79%_at_50.9%_0%,rgba(43,8,48,0)_0%,rgba(43,8,48,0.7)_100%)]">
+    <section className="relative items-center justify-center bg-primary-800 bg-[radial-gradient(79.61%_44.79%_at_50.9%_0%,rgba(43,8,48,0)_0%,rgba(43,8,48,0.7)_100%)]">
+      <Container className="relative ">
         <div className="grid grid-cols-1 lg:grid-cols-[506px_1fr] gap-3 md:gap-8 lg:gap-15 my-18 md:my-30 w-full items-start">
           <div>
             <h2
