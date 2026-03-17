@@ -20,27 +20,27 @@ const COMPETITION_LINKS = [
   {
     label: 'Paper & Poster',
     href: '/competition/paper-and-poster',
-    image: '/paper-poster.webp',
+    image: '/logo/paper-poster.svg',
   },
   {
     label: 'Business Case',
     href: '/competition/business-case',
-    image: '/business-case.webp',
+    image: '/logo/business-case.svg',
   },
   {
     label: 'Petrosmart',
     href: '/competition/petrosmart',
-    image: '/petrosmart.webp',
+    image: '/logo/petrosmart.svg',
   },
   {
     label: 'Plan of Development',
     href: '/competition/plan-of-development',
-    image: '/plan-of-development.webp',
+    image: '/logo/plan-of-development.svg',
   },
   {
     label: 'Supply Chain Management & Logistics',
     href: '/competition/supply-chain-management-logistics',
-    image: '/supply-chain.webp',
+    image: '/logo/supply-chain.svg',
   },
 ];
 
@@ -48,27 +48,27 @@ const EVENTS_LINKS = [
   {
     label: 'Social Event',
     href: '/event/social-event',
-    image: '/social-event.webp',
+    image: '/logo/social-event.svg',
   },
   {
     label: 'Company Visit',
     href: '/event/company-visit',
-    image: '/company-visit.webp',
+    image: '/logo/company-visit.svg',
   },
   {
     label: 'Talkshow',
     href: '/event/talkshow',
-    image: '/talkshow.webp',
+    image: '/logo/talkshow.svg',
   },
   {
     label: 'Exhibition',
     href: '/event/exhibition',
-    image: '/exhibition.webp',
+    image: '/logo/exhibition.svg',
   },
   {
     label: 'Awarding Night',
     href: '/event/awarding-night',
-    image: '/awarding-night.webp',
+    image: '/logo/awarding-night.svg',
   },
 ];
 

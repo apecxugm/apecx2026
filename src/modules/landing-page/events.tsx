@@ -7,60 +7,65 @@ const COMPETITION = [
   {
     title: "Paper & Poster Competition",
     type: "competition",
-    slug: "paper-and-poster"
+    slug: "paper-and-poster",
+    logo: "/logo/paper-poster.svg"
   },
   {
     title: "Business Case Competition",
     type: "competition",
-    slug: "business-case"
+    slug: "business-case",
+    logo: "/logo/business-case.svg"
   },
   {
     title: "Petrosmart Competition",
     type: "competition",
-    slug: "petrosmart"
+    slug: "petrosmart",
+    logo: "/logo/petrosmart.svg"
   },
   {
     title: "Plan of Development",
     type: "competition",
-    slug: "plan-of-development"
+    slug: "plan-of-development",
+    logo: "/logo/plan-of-development.svg"
   },
   {
     title: "Supply Chain Management & Logistics",
     type: "competition",
-    slug: "supply-chain-management-logistics"
+    slug: "supply-chain-management-logistics",
+    logo: "/logo/supply-chain.svg"
   }
 ] as const;
 
 const EVENTS = [
   {
-    title: "Social Event 1",
+    title: "Social Event",
     type: "event",
-    slug: "social-event-1"
-  },
-  {
-    title: "Social Event 2",
-    type: "event",
-    slug: "social-event-2"
+    slug: "social-event",
+    logo: "/logo/social-event.svg"
   },
   {
     title: "Company Visit",
     type: "event",
-    slug: "company-visit"
+    slug: "company-visit",
+    logo: "/logo/company-visit.svg"
   },
   {
     title: "Talkshow",
     type: "event",
-    slug: "talkshow"
+    slug: "talkshow",
+    logo: "/logo/talkshow.svg"
   },
   {
     title: "Exhibition",
     type: "event",
-    slug: "exhibition"
+    slug: "exhibition",
+    logo: "/logo/exhibition.svg"
   },
   {
     title: "Awarding Night",
     type: "event",
-    slug: "awarding-night"
+    slug: "awarding-night",
+    logo: "/logo/awarding-night.svg"
   }
 ] as const;
 
@@ -89,7 +94,7 @@ const Events = () => {
               {/* Desktop grid */}
               <div className="hidden md:grid grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-[18px]">
                 {COMPETITION.map((event, index) => (
-                  <EventCard key={index} title={event.title} type={event.type} slug={event.slug} />
+                  <EventCard key={index} title={event.title} type={event.type} slug={event.slug} logo={event.logo} />
                 ))}
               </div>
             </section>
@@ -103,7 +108,7 @@ const Events = () => {
               {/* Desktop grid */}
               <div className="hidden md:grid grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-[18px]">
                 {EVENTS.map((event, index) => (
-                  <EventCard key={index} title={event.title} type={event.type} slug={event.slug} />
+                  <EventCard key={index} title={event.title} type={event.type} slug={event.slug} logo={event.logo} />
                 ))}
               </div>
             </section>
