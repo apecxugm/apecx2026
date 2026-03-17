@@ -97,29 +97,29 @@ const Footer = () => {
               <div className="flex flex-col gap-3">
                 <ul className="flex flex-col gap-2">
                   <li>
-                    <a href="/competition/business-case" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
+                    <Link href="/competition/business-case" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
                       Business Case Competition
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a href="/competition/paper-poster" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
+                    <Link href="/competition/paper-and-poster" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
                       Paper and Poster
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a href="/competition/plan-of-development" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
+                    <Link href="/competition/plan-of-development" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
                       Plan of Development
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a href="/competition/supply-chain-management-logistics" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
+                    <Link href="/competition/supply-chain-management-logistics" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
                       Supply Chain Management and Logistic
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a href="/competition/petrosmart" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
+                    <Link href="/competition/petrosmart" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
                       Petrosmart
-                    </a>
+                    </Link>
                   </li>
                 </ul>
               </div>

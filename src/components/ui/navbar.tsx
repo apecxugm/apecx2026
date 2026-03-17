@@ -127,6 +127,8 @@ const Navbar = () => {
 
   const [isOpen, setIsOpen] = useState(false);
   const [mobileDropdownOpen, setMobileDropdownOpen] = useState<string | null>(null);
+  const isDetailPage =
+    pathname.startsWith('/competition/') || pathname.startsWith('/event/');
   const compactWidth = Math.min(viewportWidth || 0, 1280);
   const animatedWidth =
     viewportWidth > 0
@@ -151,7 +153,13 @@ const Navbar = () => {
         'fixed top-0 left-1/2 -translate-x-1/2 z-50 mx-auto border-none shadow-none transition-[background-color] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-[width,border-radius]',
 
         // Logika WARNA: Putih jika di-scroll ATAU jika menu sedang terbuka
-        isScrolled || isOpen ? 'bg-neutral-100' : 'bg-transparent text-white',
+        isDetailPage
+          ? isScrolled || isOpen
+            ? "bg-neutral-100 text-neutral-1000"
+            : "bg-transparent text-neutral-1000"
+          : isScrolled || isOpen
+            ? "bg-neutral-100 text-neutral-1000"
+            : "bg-transparent text-white",
 
         // LAYOUT animasi sekarang mengikuti progress scroll agar menyusut halus
         'max-w-none',
@@ -167,7 +175,7 @@ const Navbar = () => {
           <div className={cn('shrink-0 transition-all duration-300', isScrolled)}>
             <Image
               src={
-                isScrolled || isOpen
+                isScrolled || isOpen || isDetailPage
                   ? '/logo/dark-apecx-icon.webp'
                   : '/logo/apecx-icon.webp'
               }
@@ -181,7 +189,7 @@ const Navbar = () => {
 
         {/* NAVIGATION & ACTIONS */}
         <div className="flex items-center gap-10">
-          <DesktopLinks isScrolled={isScrolled} />
+          <DesktopLinks isScrolled={isScrolled} isDetailPage={isDetailPage} />
 
           <div className="flex items-center gap-2">
             <div className="hidden lg:flex items-center gap-2">
@@ -356,7 +364,13 @@ const Navbar = () => {
 
 export default Navbar;
 
-const DesktopLinks = ({ isScrolled }: { isScrolled: boolean }) => {
+const DesktopLinks = ({
+  isScrolled,
+  isDetailPage,
+}: {
+  isScrolled: boolean;
+  isDetailPage: boolean;
+}) => {
   const pathname = usePathname();
 
   return (
@@ -371,9 +385,11 @@ const DesktopLinks = ({ isScrolled }: { isScrolled: boolean }) => {
                 <div
                   className={cn(
                     'group relative cursor-pointer inline-flex items-baseline gap-1 transition-colors duration-300 text-sm font-medium leading-normal',
-                    isScrolled
-                      ? 'text-black hover:text-neutral-1000'
-                      : 'text-white hover:text-neutral-400',
+                    isDetailPage
+                      ? 'text-neutral-1000 hover:text-neutral-700'
+                      : isScrolled
+                        ? 'text-black hover:text-neutral-1000'
+                        : 'text-white hover:text-neutral-400',
                   )}
                 >
                   {link.name}{' '}
@@ -407,11 +423,13 @@ const DesktopLinks = ({ isScrolled }: { isScrolled: boolean }) => {
                 }}
                 className={cn(
                   'transition-all duration-300 text-sm font-medium hover:text-neutral-400',
-                  isActive
-                    ? 'text-neutral-400 font-bold'
-                    : isScrolled
-                      ? 'text-black hover:text-neutral-1000'
-                      : 'text-white hover:text-neutral-400',
+                  isDetailPage
+                    ? 'text-neutral-1000 hover:text-neutral-700'
+                    : isActive
+                      ? 'text-neutral-400 font-bold'
+                      : isScrolled
+                        ? 'text-black hover:text-neutral-1000'
+                        : 'text-white hover:text-neutral-400',
                 )}
               >
                 {link.name}
