@@ -7,7 +7,7 @@ import Link from "next/link";
 
 const SponsorCta = () => {
   return (
-    <section className="relative items-center justify-center bg-neutral-100">
+    <section id="sponsor-cta" className="relative items-center justify-center bg-neutral-100">
       <Container className="flex flex-col md:flex-row gap-6 md:gap-10 py-18 md:py-30">
         <div className=" justify-center items-center w-full gap-5">
           <Image

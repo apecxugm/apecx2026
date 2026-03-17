@@ -26,7 +26,7 @@ const Footer = () => {
               <h5 className="text-secondary-100 text-justify text-sm md:text-[15px] lg:text-base font-normal md:font-medium" style={{ fontWeight: 700 }}>General Info</h5>
               <ul className="flex flex-col gap-2">
                 <li>
-                  <a href="#about" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
+                  <a href="/about" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
                     About SPE UGM
                   </a>
                 </li>
@@ -36,12 +36,12 @@ const Footer = () => {
                   </a>
                 </li>
                 <li>
-                  <a href="#timeline" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
+                  <a href="#events" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
                     Timeline
                   </a>
                 </li>
                 <li>
-                  <a href="#competitions" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
+                  <a href="#events" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
                     Competitions
                   </a>
                 </li>
@@ -50,11 +50,11 @@ const Footer = () => {
                     Events
                   </a>
                 </li>
-                <li>
-                  <a href="#games" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
+                {/* <li>
+                  <a href="#game" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
                     Games
                   </a>
-                </li>
+                </li> */}
               </ul>
             </div>
 
@@ -63,32 +63,27 @@ const Footer = () => {
               <h5 className="text-secondary-100 text-justify text-sm md:text-[15px] lg:text-base font-normal md:font-medium" style={{ fontWeight: 700 }}>Events</h5>
               <ul className="flex flex-col gap-2">
                 <li>
-                  <a href="#blog" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
-                    Social Event 1
+                  <a href="/event/social-event" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
+                    Social Event
                   </a>
                 </li>
                 <li>
-                  <a href="#gallery" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
-                    Social Event 2
-                  </a>
-                </li>
-                <li>
-                  <a href="#faq" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
+                  <a href="/event/company-visit" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
                     Company Visit
                   </a>
                 </li>
                 <li>
-                  <a href="#support" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
+                  <a href="/event/talkshow" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
                     Talkshow
                   </a>
                 </li>
                 <li>
-                  <a href="#support" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
+                  <a href="/event/exhibition" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
                     Exhibition
                   </a>
                 </li>
                 <li>
-                  <a href="#contact" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
+                  <a href="/event/awarding-night" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
                     Awarding Night
                   </a>
                 </li>
@@ -101,28 +96,28 @@ const Footer = () => {
               <div className="flex flex-col gap-3">
                 <ul className="flex flex-col gap-2">
                   <li>
-                    <a href="#blog" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
+                    <a href="/competition/business-case" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
                       Business Case Competition
                     </a>
                   </li>
                   <li>
-                    <a href="#gallery" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
-                      Poster and Paper
+                    <a href="/competition/paper-poster" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
+                      Paper and Poster
                     </a>
                   </li>
                   <li>
-                    <a href="#faq" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
-                      Reservoir Development
+                    <a href="/competition/plan-of-development" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
+                      Plan of Development
                     </a>
                   </li>
                   <li>
-                    <a href="#support" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
+                    <a href="/competition/supply-chain-management-logistics" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
                       Supply Chain Management and Logistic
                     </a>
                   </li>
                   <li>
-                    <a href="#contact" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
-                      Petro-smart
+                    <a href="/competition/petrosmart" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
+                      Petrosmart
                     </a>
                   </li>
                 </ul>
@@ -139,7 +134,7 @@ const Footer = () => {
                   </a>
                 </li>
                 <li>
-                  <a href="#about" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
+                  <a href="#sponsor-cta" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
                     Partnership
                   </a>
                 </li>
