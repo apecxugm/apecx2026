@@ -26,6 +26,7 @@ export default function RootLayout({
         className={`${plusJakartaSans.variable} antialiased`}
       >
         {children}
+        <Navbar />
         <Footer />
       </body>
     </html>

@@ -18,52 +18,77 @@ const LINKS = [
 ];
 
 const ACTION_LINKS = [
-  { label: "Register Now!", href: "#register" },
-  { label: "Explore APECX", href: "#about" },
-  { label: "Explore APECX", href: "#theme" },
-  { label: "Explore APECX", href: "#events" },
-  { label: "Explore APECX", href: "#competitions" },
+  { label: 'Register Now!', href: '#register' },
+  { label: 'Explore APECX', href: '#about' },
+  { label: 'Explore APECX', href: '#theme' },
+  { label: 'Explore APECX', href: '#events' },
+  { label: 'Explore APECX', href: '#competitions' },
 ];
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [shrinkProgress, setShrinkProgress] = useState(0);
+  const [viewportWidth, setViewportWidth] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      const nextScrollY = window.scrollY;
+      setIsScrolled(nextScrollY > 50);
+      setShrinkProgress(Math.min(nextScrollY / 120, 1));
     };
 
+    const handleResize = () => {
+      setViewportWidth(window.innerWidth);
+    };
+
+    handleResize();
+    handleScroll();
+
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
 
   const [isOpen, setIsOpen] = useState(false);
+  const compactWidth = Math.min(viewportWidth || 0, 1280);
+  const animatedWidth =
+    viewportWidth > 0
+      ? viewportWidth - (viewportWidth - compactWidth) * shrinkProgress
+      : undefined;
 
   return (
     <nav
+      style={{
+        width: animatedWidth ? `${animatedWidth}px` : undefined,
+        borderRadius: `${17 * shrinkProgress}px`,
+        paddingTop: `${12 * shrinkProgress}px`,
+        paddingBottom: `${12 * shrinkProgress}px`,
+      }}
       className={cn(
-        'fixed top-0 left-0 right-0 z-50 mx-auto border-none shadow-none transition-[background-color,backdrop-filter,padding] duration-300 ease-linear backdrop-blur-md',
+        'fixed top-0 left-0 right-0 z-50 mx-auto border-none shadow-none transition-[background-color] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-[width,padding,border-radius]',
 
         // Logika WARNA: Putih jika di-scroll ATAU jika menu sedang terbuka
         isScrolled || isOpen ? 'bg-neutral-100' : 'bg-transparent text-white',
 
-        // Logika LAYOUT (Padding & Max Width): HANYA aktif jika di-scroll
-        isScrolled ? 'max-w-7xl py-3' : 'py-0',
+        // LAYOUT animasi sekarang mengikuti progress scroll agar menyusut halus
+        'max-w-none',
       )}
     >
       <div
         className={cn(
-          'flex flex-row items-center justify-between px-8 max-w-360 mx-auto transition-all duration-300',
-          isScrolled ? 'py-0' : 'py-4',
+          'flex flex-row items-center justify-between px-8 max-w-360 mx-auto',
         )}
+        style={{
+          paddingTop: `${16 * (1 - shrinkProgress)}px`,
+          paddingBottom: `${16 * (1 - shrinkProgress)}px`,
+        }}
       >
         {/* LOGO */}
-        <div
-          className={cn(
-            'shrink-0 transition-all duration-300',
-            isScrolled,
-          )}
-        >
+        <div className={cn('shrink-0 transition-all duration-300', isScrolled)}>
           <Image
             src={
               isScrolled || isOpen
@@ -183,7 +208,7 @@ const DesktopLinks = ({ isScrolled }: { isScrolled: boolean }) => {
         const isActive = pathname.startsWith(link.href);
 
         return (
-          <div key={link.name} className='relative group py-4'>
+          <div key={link.name} className="relative group py-4">
             {link.hasDropdown ? (
               <>
                 <div
@@ -251,4 +276,4 @@ const DropdownContent = () => {
       </div>
     </div>
   );
-}
+};
