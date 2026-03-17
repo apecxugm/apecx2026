@@ -20,9 +20,9 @@ const PAST_SPONSORS = [
 
 const Hero = () => {
   return (
-    <section className="relative w-screen h-screen max-h-[850px] min-h-[750px]">
+    <section className="relative w-screen items-center justify-center flex h-screen max-h-[850px] min-h-[750px]">
       <HeroBackground />
-      <Container className="h-full bg-primary-800 flex flex-col items-center justify-center">
+      <Container className="h-full bg-primary-800 flex flex-col items-center justify-center mx-0">
         <div className=" justify-between gap-15 max-h-[450px] z-10 flex flex-col items-center">
           <div className="text-center flex flex-col items-center z-10 gap-10 max-w-xs md:max-w-xl">
             <div className="space-y-4">
