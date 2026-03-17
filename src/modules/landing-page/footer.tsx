@@ -1,7 +1,8 @@
 import Container from '@/src/components/ui/container';
 import { Button } from '@/src/components/ui/button';
 import Image from 'next/image';
-import { InstagramLogoIcon, TiktokLogoIcon, XLogoIcon } from '@phosphor-icons/react/ssr';
+import { InstagramLogoIcon, LinkedinLogoIcon, TiktokLogoIcon, XLogoIcon, YoutubeLogoIcon } from '@phosphor-icons/react/ssr';
+import Link from 'next/link';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -152,15 +153,21 @@ const Footer = () => {
             &copy; {currentYear}Copyright - Universitas Gadjah Mada SPE Student Chapter. All rights reserved.
           </p>
           <div className="flex gap-4">
-            <Button variant="light" size="fit" className="text-xs md:text-sm p-[10px]">
-              <InstagramLogoIcon size={24} />
-            </Button>
-            <Button variant="light" size="fit" className="text-xs md:text-sm p-[10px]">
-              <TiktokLogoIcon size={24} />
-            </Button>
-            <Button variant="light" size="fit" className="text-xs md:text-sm p-[10px]">
-              <XLogoIcon size={24} />
-            </Button>
+            <Link href="https://www.instagram.com/apecx2026/">
+              <Button variant="light" size="fit" className="text-xs md:text-sm p-[10px]">
+                <InstagramLogoIcon size={24} />
+              </Button>
+            </Link>
+            <Link href="https://www.tiktok.com/@apecx2026">
+              <Button variant="light" size="fit" className="text-xs md:text-sm p-[10px]">
+                <TiktokLogoIcon size={24} />
+              </Button>
+            </Link>
+            <Link href="https://www.linkedin.com/in/apecx-speugm-8b0437362/">
+              <Button variant="light" size="fit" className="text-xs md:text-sm p-[10px]">
+                <LinkedinLogoIcon size={24} />
+              </Button>
+            </Link>
           </div>
         </div>
       </Container>

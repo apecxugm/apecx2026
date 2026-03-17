@@ -9,7 +9,7 @@ const buttonVariants = cva(
         default: 'bg-primary-700 text-white hover:bg-primary-900 has-[>svg]:gap-2 cursor-pointer hover:scale-105 font-bold',
         light: 'bg-secondary-200 text-neutral-1000 hover:bg-secondary-400 has-[>svg]:gap-2 cursor-pointer hover:scale-105',
         white: 'bg-neutral-100 font-bold text-neutral-1000 hover:bg-neutral-300 has-[>svg]:gap-2 cursor-pointer hover:scale-105',
-        'dark-blue': 'bg-tertiary-900 text-gray-700 text-white cursor-pointer hover:bg-tertiary-700 has-[>svg]:gap-2 hover:scale-105',
+        'dark-blue': 'bg-tertiary-900 text-gray-700 text-white cursor-pointer hover:bg-tertiary-1000 has-[>svg]:gap-2 hover:scale-105',
       },
       size: {
         default: 'md:w-53 w-full',
