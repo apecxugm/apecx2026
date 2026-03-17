@@ -27,7 +27,7 @@ const AboutUs = () => {
               students, academics, and industry experts meet to solve the
               world&apos;s toughest energy challenges.
             </p>
-            <Button variant="white" size="fit" className="text-sm lg:self-start md:self-center self-end">
+            <Button variant="white" size="fit" className="!text-sm lg:self-start md:self-center self-end">
               Get To Know APECX 2026
             </Button>
           </div>
