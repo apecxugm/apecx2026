@@ -6,7 +6,7 @@ export default function HeroBackground() {
     <div className="absolute inset-0 overflow-hidden bg-linear-to-b from-secondary-200 to-neutral-100">
       <HeroBackgroundAnimation />
       <Image
-        src="/logo-background.webp"
+        src="/logo/half-light.webp"
         alt="Hero Background"
         width={80}
         height={80}
@@ -97,6 +97,24 @@ export default function HeroBackground() {
             <feGaussianBlur stdDeviation="2.5" result="effect1_foregroundBlur_90_3004" />
           </filter>
           <linearGradient id="paint0_linear_90_3004" x1="149.917" y1="9.86182" x2="149.917" y2="78.8618" gradientUnits="userSpaceOnUse">
+            <stop stopColor="white" stopOpacity="0" />
+            <stop offset="0.5" stopColor="white" />
+            <stop offset="1" stopColor="white" stopOpacity="0" />
+          </linearGradient>
+        </defs>
+      </svg>
+
+      <svg className="z-1 absolute bottom-6 md:hidden" xmlns="http://www.w3.org/2000/svg" width="44" height="65" viewBox="0 0 44 65" fill="none">
+        <g filter="url(#filter0_f_99_3149)">
+          <path className="hero-light-bottom" d="M40.806 4.15161L-100.373 59.9204" stroke="url(#paint0_linear_99_3149)" strokeWidth="4.30206" />
+        </g>
+        <defs>
+          <filter id="filter0_f_99_3149" x="-103.314" y="9.25064e-05" width="147.062" height="64.0721" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+            <feFlood floodOpacity="0" result="BackgroundImageFix" />
+            <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+            <feGaussianBlur stdDeviation="1.07552" result="effect1_foregroundBlur_99_3149" />
+          </filter>
+          <linearGradient id="paint0_linear_99_3149" x1="-29.7835" y1="4.15161" x2="-29.7835" y2="59.9204" gradientUnits="userSpaceOnUse">
             <stop stopColor="white" stopOpacity="0" />
             <stop offset="0.5" stopColor="white" />
             <stop offset="1" stopColor="white" stopOpacity="0" />
@@ -224,6 +242,24 @@ export default function HeroBackground() {
         </defs>
       </svg>
 
+      <svg className="z-1 absolute bottom-6 right-0 md:hidden" xmlns="http://www.w3.org/2000/svg" width="43" height="65" viewBox="0 0 43 65" fill="none">
+        <g filter="url(#filter0_f_99_3148)">
+          <path className="hero-light-bottom" d="M2.94128 4.15161L144.12 59.9204" stroke="url(#paint0_linear_99_3148)" strokeWidth="4.30206" />
+        </g>
+        <defs>
+          <filter id="filter0_f_99_3148" x="-2.95639e-05" y="9.25064e-05" width="147.062" height="64.0721" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+            <feFlood floodOpacity="0" result="BackgroundImageFix" />
+            <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+            <feGaussianBlur stdDeviation="1.07552" result="effect1_foregroundBlur_99_3148" />
+          </filter>
+          <linearGradient id="paint0_linear_99_3148" x1="73.5308" y1="4.15161" x2="73.5308" y2="59.9204" gradientUnits="userSpaceOnUse">
+            <stop stopColor="white" stopOpacity="0" />
+            <stop offset="0.5" stopColor="white" />
+            <stop offset="1" stopColor="white" stopOpacity="0" />
+          </linearGradient>
+        </defs>
+      </svg>
+
       {/* Right background trapezium */}
       <svg className="md:block hidden absolute right-0 top-0 z-1" xmlns="http://www.w3.org/2000/svg" width="307" height="829" viewBox="0 0 307 829" fill="none">
         <path d="M263.787 -290.001L-1.37029e-06 -32.9485L115.084 741.993L545.212 828.435L263.787 -290.001Z" fill="url(#paint0_radial_90_1540)" />
@@ -322,7 +358,7 @@ export default function HeroBackground() {
 
       <svg className="absolute inset-0 w-full h-full z-2 md:hidden" xmlns="http://www.w3.org/2000/svg" width="430" height="655" viewBox="0 0 430 655" fill="none">
         <g filter="url(#filter0_f_99_3162)">
-          <path d="M393.14 568.563L352.921 86.0413H76.1358L34.6679 568.563H393.14Z" fill="url(#paint0_radial_99_3162)" />
+          <path className="glowing" d="M393.14 568.563L352.921 86.0413H76.1358L34.6679 568.563H393.14Z" fill="url(#paint0_radial_99_3162)" />
         </g>
         <defs>
           <filter id="filter0_f_99_3162" x="-51.3733" y="4.57764e-05" width="530.555" height="654.604" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
@@ -342,10 +378,6 @@ export default function HeroBackground() {
 
       {/* right floating blue triangles */}
       <Image className="shoot-right md:block hidden absolute -right-70 -bottom-30 h-[640px] w-auto z-10" src="/triangles-right.webp" alt="Right Triangles" width={500} height={600} />
-
-
-
-
     </div>
   )
 }

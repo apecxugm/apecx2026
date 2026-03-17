@@ -56,20 +56,18 @@ export default function Animation() {
 
   useEffect(() => {
     const elements = gsap.utils.toArray<HTMLElement>(".shoot-left");
-    const centerX = window.innerWidth / 2;
-    const centerY = window.innerHeight / 2;
 
     const tweens = elements.map((element) => {
       const rect = element.getBoundingClientRect();
-      const elementCenterX = rect.left + rect.width / 2;
-      const elementCenterY = rect.top + rect.height / 2;
+      const offscreenLeftX = -(rect.left + rect.width + 240);
+      const offscreenBottomY = window.innerHeight - rect.top + rect.height + 40;
 
       return gsap.from(element, {
-        x: centerX - elementCenterX,
-        y: centerY - elementCenterY,
-        scale: 0,
+        x: offscreenLeftX,
+        y: offscreenBottomY,
+        scale: 2,
         opacity: 0,
-        duration: 1.2,
+        duration: 0.6,
         delay: 0.8,
         ease: "power1.out",
       });
@@ -82,20 +80,18 @@ export default function Animation() {
 
   useEffect(() => {
     const elements = gsap.utils.toArray<HTMLElement>(".shoot-right");
-    const centerX = window.innerWidth / 2;
-    const centerY = window.innerHeight / 2;
 
     const tweens = elements.map((element) => {
       const rect = element.getBoundingClientRect();
-      const elementCenterX = rect.left + rect.width / 2;
-      const elementCenterY = rect.top + rect.height / 2;
+      const offscreenRightX = window.innerWidth - rect.left + rect.width + 240;
+      const offscreenBottomY = window.innerHeight - rect.top + rect.height + 60;
 
       return gsap.from(element, {
-        x: centerX - elementCenterX,
-        y: centerY - elementCenterY,
-        scale: 0,
+        x: offscreenRightX,
+        y: offscreenBottomY,
+        scale: 2,
         opacity: 0,
-        duration: 1.2,
+        duration: 0.6,
         delay: 1,
         ease: "power1.out",
       });

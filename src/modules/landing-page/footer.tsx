@@ -1,6 +1,7 @@
 import Container from '@/src/components/ui/container';
-import { Button } from '@/src/components/ui/button';2
+import { Button } from '@/src/components/ui/button';
 import Image from 'next/image';
+import { InstagramLogoIcon, TiktokLogoIcon, XLogoIcon } from '@phosphor-icons/react/ssr';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -12,7 +13,7 @@ const Footer = () => {
         <div className="grid w-full grid-cols-1 lg:grid-cols-[1fr_2fr] gap-12 lg:gap-20 w-full justify-items-stretch">
           {/* Brand Section */}
           <div className="flex flex-col gap-4">
-            <Image src="/buat-footer/logo.svg" alt="apecx" width={157} height={146} />
+            <Image src="/logo/logo-light.svg" alt="apecx" width={157} height={146} />
             <h5 className="text-sm mdtext-secondary-100 text-justify text-sm md:text-[15px] lg:text-base font-normal md:font-medium:text-base text-secondary-100 w-full">
               APECX is the flagship annual event hosted by the SPE UGM Student Chapter. For over 15 year
             </h5>
@@ -99,33 +100,33 @@ const Footer = () => {
               <h5 className="text-secondary-100 text-justify text-sm md:text-[15px] lg:text-base font-normal md:font-medium" style={{ fontWeight: 700 }}>Competitions</h5>
               <div className="flex flex-col gap-3">
                 <ul className="flex flex-col gap-2">
-                    <li>
+                  <li>
                     <a href="#blog" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
-                        Business Case Competition
+                      Business Case Competition
                     </a>
-                    </li>
-                    <li>
+                  </li>
+                  <li>
                     <a href="#gallery" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
-                        Poster and Paper
+                      Poster and Paper
                     </a>
-                    </li>
-                    <li>
+                  </li>
+                  <li>
                     <a href="#faq" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
-                        Reservoir Development
+                      Reservoir Development
                     </a>
-                    </li>
-                    <li>
+                  </li>
+                  <li>
                     <a href="#support" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
-                        Supply Chain Management and Logistic
+                      Supply Chain Management and Logistic
                     </a>
-                    </li>
-                    <li>
+                  </li>
+                  <li>
                     <a href="#contact" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
-                        Petro-smart
+                      Petro-smart
                     </a>
-                    </li>
+                  </li>
                 </ul>
-                </div>
+              </div>
             </div>
 
             {/* Contact Us */}
@@ -157,13 +158,13 @@ const Footer = () => {
           </p>
           <div className="flex gap-4">
             <Button variant="light" size="fit" className="text-xs md:text-sm p-[10px]">
-              <Image src="/buat-footer/instagram.svg" alt="Instagram" width={24} height={24} />
+              <InstagramLogoIcon size={24} />
             </Button>
             <Button variant="light" size="fit" className="text-xs md:text-sm p-[10px]">
-              <Image src="/buat-footer/tiktok.svg" alt="TikTok" width={24} height={24} />
+              <TiktokLogoIcon size={24} />
             </Button>
             <Button variant="light" size="fit" className="text-xs md:text-sm p-[10px]">
-              <Image src="/buat-footer/X logo.svg" alt="X" width={24} height={24} />
+              <XLogoIcon size={24} />
             </Button>
           </div>
         </div>
