@@ -43,6 +43,7 @@ export default function HeroBackground() {
         </defs>
       </svg>
 
+      {/* Left light path */}
       <svg className="absolute z-10 md:block hidden" xmlns="http://www.w3.org/2000/svg" width="340" height="859" viewBox="0 0 340 859" fill="none">
         <g filter="url(#filter0_dddddf_90_2950)">
           <path className="hero-light" d="M91.0001 747L262 -8" stroke="url(#paint0_linear_90_2950)" strokeWidth="12" />
@@ -86,6 +87,7 @@ export default function HeroBackground() {
         </defs>
       </svg>
 
+      {/* Left light bottom path */}
       <svg className="absolute z-1 bottom-8 left-21 md:block hidden" xmlns="http://www.w3.org/2000/svg" width="300" height="89" viewBox="0 0 300 89" fill="none">
         <g filter="url(#filter0_f_90_3004)">
           <path className="hero-light-bottom" d="M293.667 9.86182L6.16687 78.8618" stroke="url(#paint0_linear_90_3004)" strokeWidth="10" />
@@ -104,6 +106,7 @@ export default function HeroBackground() {
         </defs>
       </svg>
 
+    {/* Left light path - mobile*/}
       <svg className="z-1 absolute bottom-6 md:hidden" xmlns="http://www.w3.org/2000/svg" width="44" height="65" viewBox="0 0 44 65" fill="none">
         <g filter="url(#filter0_f_99_3149)">
           <path className="hero-light-bottom" d="M40.806 4.15161L-100.373 59.9204" stroke="url(#paint0_linear_99_3149)" strokeWidth="4.30206" />
