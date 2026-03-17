@@ -1,34 +1,106 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, type MouseEvent } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { ChevronDown, X, ChevronRight, Menu } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
 import { Button } from '@/src/components/ui/button';
 import { cn } from '@/src/lib/utils';
+import { CaretDownIcon, CaretRightIcon, ListIcon, XIcon } from '@phosphor-icons/react/dist/ssr';
 
 const LINKS = [
   { name: 'Theme', href: '#theme' },
-  { name: 'Timeline', href: '#timeline' },
+  { name: 'Timeline', href: '#events' },
   { name: 'Events', href: '#events', hasDropdown: true },
   { name: 'Competitions', href: '#competitions', hasDropdown: true },
-  { name: 'Game', href: '#game' },
+  { name: 'Game', href: '#game', disabled: true },
 ];
 
-const ACTION_LINKS = [
-  { label: 'Register Now!', href: '#register' },
-  { label: 'Explore APECX', href: '#about' },
-  { label: 'Explore APECX', href: '#theme' },
-  { label: 'Explore APECX', href: '#events' },
-  { label: 'Explore APECX', href: '#competitions' },
+const COMPETITION_LINKS = [
+  {
+    label: 'Paper & Poster',
+    href: '/competition/paper-and-poster',
+    image: '/paper-poster.webp',
+  },
+  {
+    label: 'Business Case',
+    href: '/competition/business-case',
+    image: '/business-case.webp',
+  },
+  {
+    label: 'Petrosmart',
+    href: '/competition/petrosmart',
+    image: '/petrosmart.webp',
+  },
+  {
+    label: 'Plan of Development',
+    href: '/competition/plan-of-development',
+    image: '/plan-of-development.webp',
+  },
+  {
+    label: 'Supply Chain Management & Logistics',
+    href: '/competition/supply-chain-management-logistics',
+    image: '/supply-chain.webp',
+  },
 ];
+
+const EVENTS_LINKS = [
+  {
+    label: 'Social Event',
+    href: '/event/social-event',
+    image: '/social-event.webp',
+  },
+  {
+    label: 'Company Visit',
+    href: '/event/company-visit',
+    image: '/company-visit.webp',
+  },
+  {
+    label: 'Talkshow',
+    href: '/event/talkshow',
+    image: '/talkshow.webp',
+  },
+  {
+    label: 'Exhibition',
+    href: '/event/exhibition',
+    image: '/exhibition.webp',
+  },
+  {
+    label: 'Awarding Night',
+    href: '/event/awarding-night',
+    image: '/awarding-night.webp',
+  },
+];
+
+type DropdownType = 'events' | 'competitions';
+
+const scrollToHash = (href: string) => {
+  if (!href.startsWith('#')) {
+    return false;
+  }
+
+  const sectionId = href.slice(1);
+  const target = document.getElementById(sectionId);
+
+  if (!target) {
+    return false;
+  }
+
+  const navElement = document.querySelector('nav');
+  const navOffset = navElement instanceof HTMLElement ? navElement.offsetHeight + 12 : 0;
+  const top = target.getBoundingClientRect().top + window.scrollY - navOffset;
+
+  window.history.replaceState(null, '', href);
+  window.scrollTo({ top, behavior: 'smooth' });
+
+  return true;
+};
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [shrinkProgress, setShrinkProgress] = useState(0);
   const [viewportWidth, setViewportWidth] = useState(0);
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -54,22 +126,29 @@ const Navbar = () => {
   }, []);
 
   const [isOpen, setIsOpen] = useState(false);
+  const [mobileDropdownOpen, setMobileDropdownOpen] = useState<string | null>(null);
   const compactWidth = Math.min(viewportWidth || 0, 1280);
   const animatedWidth =
     viewportWidth > 0
       ? viewportWidth - (viewportWidth - compactWidth) * shrinkProgress
       : undefined;
 
+  const handleLogoClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (pathname === '/') {
+      e.preventDefault();
+      // Scroll to hero on home page
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    // Otherwise, Link will navigate to /
+  };
   return (
     <nav
       style={{
         width: animatedWidth ? `${animatedWidth}px` : undefined,
-        borderRadius: `${17 * shrinkProgress}px`,
-        paddingTop: `${12 * shrinkProgress}px`,
-        paddingBottom: `${12 * shrinkProgress}px`,
+        borderRadius: viewportWidth >= 1024 ? `${17 * shrinkProgress}px` : '0px',
       }}
       className={cn(
-        'fixed top-0 left-0 right-0 z-50 mx-auto border-none shadow-none transition-[background-color] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-[width,padding,border-radius]',
+        'fixed top-0 left-1/2 -translate-x-1/2 z-50 mx-auto border-none shadow-none transition-[background-color] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-[width,border-radius]',
 
         // Logika WARNA: Putih jika di-scroll ATAU jika menu sedang terbuka
         isScrolled || isOpen ? 'bg-neutral-100' : 'bg-transparent text-white',
@@ -80,27 +159,25 @@ const Navbar = () => {
     >
       <div
         className={cn(
-          'flex flex-row items-center justify-between px-8 max-w-360 mx-auto',
+          'flex flex-row items-center justify-between px-8 max-w-360 mx-auto py-4',
         )}
-        style={{
-          paddingTop: `${16 * (1 - shrinkProgress)}px`,
-          paddingBottom: `${16 * (1 - shrinkProgress)}px`,
-        }}
       >
         {/* LOGO */}
-        <div className={cn('shrink-0 transition-all duration-300', isScrolled)}>
-          <Image
-            src={
-              isScrolled || isOpen
-                ? '/logo/dark-apecx-icon.webp'
-                : '/logo/apecx-icon.webp'
-            }
-            alt="APECX 2026"
-            width={62}
-            height={58}
-            className="object-contain"
-          />
-        </div>
+        <Link href="/" onClick={handleLogoClick}>
+          <div className={cn('shrink-0 transition-all duration-300', isScrolled)}>
+            <Image
+              src={
+                isScrolled || isOpen
+                  ? '/logo/dark-apecx-icon.webp'
+                  : '/logo/apecx-icon.webp'
+              }
+              alt="APECX 2026"
+              width={62}
+              height={58}
+              className="object-contain"
+            />
+          </div>
+        </Link>
 
         {/* NAVIGATION & ACTIONS */}
         <div className="flex items-center gap-10">
@@ -108,20 +185,24 @@ const Navbar = () => {
 
           <div className="flex items-center gap-2">
             <div className="hidden lg:flex items-center gap-2">
-              <Button
-                variant="dark-blue"
-                size="fit"
-                className="!text-sm hover:bg-tertiary-1000"
-              >
-                Social Events
-              </Button>
-              <Button
-                variant="dark-blue"
-                size="fit"
-                className="!text-sm hover:bg-tertiary-1000"
-              >
-                Join Our Competitions
-              </Button>
+              <Link href="#events">
+                <Button
+                  variant="dark-blue"
+                  size="fit"
+                  className="!text-sm hover:bg-tertiary-1000"
+                >
+                  Social Events
+                </Button>
+              </Link>
+              <Link href="#events">
+                <Button
+                  variant="dark-blue"
+                  size="fit"
+                  className="!text-sm hover:bg-tertiary-1000"
+                >
+                  Join Our Competitions
+                </Button>
+              </Link>
             </div>
 
             {/* TOGGLE MOBILE */}
@@ -134,12 +215,14 @@ const Navbar = () => {
                 )}
                 aria-label="Toggle Menu"
               >
-                <motion.div
-                  animate={{ rotate: isOpen ? 180 : 0 }}
-                  transition={{ duration: 0.3, ease: 'easeInOut' }}
+                <div
+                  className={cn(
+                    'transition-transform duration-300 ease-in-out',
+                    isOpen ? 'rotate-180' : 'rotate-0',
+                  )}
                 >
-                  {isOpen ? <X size={28} /> : <Menu size={28} />}
-                </motion.div>
+                  {isOpen ? <XIcon size={28} /> : <ListIcon size={28} />}
+                </div>
               </button>
             </div>
           </div>
@@ -147,52 +230,126 @@ const Navbar = () => {
       </div>
 
       {/* mobile menu overlay */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="absolute top-full left-0 right-0 border-none bg-neutral-100 shadow-none lg:hidden"
-          >
-            <div className="flex flex-col mx-4 md:mx-8 py-[10px] gap-2">
-              {LINKS.map((link) => (
-                <Link
-                  key={link.name}
-                  href={link.href}
-                  onClick={() => setIsOpen(false)}
+      <div
+        className={cn(
+          'absolute top-full left-0 right-0 border-none bg-neutral-100 shadow-none lg:hidden transition-all duration-300 ease-in-out',
+          isOpen
+            ? 'opacity-100 translate-y-0 visible pointer-events-auto'
+            : 'opacity-0 -translate-y-5 invisible pointer-events-none',
+        )}
+        aria-hidden={!isOpen}
+      >
+        <div className="flex flex-col mx-4 md:mx-8 py-[10px] gap-2">
+          {LINKS.map((link) =>
+            link.disabled ? (
+              <span
+                key={link.name}
+                aria-disabled="true"
+                className={cn(
+                  'flex items-center justify-between px-4 text-sm py-[10px] text-neutral-400 cursor-not-allowed select-none',
+                  link.name === 'Theme' && 'border-t border-black',
+                  link.name === 'Game' && 'border-b border-black',
+                )}
+              >
+                {link.name}
+                {link.hasDropdown && <CaretRightIcon size={18} className="text-neutral-400" />}
+              </span>
+            ) : link.hasDropdown ? (
+              <div key={link.name}>
+                <button
+                  onClick={() =>
+                    setMobileDropdownOpen(
+                      mobileDropdownOpen === link.name ? null : link.name,
+                    )
+                  }
                   className={cn(
-                    'flex items-center justify-between px-4 text-black text-lg py-[10px]',
+                    'w-full flex items-center justify-between px-4 text-black text-sm py-[10px]',
                     link.name === 'Theme' && 'border-t border-black',
                     link.name === 'Game' && 'border-b border-black',
                   )}
                 >
-                  {link.name} <ChevronRight size={18} className="text-black" />
-                </Link>
-              ))}
-
-              <div className="flex flex-col gap-2 pt-2 pb-3 ">
-                <Button
-                  variant="dark-blue"
-                  size="default"
-                  className="hover:bg-tertiary-1000 w-full md:w-auto"
-                  onClick={() => setIsOpen(false)}
+                  {link.name}
+                  <CaretRightIcon
+                    size={18}
+                    className={cn(
+                      'text-black transition-transform duration-300',
+                      mobileDropdownOpen === link.name && 'rotate-90',
+                    )}
+                  />
+                </button>
+                <div
+                  className={cn(
+                    'overflow-hidden transition-all duration-300 ease-in-out',
+                    mobileDropdownOpen === link.name
+                      ? 'max-h-96'
+                      : 'max-h-0',
+                  )}
                 >
-                  Social Events
-                </Button>
-                <Button
-                  variant="dark-blue"
-                  size="default"
-                  className="hover:bg-tertiary-1000 w-full md:w-auto"
-                  onClick={() => setIsOpen(false)}
-                >
-                  Join Our Competitions
-                </Button>
+                  <div className="flex flex-col gap-2 bg-neutral-50 pl-8 pr-4 py-2">
+                    {(link.name === 'Events' ? EVENTS_LINKS : COMPETITION_LINKS).map(
+                      (item) => (
+                        <Link
+                          key={`${item.label}-${item.href}`}
+                          href={item.href}
+                          onClick={() => {
+                            scrollToHash(item.href);
+                            setIsOpen(false);
+                            setMobileDropdownOpen(null);
+                          }}
+                          className="text-black text-sm py-2 hover:font-medium transition-all"
+                        >
+                          {item.label}
+                        </Link>
+                      ),
+                    )}
+                  </div>
+                </div>
               </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            ) : (
+              <Link
+                key={link.name}
+                href={link.href}
+                onClick={(event) => {
+                  if (scrollToHash(link.href)) {
+                    event.preventDefault();
+                  }
+                  setIsOpen(false);
+                }}
+                className={cn(
+                  'flex items-center justify-between px-4 text-black text-sm py-[10px]',
+                  link.name === 'Theme' && 'border-t border-black',
+                  link.name === 'Game' && 'border-b border-black',
+                )}
+              >
+                {link.name}
+              </Link>
+            ),
+          )}
+
+          <div className="flex flex-col gap-2 pt-2 pb-3 ">
+            <Link href="#events" onClick={() => setIsOpen(false)}>
+              <Button
+                variant="dark-blue"
+                size="default"
+                className="hover:bg-tertiary-1000 w-full md:w-auto"
+                onClick={() => setIsOpen(false)}
+              >
+                Social Events
+              </Button>
+            </Link>
+            <Link href="#events" onClick={() => setIsOpen(false)}>
+              <Button
+                variant="dark-blue"
+                size="default"
+                className="hover:bg-tertiary-1000 w-full md:w-auto"
+                onClick={() => setIsOpen(false)}
+              >
+                Join Our Competitions
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </div>
     </nav>
   );
 };
@@ -213,25 +370,41 @@ const DesktopLinks = ({ isScrolled }: { isScrolled: boolean }) => {
               <>
                 <div
                   className={cn(
-                    'group relative cursor-pointer flex items-center gap-1 transition-all duration-100 text-sm font-medium',
+                    'group relative cursor-pointer inline-flex items-baseline gap-1 transition-colors duration-300 text-sm font-medium leading-normal',
                     isScrolled
                       ? 'text-black hover:text-neutral-1000'
                       : 'text-white hover:text-neutral-400',
                   )}
                 >
                   {link.name}{' '}
-                  <ChevronDown
+                  <CaretDownIcon
                     size={14}
-                    className="group-hover:rotate-180 transition-transform duration-400"
+                    className="translate-y-px group-hover:rotate-180 transition-[transform,color] duration-300"
                   />
                 </div>
                 <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform scale-95 group-hover:scale-100">
-                  <DropdownContent />
+                  <DropdownContent
+                    type={
+                      link.name === 'Events' ? 'events' : 'competitions'
+                    }
+                  />
                 </div>
               </>
+            ) : link.disabled ? (
+              <span
+                aria-disabled="true"
+                className="text-sm font-medium text-neutral-400 cursor-not-allowed select-none"
+              >
+                {link.name}
+              </span>
             ) : (
               <Link
                 href={link.href}
+                onClick={(event: MouseEvent<HTMLAnchorElement>) => {
+                  if (scrollToHash(link.href)) {
+                    event.preventDefault();
+                  }
+                }}
                 className={cn(
                   'transition-all duration-300 text-sm font-medium hover:text-neutral-400',
                   isActive
@@ -251,24 +424,38 @@ const DesktopLinks = ({ isScrolled }: { isScrolled: boolean }) => {
   );
 };
 
-const DropdownContent = () => {
+const DropdownContent = ({ type }: { type: DropdownType }) => {
+  const links = type === 'events' ? EVENTS_LINKS : COMPETITION_LINKS;
+  const [activeIndex, setActiveIndex] = useState(0);
+
   return (
-    <div className="w-[480px] h-[262px] p-5 gap-8 bg-neutral-100 text-neutral-1000 flex flex-row items-stretch justify-center rounded-[10px] shadow-2xl border border-neutral-200">
+    <div className="w-[480px] h-fit p-5 gap-8 bg-neutral-100 text-neutral-1000 flex flex-row items-stretch justify-center rounded-[10px] shadow-2xl border border-neutral-200">
       <div className="flex flex-col gap-2 flex-1 text-center w-full">
-        {ACTION_LINKS.map((item) => (
+        {links.map((item, index) => (
           <Link
             key={`${item.label}-${item.href}`}
             href={item.href}
-            className="w-full rounded-[8px] border border-neutral-100 bg-neutral-100 px-6 py-[8.5px] text-sm shadow-[0_1px_2px_0_rgba(16,24,40,0.05)]"
+            onMouseEnter={() => setActiveIndex(index)}
+            onClick={(event: MouseEvent<HTMLAnchorElement>) => {
+              if (scrollToHash(item.href)) {
+                event.preventDefault();
+              }
+            }}
+            className={cn(
+              'w-full py-2 rounded-md transition-colors duration-300 text-sm font-medium',
+              index === activeIndex
+                ? 'border-neutral-300 bg-neutral-200'
+                : 'border-neutral-100 bg-neutral-100',
+            )}
           >
             {item.label}
           </Link>
         ))}
       </div>
-      <div className="relative shrink-0 w-[167px] h-[222px] self-stretch rounded-lg overflow-hidden">
+      <div className="relative shrink-0 w-[167px] aspect-square rounded-lg overflow-hidden">
         <Image
-          src="/navbar-dropdown-image.webp"
-          alt="APECX Icon"
+          src={links[activeIndex]?.image ?? '/navbar-dropdown-image.webp'}
+          alt={`${links[activeIndex]?.label ?? 'APECX'} image`}
           fill
           sizes="167px"
           className="object-cover"

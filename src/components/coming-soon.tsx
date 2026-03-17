@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Container from "./container";
+import Container from "./ui/container";
 
 const ComingSoon = () => {
   return (
