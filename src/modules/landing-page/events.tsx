@@ -71,7 +71,7 @@ const EVENTS = [
 
 const Events = () => {
   return (
-    <main id="events" className="relative w-screen bg-primary-900 flex items-center justify-center">
+    <main id="events" className="relative w-screen overflow-hidden bg-primary-900 flex items-center justify-center">
 
       <Image className="floating md:block hidden absolute -left-35 top-80 h-[650px] w-auto" src="/triangles-left.webp" alt="Left Triangles" width={500} height={600} />
 
