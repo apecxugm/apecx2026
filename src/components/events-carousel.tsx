@@ -12,8 +12,9 @@ import { cn } from "@/src/lib/utils"
 
 interface EventItem {
   title: string
-  type: "competition" | "exhibition" | "event"
+  type: "competition" | "event"
   slug: string
+  logo: string
 }
 
 interface EventsCarouselProps {
@@ -63,6 +64,7 @@ export default function EventsCarousel({ items }: EventsCarouselProps) {
                 title={event.title}
                 type={event.type}
                 slug={event.slug}
+                logo={event.logo}
               />
             </CarouselItem>
           ))}
