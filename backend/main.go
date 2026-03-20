@@ -33,10 +33,10 @@ func main() {
 		panic("Gagal konek ke Google Sheets: " + err.Error())
 	}
 
-	// setup minio
-	err = setupMinIO()
+	// setup storage
+	err = setupStorage()
 	if err != nil {
-		panic("Gagal konek ke MinIO: " + err.Error())
+		panic("Gagal konek ke bucket storage Railway: " + err.Error())
 	}
 
 	r := gin.Default()
@@ -169,24 +169,58 @@ func handleRegister(c *gin.Context) {
 		paymentURL, studentIDURL, followProofURL, twibbonURL, storyURL, whatsappURL,
 	}
 
-	valueRange := &sheets.ValueRange{
-		Values: [][]interface{}{row},
-	}
-
 	sheetName := getSheetName(input.Competition)
 
-	_, err = sheetsService.Spreadsheets.Values.
-		Append(spreadsheetID, sheetName+"!B2", valueRange).
-		ValueInputOption("RAW").
-		Do()
-
-	if err != nil {
+	if err := appendToSheet(sheetName, row); err != nil {
 		fmt.Println("ERROR Google Sheets:", err)
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Gagal menyimpan data"})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Gagal menyimpan data: " + err.Error()})
 		return
 	}
 
 	c.JSON(http.StatusOK, gin.H{"message": "Registrasi berhasil!"})
+}
+
+func appendToSheet(sheetName string, row []interface{}) error {
+	resp, err := sheetsService.Spreadsheets.Values.
+		Get(spreadsheetID, sheetName+"!B2:B").
+		Do()
+	if err != nil {
+		return fmt.Errorf("gagal baca sheet: %w", err)
+	}
+
+	nextRow := len(resp.Values) + 2
+	writeRange := fmt.Sprintf("%s!B%d", sheetName, nextRow)
+	valueRange := &sheets.ValueRange{
+		Values: [][]interface{}{row},
+	}
+
+	_, err = sheetsService.Spreadsheets.Values.
+		Update(spreadsheetID, writeRange, valueRange).
+		ValueInputOption("RAW").
+		Do()
+
+	if err != nil {
+		return fmt.Errorf("gagal tulis sheet: %w", err)
+	}
+
+	formulaRange := fmt.Sprintf("%s!A%d", sheetName, nextRow)
+	formulaValue := &sheets.ValueRange{
+		Values: [][]interface{}{
+			{fmt.Sprintf("=IF(B%d<>\"\",ROW()-1,\"\")", nextRow)},
+		},
+	}
+
+	_, err = sheetsService.Spreadsheets.Values.
+		Update(spreadsheetID, formulaRange, formulaValue).
+		ValueInputOption("USER_ENTERED").
+		Do()
+
+	if err != nil {
+		return fmt.Errorf("gagal tulis formula kolom A: %w", err)
+	}
+
+	fmt.Printf("Data berhasil ditulis ke %s baris %d\n", sheetName, nextRow)
+	return nil
 }
 
 // upload file ke minio, return public URL
@@ -218,12 +252,15 @@ func setupSheetsService() (*sheets.Service, error) {
 	ctx := context.Background()
 
 	credsJSON := os.Getenv("GOOGLE_CREDENTIALS")
-	if credsJSON == "" {
-		return nil, fmt.Errorf("GOOGLE_CREDENTIALS tidak ditemukan")
+	if credsJSON != "" {
+		return sheets.NewService(ctx,
+			option.WithCredentialsJSON([]byte(credsJSON)),
+		)
 	}
 
+	// fallback
 	return sheets.NewService(ctx,
-		option.WithCredentialsJSON([]byte(credsJSON)),
+		option.WithCredentialsFile("credentials/service-account.json"),
 	)
 }
 

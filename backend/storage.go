@@ -7,60 +7,40 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+	"time"
 
 	"github.com/minio/minio-go/v7"
 	"github.com/minio/minio-go/v7/pkg/credentials"
 )
 
-var minioClient *minio.Client
+var storageClient *minio.Client
 
 const bucketName = "apecx-document"
 
-func setupMinIO() error {
-	endpoint := os.Getenv("MINIO_ENDPOINT")
-	accessKey := os.Getenv("MINIO_ACCESS_KEY")
-	secretKey := os.Getenv("MINIO_SECRET_KEY")
-	useSSL := false
+func setupStorage() error {
+	endpoint := os.Getenv("RAILWAY_ENDPOINT")
+	accessKey := os.Getenv("RAILWAY_ACCESS_KEY")
+	secretKey := os.Getenv("RAILWAY_SECRET_KEY")
+	region := os.Getenv("RAILWAY_BUCKET_REGION")
 
 	var err error
-	minioClient, err = minio.New(endpoint, &minio.Options{
+	storageClient, err = minio.New(endpoint, &minio.Options{
 		Creds:  credentials.NewStaticV4(accessKey, secretKey, ""),
-		Secure: useSSL,
+		Secure: true,
+		Region: region,
 	})
-	if err != nil {
-		return err
-	}
 
-	ctx := context.Background()
-
-	exists, err := minioClient.BucketExists(ctx, bucketName)
-	if err != nil {
-		return err
-	}
-
-	if !exists {
-		err = minioClient.MakeBucket(ctx, bucketName, minio.MakeBucketOptions{})
-		if err != nil {
-			return err
-		}
-	}
-
-	policy := `{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"AWS":["*"]},"Action":["s3:GetObject"],"Resource":["arn:aws:s3:::apecx-document/*"]}]}`
-
-	err = minioClient.SetBucketPolicy(ctx, bucketName, policy)
-	if err != nil {
-		fmt.Println("Warning: gagal set bucket policy:", err)
-	}
-
-	return nil
+	return err
 }
 
 func uploadFileToStorage(file multipart.File, fileName string, contentType string) (string, error) {
 	ctx := context.Background()
+	bucketName := os.Getenv("RAILWAY_BUCKET_NAME")
 
-	_, err := minioClient.PutObject(ctx, bucketName, fileName, file, -1,
+	_, err := storageClient.PutObject(ctx, bucketName, fileName, file, -1,
 		minio.PutObjectOptions{
-			ContentType: contentType,
+			ContentType:  contentType,
+			UserMetadata: map[string]string{"x-amz-acl": "public-read"},
 		},
 	)
 	if err != nil {
@@ -68,20 +48,23 @@ func uploadFileToStorage(file multipart.File, fileName string, contentType strin
 	}
 
 	// return public URL
-	endpoint := os.Getenv("MINIO_ENDPOINT")
-	publicURL := fmt.Sprintf("http://%s/%s/%s", endpoint, bucketName, fileName)
-	return publicURL, nil
-}
+	presignedURL, err := storageClient.PresignedGetObject(
+		ctx,
+		bucketName,
+		fileName,
+		7*24*time.Hour,
+		nil,
+	)
+	if err != nil {
+		return "", fmt.Errorf("gagal generate presigned URL: %w", err)
+	}
 
-var allowedTypes = map[string]bool{
-	"image/png":       true,
-	"application/pdf": true,
+	return presignedURL.String(), nil
 }
 
 var allowedExtensions = map[string]bool{
-	".jpg":  true,
-	".jpeg": true,
-	".png":  true,
+	".jpg": true,
+	".png": true,
 }
 
 func validateFile(header *multipart.FileHeader, rule string) error {
