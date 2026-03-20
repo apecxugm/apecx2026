@@ -14,6 +14,8 @@ import (
 
 var minioClient *minio.Client
 
+const bucketName = "apecx-document"
+
 func setupMinIO() error {
 	endpoint := os.Getenv("MINIO_ENDPOINT")
 	accessKey := os.Getenv("MINIO_ACCESS_KEY")
@@ -29,9 +31,23 @@ func setupMinIO() error {
 		return err
 	}
 
+	ctx := context.Background()
+
+	exists, err := minioClient.BucketExists(ctx, bucketName)
+	if err != nil {
+		return err
+	}
+
+	if !exists {
+		err = minioClient.MakeBucket(ctx, bucketName, minio.MakeBucketOptions{})
+		if err != nil {
+			return err
+		}
+	}
+
 	policy := `{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"AWS":["*"]},"Action":["s3:GetObject"],"Resource":["arn:aws:s3:::apecx-document/*"]}]}`
 
-	err = minioClient.SetBucketPolicy(context.Background(), "apecx-document", policy)
+	err = minioClient.SetBucketPolicy(ctx, bucketName, policy)
 	if err != nil {
 		fmt.Println("Warning: gagal set bucket policy:", err)
 	}
@@ -41,7 +57,6 @@ func setupMinIO() error {
 
 func uploadFileToStorage(file multipart.File, fileName string, contentType string) (string, error) {
 	ctx := context.Background()
-	bucketName := "apecx-document"
 
 	_, err := minioClient.PutObject(ctx, bucketName, fileName, file, -1,
 		minio.PutObjectOptions{
@@ -64,12 +79,12 @@ var allowedTypes = map[string]bool{
 }
 
 var allowedExtensions = map[string]bool{
-	".jpg": true,
-	".png": true,
-	".pdf": true,
+	".jpg":  true,
+	".jpeg": true,
+	".png":  true,
 }
 
-func validateFile(header *multipart.FileHeader, onlyPDF bool) error {
+func validateFile(header *multipart.FileHeader, rule string) error {
 	// cek ukuran file
 	if header.Size > 5*1024*1024 {
 		return fmt.Errorf("ukuran file %s terlalu besar (max 5MB)", header.Filename)
@@ -77,14 +92,16 @@ func validateFile(header *multipart.FileHeader, onlyPDF bool) error {
 
 	// cek ekstensi
 	ext := strings.ToLower(filepath.Ext(header.Filename))
-	if onlyPDF {
+	if rule == "pdf" {
 		if ext != ".pdf" {
 			return fmt.Errorf("file %s harus berformat PDF", header.Filename)
 		}
-	} else {
+	} else if rule == "image" {
 		if !allowedExtensions[ext] {
-			return fmt.Errorf("format file %s tidak didukung (PDF/JPG/PNG)", header.Filename)
+			return fmt.Errorf("format file %s tidak didukung (JPG/JPEG/PNG)", header.Filename)
 		}
+	} else {
+		return fmt.Errorf("aturan validasi file tidak valid")
 	}
 
 	return nil

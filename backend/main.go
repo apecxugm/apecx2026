@@ -99,22 +99,22 @@ func handleRegister(c *gin.Context) {
 	}
 
 	// validasi file
-	files := map[string]bool{
-		"payment_proof":  false,
-		"student_id":     true,
-		"follow_proof":   true,
-		"twibbon_proof":  true,
-		"story_proof":    true,
-		"whatsapp_proof": true,
+	fileRules := map[string]string{
+		"payment_proof":  "image",
+		"student_id":     "pdf",
+		"follow_proof":   "pdf",
+		"twibbon_proof":  "pdf",
+		"story_proof":    "pdf",
+		"whatsapp_proof": "pdf",
 	}
 
-	for fieldName, pdfOnly := range files {
+	for fieldName, rule := range fileRules {
 		_, header, err := c.Request.FormFile(fieldName)
 		if err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": "File " + fieldName + " wajib diupload"})
 			return
 		}
-		if err := validateFile(header, pdfOnly); err != nil {
+		if err := validateFile(header, rule); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
@@ -122,7 +122,7 @@ func handleRegister(c *gin.Context) {
 
 	paymentURL, err := uploadFile(c, "payment_proof")
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Gagal upload bukti pembayaran"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Gagal upload bukti pembayaran: " + err.Error()})
 		return
 	}
 
