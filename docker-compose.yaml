@@ -3,14 +3,50 @@ services:
     image: minio/minio
     container_name: apecx-minio
     ports:
-      - "9000:9000"   # API port
-      - "9001:9001"   # Web UI port
+      - "9000:9000" # API port
+      - "9001:9001" # Web UI port
     environment:
       MINIO_ROOT_USER: apecx
       MINIO_ROOT_PASSWORD: apecxgacorlancarjaya
     volumes:
       - minio_data:/data
     command: server /data --console-address ":9001"
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: apecx-backend
+    ports:
+      - "8000:8080"
+    environment:
+      SPREADSHEET_ID: ${SPREADSHEET_ID}
+      MINIO_ENDPOINT: minio:9000
+      MINIO_ACCESS_KEY: ${MINIO_ACCESS_KEY}
+      MINIO_SECRET_KEY: ${MINIO_SECRET_KEY}
+    depends_on:
+      - minio
+    networks:
+      - apecx-network
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.nextjs
+    container_name: apecx-frontend
+    ports:
+      - "8080:3000"
+    environment:
+      BACKEND_URL: http://backend:8080
+      NODE_ENV: production
+    depends_on:
+      - backend
+    networks:
+      - apecx-network
+
+networks:
+  apecx-network:
+    driver: bridge
 
 volumes:
   minio_data:
