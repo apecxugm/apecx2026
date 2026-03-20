@@ -216,8 +216,14 @@ func uploadFile(c *gin.Context, fieldName string) (string, error) {
 
 func setupSheetsService() (*sheets.Service, error) {
 	ctx := context.Background()
+
+	credsJSON := os.Getenv("GOOGLE_CREDENTIALS")
+	if credsJSON == "" {
+		return nil, fmt.Errorf("GOOGLE_CREDENTIALS tidak ditemukan")
+	}
+
 	return sheets.NewService(ctx,
-		option.WithCredentialsFile("credentials/service-account.json"),
+		option.WithCredentialsJSON([]byte(credsJSON)),
 	)
 }
 
