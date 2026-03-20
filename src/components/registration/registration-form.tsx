@@ -83,7 +83,7 @@ export default function RegistrationForm() {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
 
-  const requiredMembers = formData.competition === 'POD' ? 4 : 3;
+  const requiredMembers = formData.competition === 'POD' ? 5 : 3;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -273,7 +273,7 @@ export default function RegistrationForm() {
             {formData.competition && (
               <p className="mt-2 text-sm text-neutral-700">
                 {formData.competition === 'POD'
-                  ? 'This team requires 1 captain + 3 members (total 4 people)'
+                  ? 'This team requires 1 captain + 3 members minimum (up to 4 members allowed)'
                   : 'This team requires 1 captain + 2 members (total 3 people)'}
               </p>
             )}

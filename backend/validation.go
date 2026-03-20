@@ -68,8 +68,15 @@ func validateInput(input RegistrationInput) error {
 
 	// validasi jumlah member
 	if input.Competition == "POD" {
+		// POD requires member 3
 		if err := validateMember("Member 3", input.Member3Name, input.Member3Email, input.Member3Phone); err != nil {
 			return err
+		}
+		// Member 4 is optional for POD, but if provided must be valid
+		if strings.TrimSpace(input.Member4Name) != "" {
+			if err := validateMember("Member 4", input.Member4Name, input.Member4Email, input.Member4Phone); err != nil {
+				return err
+			}
 		}
 	} else {
 		// Non-POD tidak boleh ada member 3 & 4

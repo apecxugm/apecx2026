@@ -82,10 +82,21 @@ export function validateRegistrationForm(
     }
   }
 
-  // Validate that extra members are not filled if not required
+  // Validate that extra members are not filled if not allowed
   if (requiredMembers === 3) {
+    // Non-POD competitions: only allow captain + 2 members
     if (formData.member3_name.trim() || formData.member4_name.trim()) {
       return `Competition ${formData.competition} only allows 3 members (1 captain + 2 members)`;
+    }
+  } else if (requiredMembers === 4 && formData.competition === "POD") {
+    // POD competition: member4 is optional, but if filled, all fields must be valid
+    if (formData.member4_name.trim()) {
+      if (!validateEmail(formData.member4_email)) {
+        return "Member 4 email is invalid";
+      }
+      if (!validatePhone(formData.member4_phone)) {
+        return "Member 4 phone number is invalid (numbers only, 10-13 digits)";
+      }
     }
   }
 
