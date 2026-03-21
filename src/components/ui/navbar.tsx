@@ -9,11 +9,11 @@ import { cn } from '@/src/lib/utils';
 import { CaretDownIcon, CaretRightIcon, ListIcon, XIcon } from '@phosphor-icons/react/dist/ssr';
 
 const LINKS = [
-  { name: 'Theme', href: '#theme' },
-  { name: 'Timeline', href: '#events' },
-  { name: 'Events', href: '#events', hasDropdown: true },
-  { name: 'Competitions', href: '#competitions', hasDropdown: true },
-  { name: 'Game', href: '#game', disabled: true },
+  { name: 'Theme', href: '/#theme' },
+  { name: 'Timeline', href: '/#timeline' },
+  { name: 'Events', href: '/#events', hasDropdown: true },
+  { name: 'Competitions', href: '/#competitions', hasDropdown: true },
+  { name: 'Game', href: '/#game', disabled: true },
 ];
 
 const COMPETITION_LINKS = [
@@ -202,7 +202,7 @@ const Navbar = () => {
                   Social Events
                 </Button>
               </Link>
-              <Link href="#events">
+              <Link href="/registration">
                 <Button
                   variant="dark-blue"
                   size="fit"

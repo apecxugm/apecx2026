@@ -30,7 +30,7 @@ const Hero = ({ title, heroDesc, logo }: { title: string, heroDesc: string, logo
         </g>
         <defs>
           <filter id="filter0_d_684_1434" x="-333.767" y="-82.4515" width="607.062" height="551.112" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
-            <feFlood flood-opacity="0" result="BackgroundImageFix" />
+            <feFlood floodOpacity="0" result="BackgroundImageFix" />
             <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
             <feOffset dx="-4.90708" dy="11.4499" />
             <feGaussianBlur stdDeviation="13.4945" />

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useRef, useState } from 'react';
-import { CloudArrowUp, X } from '@phosphor-icons/react';
+import { ArrowSquareOut, CopySimple, UploadSimple, X } from '@phosphor-icons/react';
 
 interface FileUploadFieldProps {
   label: string;
@@ -9,6 +9,9 @@ interface FileUploadFieldProps {
   onChange: (file: File | null) => void;
   file: File | null;
   pdfOnly?: boolean;
+  helperText?: string;
+  linkLabel?: string;
+  linkHref?: string;
 }
 
 export default function FileUploadField({
@@ -17,6 +20,9 @@ export default function FileUploadField({
   onChange,
   file,
   pdfOnly = false,
+  helperText,
+  linkLabel,
+  linkHref,
 }: FileUploadFieldProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [dragActive, setDragActive] = useState(false);
@@ -42,10 +48,10 @@ export default function FileUploadField({
   };
 
   const handleFile = (file: File) => {
-    // Validate file size (5MB max)
-    const maxSize = 5 * 1024 * 1024;
+    // Validate file size (10MB max)
+    const maxSize = 10 * 1024 * 1024;
     if (file.size > maxSize) {
-      alert(`File is too large. Maximum 5MB. This file is ${(file.size / 1024 / 1024).toFixed(2)}MB`);
+      alert(`File is too large. Maximum 10MB. This file is ${(file.size / 1024 / 1024).toFixed(2)}MB`);
       return;
     }
 
@@ -84,9 +90,30 @@ export default function FileUploadField({
 
   return (
     <div>
-      <label className="block text-sm font-semibold text-neutral-1000 mb-2">
-        {label}<span className="text-red-200">*</span>
-      </label>
+      <div className="mb-2 flex items-center justify-between gap-3">
+        <label className="block text-xs font-semibold text-neutral-1000">
+          {label}<span className="text-red-200">*</span>
+        </label>
+        {linkLabel && linkHref && (
+          <a
+            href={linkHref}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-1 text-xs text-neutral-800 underline hover:text-tertiary-800"
+          >
+            {linkLabel}
+            <ArrowSquareOut size={14} weight="bold" />
+          </a>
+        )}
+      </div>
+
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept={accept}
+        onChange={handleChange}
+        className="hidden"
+      />
 
       {!file ? (
         <div
@@ -95,57 +122,48 @@ export default function FileUploadField({
           onDragOver={handleDrag}
           onDrop={handleDrop}
           onClick={handleClick}
-          className={`relative border-2 border-dashed rounded-lg p-6 cursor-pointer transition-colors ${dragActive
-            ? 'border-primary-500 bg-primary-100 bg-opacity-20'
-            : 'border-neutral-300 hover:border-primary-400 hover:bg-primary-50 hover:bg-opacity-10'
+          className={`relative flex cursor-pointer items-center gap-3 rounded-lg border px-4 py-3 transition-colors ${dragActive
+            ? 'border-primary-500 bg-primary-100/20'
+            : 'border-neutral-300 bg-white hover:border-primary-400'
             }`}
         >
-          <input
-            ref={fileInputRef}
-            type="file"
-            accept={accept}
-            onChange={handleChange}
-            className="hidden"
-          />
-
-          <div className="flex flex-col items-center justify-center">
-            <CloudArrowUp
-              size={40}
-              className="text-primary-500 mb-2"
-              weight="bold"
-            />
-            <p className="text-center text-sm font-semibold text-neutral-1000">
-              Drag & drop file here or click to select
-            </p>
-            <p className="text-center text-xs text-neutral-600 mt-1">
-              {pdfOnly ? 'PDF Format (Max 5MB)' : 'JPG, JPEG, or PNG (Max 5MB)'}
-            </p>
-          </div>
+          <UploadSimple size={20} className="text-neutral-900" weight="bold" />
+          <p className="text-xs text-neutral-700">{label}</p>
         </div>
       ) : (
-        <div className="border border-quarternary-600 bg-quarternary-100 bg-opacity-30 rounded-lg p-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-quarternary-600 rounded flex items-center justify-center text-white text-xs font-bold">
-              ✓
-            </div>
-            <div>
-              <p className="text-sm font-semibold text-neutral-1000 truncate">
-                {file.name}
-              </p>
-              <p className="text-xs text-neutral-600">
-                {(file.size / 1024).toFixed(2)} KB
-              </p>
-            </div>
+        <div className="flex items-center justify-between gap-3 rounded-lg border border-quarternary-600 bg-quarternary-100/40 px-4 py-3">
+          <div className="min-w-0">
+            <p className="truncate text-xs font-semibold text-neutral-1000">
+              {file.name}
+            </p>
+            <p className="text-xs text-neutral-600">
+              {(file.size / 1024).toFixed(2)} KB
+            </p>
           </div>
-          <button
-            type="button"
-            onClick={handleRemove}
-            className="p-1 hover:bg-red-100 hover:bg-opacity-20 rounded transition-colors"
-          >
-            <X size={20} className="text-red-200" weight="bold" />
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={handleClick}
+              className="rounded p-1 text-neutral-800 transition-colors hover:bg-neutral-200"
+              title="Replace file"
+            >
+              <CopySimple size={18} weight="bold" />
+            </button>
+            <button
+              type="button"
+              onClick={handleRemove}
+              className="rounded p-1 text-red-200 transition-colors hover:bg-red-100/20"
+              title="Remove file"
+            >
+              <X size={18} weight="bold" />
+            </button>
+          </div>
         </div>
       )}
+
+      <p className="mt-2 text-xs text-neutral-800">
+        {helperText || (pdfOnly ? 'Upload PDF. Max 5 MB.' : 'Upload image file. Max 5 MB.')}
+      </p>
     </div>
   );
 }
