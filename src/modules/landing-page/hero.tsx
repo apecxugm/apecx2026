@@ -33,7 +33,7 @@ const Hero = () => {
             </div>
             <div className="flex flex-col md:flex-row gap-[10px] justify-center w-full px-3 md:gap-6">
               <Button variant="default">Register Now!</Button>
-              <Button variant="light">Explore APECX</Button>
+              <Button variant="light" >Invitation Letter</Button>
             </div>
           </div>
 
