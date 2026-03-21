@@ -87,7 +87,7 @@ const FILE_FIELDS: FileField[] = [
     label: 'Proof of Payment',
     accept: 'image/png,image/jpeg,.jpg,.jpeg,.png,.pdf',
     pdfOnly: false,
-    helperText: 'Upload PDF. Max 5 MB.',
+    helperText: 'Upload JPG/JPEG/PNG. Max 5 MB.',
   },
   {
     key: 'student_id',

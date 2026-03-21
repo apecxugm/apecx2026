@@ -50,7 +50,7 @@ func main() {
 	rateLimiter := limiter.New(store, rate)
 	r.Use(limitergin.NewMiddleware(rateLimiter))
 
-	r.MaxMultipartMemory = 20 << 20
+	r.MaxMultipartMemory = 1 << 20
 
 	// CORS
 	r.Use(func(c *gin.Context) {
