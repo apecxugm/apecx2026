@@ -19,13 +19,13 @@ const LINKS = [
 const COMPETITION_LINKS = [
   {
     label: 'Paper & Poster',
-    href: '/competition/paper-and-poster',
-    image: '/logo/paper-poster.svg',
+    href: '/competition/ppc',
+    image: '/logo/ppc.svg',
   },
   {
     label: 'Business Case',
-    href: '/competition/business-case',
-    image: '/logo/business-case.svg',
+    href: '/competition/bcc',
+    image: '/logo/bcc.svg',
   },
   {
     label: 'Petrosmart',
@@ -34,13 +34,13 @@ const COMPETITION_LINKS = [
   },
   {
     label: 'Plan of Development',
-    href: '/competition/plan-of-development',
-    image: '/logo/plan-of-development.svg',
+    href: '/competition/pod',
+    image: '/logo/pod.svg',
   },
   {
     label: 'Supply Chain Management & Logistics',
-    href: '/competition/supply-chain-management-logistics',
-    image: '/logo/supply-chain.svg',
+    href: '/competition/scml',
+    image: '/logo/scml.svg',
   },
 ];
 

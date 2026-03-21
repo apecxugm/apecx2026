@@ -1,7 +1,8 @@
+import RegistrationCountdowm from "@/src/components/competition/countdown";
 import Container from "@/src/components/ui/container"
 import Image from "next/image";
 
-const Hero = ({ title, heroDesc, logo }: { title: string, heroDesc: string, logo: string }) => {
+const Hero = ({ title, logo }: { title: string, logo: string }) => {
   return (
     <section className="relative w-full h-168 md:h-125 overflow-hidden bg-[#FCEFFB]">
 
@@ -30,7 +31,7 @@ const Hero = ({ title, heroDesc, logo }: { title: string, heroDesc: string, logo
         </g>
         <defs>
           <filter id="filter0_d_684_1434" x="-333.767" y="-82.4515" width="607.062" height="551.112" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
-            <feFlood flood-opacity="0" result="BackgroundImageFix" />
+            <feFlood floodOpacity="0" result="BackgroundImageFix" />
             <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
             <feOffset dx="-4.90708" dy="11.4499" />
             <feGaussianBlur stdDeviation="13.4945" />
@@ -43,15 +44,14 @@ const Hero = ({ title, heroDesc, logo }: { title: string, heroDesc: string, logo
         </defs>
       </svg>
 
-      <Image src="/globe.webp" width={580} height={630} alt="" className="absolute md:right-0 -right-40 md:-bottom-50 -bottom-10" />
+      <Image src="/globe.webp" width={580} height={630} alt="" className="absolute md:right-0 -right-40 md:-bottom-50 bottom-10" />
 
-      <Image src={logo} width={380} height={360} alt={title} className="md:hidden absolute scale-70 bottom-20 -right-30 z-1" />
+      <Image src={logo} width={380} height={360} alt={title} className="absolute md:scale-100 scale-70 md:-bottom-10 bottom-20 -right-30 z-1" />
 
       <Container className="z-3 h-full justify-end flex flex-col px-0 md:px-8 xl:px-12">
-        <div className="w-full z-10 flex md:flex-row flex-col md:items-end items-start md:bg-transparent bg-secondary-100 px-4 py-8 space-y-3">
+        <div className="w-full md:max-w-[70vw] z-10 flex md:flex-row flex-col md:items-end md:justify-between items-start md:bg-transparent bg-secondary-100 px-4 py-8 space-y-3">
           <h2 className="min-w-70 font-bold text-transparent bg-clip-text bg-gradient-to-b from-tertiary-400 z-10 to-tertiary-800">{title}</h2>
-          <p className="z-10 md:text-lg">{heroDesc}</p>
-          <Image src={logo} width={380} height={360} alt={title} className="md:block hidden scale-110 translate-y-10 z-1" />
+          <RegistrationCountdowm targetDate={"2026-05-30T23:59:59"} />
         </div>
       </Container>
     </section>

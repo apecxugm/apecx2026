@@ -1,6 +1,7 @@
-import Hero from "@/src/modules/slug/hero"
+import Hero from "@/src/modules/competition/hero"
 import { COMPETITION } from "./data"
 import ComingSoon from "@/src/components/coming-soon"
+import CompetitionTheme from "@/src/modules/competition/theme"
 
 type Params = {
   slug: string
@@ -18,7 +19,8 @@ const Page = async ({ params }: { params: Promise<Params> }) => {
 
   return (
     <div>
-      <Hero title={data.title} heroDesc={data.heroDesc} logo={data.logo} />
+      <Hero title={data.title} logo={data.logo} />
+      <CompetitionTheme theme={data.theme} themeDesc={data.themeDesc} />
       <div className="py-10">
         <ComingSoon />
       </div>

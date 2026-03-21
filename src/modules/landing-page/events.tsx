@@ -7,14 +7,14 @@ const COMPETITION = [
   {
     title: "Paper & Poster Competition",
     type: "competition",
-    slug: "paper-and-poster",
-    logo: "/logo/paper-poster.svg"
+    slug: "ppc",
+    logo: "/logo/ppc.svg"
   },
   {
     title: "Business Case Competition",
     type: "competition",
-    slug: "business-case",
-    logo: "/logo/business-case.svg"
+    slug: "bcc",
+    logo: "/logo/bcc.svg"
   },
   {
     title: "Petrosmart Competition",
@@ -25,14 +25,14 @@ const COMPETITION = [
   {
     title: "Plan of Development",
     type: "competition",
-    slug: "plan-of-development",
-    logo: "/logo/plan-of-development.svg"
+    slug: "pod",
+    logo: "/logo/pod.svg"
   },
   {
     title: "Supply Chain Management & Logistics",
     type: "competition",
-    slug: "supply-chain-management-logistics",
-    logo: "/logo/supply-chain.svg"
+    slug: "scml",
+    logo: "/logo/scml.svg"
   }
 ] as const;
 

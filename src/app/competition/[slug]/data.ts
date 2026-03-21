@@ -1,37 +1,39 @@
 export const COMPETITION = [
   {
-    slug: "paper-and-poster",
+    slug: "ppc",
     title: "Paper and Poster",
-    heroDesc:
-      "A prestigious research challenge for students to pitch innovative solutions for the energy industry.",
-    logo: "/logo/paper-poster.svg",
+    logo: "/logo/ppc.svg",
+    theme:
+      "Strategic Optimization of Integrated Energy System to Enhance Efficiency, Resilience, and Long-Term Sustainability in the Oil and Gas Industry.",
+    themeDesc:
+      "APECX 2026 invites **undergraduates** to compete in a multi-stage Paper and Poster Competition (preliminaries to finals). Participants will develop **innovative, practical research to address modern challenges** and **drive the long-term sustainability** of Indonesia's oil and gas sector.",
   },
   {
-    slug: "business-case",
+    slug: "bcc",
     title: "Business Case Competition",
-    heroDesc:
-      "A high-stakes business challenge to solve real energy industry problems with strategic solutions.",
-    logo: "/logo/business-case.svg",
+    logo: "/logo/bcc.svg",
+    theme: "",
+    themeDesc: "",
   },
   {
     slug: "petrosmart",
     title: "Petrosmart Competition",
-    heroDesc:
-      "A fast-paced quiz competition testing deep knowledge and quick thinking on the global energy sector.",
     logo: "/logo/petrosmart.svg",
+    theme: "",
+    themeDesc: "",
   },
   {
-    slug: "plan-of-development",
+    slug: "pod",
     title: "Plan of Development",
-    heroDesc:
-      "A field development challenge to design technical and economic strategies for oil and gas recovery.",
-    logo: "/logo/plan-of-development.svg",
+    logo: "/logo/pod.svg",
+    theme: "",
+    themeDesc: "",
   },
   {
-    slug: "supply-chain-management-logistics",
+    slug: "scml",
     title: "Supply Chain Management & Logistics",
-    heroDesc:
-      "A logistics challenge to design green, resilient, and data-driven solutions for global supply chains.",
-    logo: "/logo/supply-chain.svg",
+    logo: "/logo/scml.svg",
+    theme: "",
+    themeDesc: "",
   },
 ];

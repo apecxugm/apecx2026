@@ -1,4 +1,4 @@
-import Hero from "@/src/modules/slug/hero"
+import Hero from "@/src/modules/competition/hero"
 import { COMPETITION } from "./data"
 import ComingSoon from "@/src/components/coming-soon"
 
