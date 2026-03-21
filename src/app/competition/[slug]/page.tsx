@@ -1,6 +1,6 @@
 import Hero from "@/src/modules/competition/hero"
 import { COMPETITION } from "./data"
-import ComingSoon from "@/src/components/coming-soon"
+// import ComingSoon from "@/src/components/coming-soon"
 import CompetitionTheme from "@/src/modules/competition/theme"
 
 type Params = {
@@ -20,10 +20,10 @@ const Page = async ({ params }: { params: Promise<Params> }) => {
   return (
     <div>
       <Hero title={data.title} logo={data.logo} />
-      <CompetitionTheme theme={data.theme} themeDesc={data.themeDesc} />
-      <div className="py-10">
+      <CompetitionTheme title={data.title} theme={data.theme} themeDesc={data.themeDesc} />
+      {/* <div className="py-10">
         <ComingSoon />
-      </div>
+      </div> */}
     </div>
   )
 }
