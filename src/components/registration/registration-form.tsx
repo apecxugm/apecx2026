@@ -134,7 +134,7 @@ const STEPS = [
   'Document Upload',
 ] as const;
 
-const PREVIEW_SUCCESS_MODAL = true;
+const PREVIEW_SUCCESS_MODAL = false;
 
 const inputClassName =
   'w-full rounded-lg border border-neutral-300 bg-white px-3 py-[10px] text-xs text-neutral-1000 placeholder:text-neutral-600 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/30';
