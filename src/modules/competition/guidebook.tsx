@@ -158,8 +158,12 @@ const Guidebook = ({
   ]);
 
   return (
-    <section className="bg-neutral-100 py-12 md:py-38">
+    <section className="bg-[#FCEFFB] py-12 md:py-38">
       <Container className="flex flex-col gap-0 px-0 md:px-8 xl:px-12">
+        <div className="px-4 flex md:flex-row flex-col justify-between items-center mb-6 space-y-2 w-full">
+          <h3>The Essentials.</h3>
+          <p className="max-w-2xl">A streamlined version of the official guidebook. Review the core requirements and participation flow before you register.</p>
+        </div>
         <div className="flex flex-row mx-4 md:mx-0 items-end gap-2 md:gap-3">
           {TAB_LABELS.map((tab) => {
             const isActive = tab.id === activeTab;
