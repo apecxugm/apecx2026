@@ -5,6 +5,7 @@ import CompetitionTheme from "@/src/modules/competition/theme"
 import CompetitionTimeline from "@/src/modules/competition/timeline"
 import Guidebook from "@/src/modules/competition/guidebook"
 import FAQ from "@/src/modules/competition/faq"
+import FinalCTA from "@/src/modules/competition/final-cta"
 
 type Params = {
   slug: string
@@ -39,6 +40,7 @@ const Page = async ({ params }: { params: Promise<Params> }) => {
         preliminaryPayment={data.preliminaryPayment}
       />
       <FAQ faq={data.faq} contactPerson={data.contactPerson} cpLink={data.cpLink} />
+      <FinalCTA title={data.title} guidebook={data.guidebook} />
       {/* <div className="py-10">
         <ComingSoon />
       </div> */}
