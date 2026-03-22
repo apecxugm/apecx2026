@@ -4,6 +4,7 @@ import { COMPETITION } from "./data"
 import CompetitionTheme from "@/src/modules/competition/theme"
 import CompetitionTimeline from "@/src/modules/competition/timeline"
 import Guidebook from "@/src/modules/competition/guidebook"
+import FAQ from "@/src/modules/competition/faq"
 
 type Params = {
   slug: string
@@ -37,6 +38,7 @@ const Page = async ({ params }: { params: Promise<Params> }) => {
         requiredDocument={data.requiredDocument}
         preliminaryPayment={data.preliminaryPayment}
       />
+      <FAQ faq={data.faq} contactPerson={data.contactPerson} cpLink={data.cpLink} />
       {/* <div className="py-10">
         <ComingSoon />
       </div> */}

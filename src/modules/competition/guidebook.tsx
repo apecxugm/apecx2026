@@ -160,7 +160,7 @@ const Guidebook = ({
   return (
     <section className="bg-[#FCEFFB] py-12 md:py-38">
       <Container className="flex flex-col gap-0 px-0 md:px-8 xl:px-12">
-        <div className="px-4 flex md:flex-row flex-col justify-between items-center mb-6 space-y-2 w-full">
+        <div className="px-4 md:px-0 flex md:flex-row flex-col justify-between md:items-center mb-6 space-y-2 w-full">
           <h3>The Essentials.</h3>
           <p className="max-w-2xl">A streamlined version of the official guidebook. Review the core requirements and participation flow before you register.</p>
         </div>

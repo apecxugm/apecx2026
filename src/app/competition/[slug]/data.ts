@@ -76,8 +76,28 @@ export const COMPETITION: CompetitionData[] = [
         answer:
           "No, each participant can only submit one paper for the competition.",
       },
+      {
+        question: "Can I submit multiple papers?",
+        answer:
+          "No, each participant can only submit one paper for the competition.",
+      },
+      {
+        question: "Can I submit multiple papers?",
+        answer:
+          "No, each participant can only submit one paper for the competition.",
+      },
+      {
+        question: "Can I submit multiple papers?",
+        answer:
+          "No, each participant can only submit one paper for the competition.",
+      },
+      {
+        question: "Can I submit multiple papers?",
+        answer:
+          "No, each participant can only submit one paper for the competition.",
+      },
     ],
-    contactPerson: "",
+    contactPerson: "Apa Aja ini nomernya",
     cpLink: "",
   },
   {
