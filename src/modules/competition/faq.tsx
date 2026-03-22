@@ -27,7 +27,7 @@ const FAQ = ({ faq, contactPerson, cpLink }: FAQProps) => {
             </p>
           </div>
           <div className="hidden md:block bg-primary-1000 p-5 space-y-10">
-            <p className="text-secondary-100">Tanya aja</p>
+            <p className="text-secondary-100">Contact our support team for any further clarifications.</p>
             <Link href={cpLink}>
               <Button variant="dark-blue" size="fit" className="!text-sm">
                 <Chat size={20} />{contactPerson}
