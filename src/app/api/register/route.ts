@@ -1,16 +1,14 @@
 import { NextResponse } from "next/server";
 
 const BACKEND_URL = process.env.BACKEND_URL || "http://localhost:8080";
-const BACKEND_FALLBACK_URL =
-  process.env.BACKEND_FALLBACK_URL || "http://localhost:8000";
+const BACKEND_FALLBACK_URL = process.env.BACKEND_FALLBACK_URL;
 
 function getBackendCandidates() {
   const candidates = [
+    "http://localhost:8080",
     BACKEND_URL,
     BACKEND_FALLBACK_URL,
-    "http://localhost:8080",
-    "http://localhost:8000",
-  ];
+  ].filter((url): url is string => Boolean(url));
   return [...new Set(candidates.map((url) => url.replace(/\/$/, "")))];
 }
 
@@ -19,6 +17,7 @@ export async function POST(request: Request) {
     const formData = await request.formData();
     const backendCandidates = getBackendCandidates();
     let response: Response | null = null;
+    let selectedBaseUrl: string | null = null;
     let lastConnectionError: unknown = null;
 
     for (const baseUrl of backendCandidates) {
@@ -27,6 +26,7 @@ export async function POST(request: Request) {
           method: "POST",
           body: formData,
         });
+        selectedBaseUrl = baseUrl;
         break;
       } catch (error) {
         lastConnectionError = error;
@@ -46,6 +46,7 @@ export async function POST(request: Request) {
 
     if (!response.ok) {
       console.error("[api/register] Backend returned error", {
+        backendUrl: selectedBaseUrl,
         status: response.status,
         body: responseText,
       });

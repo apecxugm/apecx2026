@@ -1,5 +1,6 @@
 import { Button } from '@/src/components/ui/button';
 import Container from '@/src/components/ui/container';
+import Link from 'next/link';
 
 const AboutUs = () => {
   return (
@@ -11,7 +12,7 @@ const AboutUs = () => {
               className="!md:text-[32px] font-bold leading-9.75 md:leading-14.25"
               style={{
                 background:
-                'linear-gradient(90deg, var(--Colors-Neutral-100, #FFF) 0%, var(--Colors-Tertiary-200, #7ECCFF) 100%)',
+                  'linear-gradient(90deg, var(--Colors-Neutral-100, #FFF) 0%, var(--Colors-Tertiary-200, #7ECCFF) 100%)',
                 backgroundClip: 'text',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
@@ -27,9 +28,11 @@ const AboutUs = () => {
               students, academics, and industry experts meet to solve the
               world&apos;s toughest energy challenges.
             </p>
-            <Button variant="white" size="fit" className="!text-sm lg:self-start md:self-center self-end">
-              Get To Know APECX 2026
-            </Button>
+            <Link href="/about">
+              <Button variant="white" size="fit" className="!text-sm lg:self-start md:self-center self-end">
+                Get To Know APECX 2026
+              </Button>
+            </Link>
           </div>
         </div>
       </Container>

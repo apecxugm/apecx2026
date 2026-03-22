@@ -29,10 +29,7 @@ export interface FormData {
   member4_phone: string;
 }
 
-export function validateRegistrationForm(
-  formData: FormData,
-  requiredMembers: number,
-): string | null {
+export function validateRegistrationForm(formData: FormData): string | null {
   // Validate team info
   if (!formData.team_name.trim()) {
     return "Team name is required";
@@ -59,44 +56,76 @@ export function validateRegistrationForm(
     return "Captain phone number is invalid (numbers only, 10-13 digits)";
   }
 
-  // Validate members
-  for (let i = 1; i < requiredMembers; i++) {
-    const nameKey = `member${i}_name` as keyof FormData;
-    const emailKey = `member${i}_email` as keyof FormData;
-    const phoneKey = `member${i}_phone` as keyof FormData;
+  const memberRules: Record<
+    string,
+    { required: number[]; optional: number[] }
+  > = {
+    SCML: { required: [1], optional: [2] },
+    PPC: { required: [1], optional: [2] },
+    Petrosmart: { required: [1, 2], optional: [] },
+    BCC: { required: [], optional: [1, 2] },
+    POD: { required: [1, 2], optional: [3, 4] },
+  };
 
-    const name = formData[nameKey];
-    const email = formData[emailKey];
-    const phone = formData[phoneKey];
+  const rule = memberRules[formData.competition] ?? {
+    required: [],
+    optional: [],
+  };
 
-    if (!name?.toString().trim()) {
+  for (const i of rule.required) {
+    const name =
+      formData[`member${i}_name` as keyof FormData]?.toString().trim() || "";
+    const email =
+      formData[`member${i}_email` as keyof FormData]?.toString().trim() || "";
+    const phone =
+      formData[`member${i}_phone` as keyof FormData]?.toString().trim() || "";
+
+    if (!name) {
       return `Member ${i} name is required`;
     }
 
-    if (!validateEmail(email?.toString() || "")) {
+    if (!validateEmail(email)) {
       return `Member ${i} email is invalid`;
     }
 
-    if (!validatePhone(phone?.toString() || "")) {
+    if (!validatePhone(phone)) {
       return `Member ${i} phone number is invalid (numbers only, 10-13 digits)`;
     }
   }
 
-  // Validate that extra members are not filled if not allowed
-  if (requiredMembers === 3) {
-    // Non-POD competitions: only allow captain + 2 members
-    if (formData.member3_name.trim() || formData.member4_name.trim()) {
-      return `Competition ${formData.competition} only allows 3 members (1 captain + 2 members)`;
+  for (const i of rule.optional) {
+    const name =
+      formData[`member${i}_name` as keyof FormData]?.toString().trim() || "";
+    const email =
+      formData[`member${i}_email` as keyof FormData]?.toString().trim() || "";
+    const phone =
+      formData[`member${i}_phone` as keyof FormData]?.toString().trim() || "";
+
+    if (!name) {
+      continue;
     }
-  } else if (requiredMembers === 4 && formData.competition === "POD") {
-    // POD competition: member4 is optional, but if filled, all fields must be valid
-    if (formData.member4_name.trim()) {
-      if (!validateEmail(formData.member4_email)) {
-        return "Member 4 email is invalid";
-      }
-      if (!validatePhone(formData.member4_phone)) {
-        return "Member 4 phone number is invalid (numbers only, 10-13 digits)";
-      }
+
+    if (!validateEmail(email)) {
+      return `Member ${i} email is invalid`;
+    }
+
+    if (!validatePhone(phone)) {
+      return `Member ${i} phone number is invalid (numbers only, 10-13 digits)`;
+    }
+  }
+
+  // Non-POD competitions cannot submit member 3 or 4.
+  if (formData.competition !== "POD") {
+    const hasMember3 =
+      formData.member3_name.trim() ||
+      formData.member3_email.trim() ||
+      formData.member3_phone.trim();
+    const hasMember4 =
+      formData.member4_name.trim() ||
+      formData.member4_email.trim() ||
+      formData.member4_phone.trim();
+    if (hasMember3 || hasMember4) {
+      return `Competition ${formData.competition} only allows up to Member 2`;
     }
   }
 

@@ -110,18 +110,18 @@ const FILE_FIELDS: FileField[] = [
     pdfOnly: true,
     helperText: 'Upload PDF. Max 5 MB.',
     linkLabel: 'Twibbon Link',
-    linkHref: '#',
+    linkHref: 'https://bit.ly/APECX2026-TwibbonPost',
   },
   {
     key: 'story_proof',
-    label: 'Proof of Uploading Instagram Story',
+    label: 'Proof of Posting Instagram Story',
     accept: '.pdf',
     pdfOnly: true,
     helperText: 'Upload PDF. Max 5 MB.',
   },
   {
     key: 'whatsapp_proof',
-    label: 'Proof of sharing Instagram post to 3 Whatsapp Group',
+    label: 'Proof of Sharing Instagram Post to 3 WhatsApp Groups',
     accept: '.pdf',
     pdfOnly: true,
     helperText: 'Upload PDF. Max 5 MB.',
@@ -141,6 +141,19 @@ const inputClassName =
 
 const sectionClassName =
   'rounded-lg border border-neutral-500 bg-neutral-100 px-3 py-4';
+
+type MemberRule = {
+  required: number[];
+  optional: number[];
+};
+
+const MEMBER_RULES: Record<string, MemberRule> = {
+  SCML: { required: [1], optional: [2] },
+  PPC: { required: [1], optional: [2] },
+  Petrosmart: { required: [1, 2], optional: [] },
+  BCC: { required: [], optional: [1, 2] },
+  POD: { required: [1, 2], optional: [3, 4] },
+};
 
 const RegistrationForm = forwardRef<RegistrationFormHandle, RegistrationFormProps>(function RegistrationForm({ }, ref) {
   const router = useRouter();
@@ -251,9 +264,11 @@ const RegistrationForm = forwardRef<RegistrationFormHandle, RegistrationFormProp
     localStorage.setItem(FILES_STORAGE_KEY, JSON.stringify(fileMetadata));
   }, [files, isHydrated]);
 
-  const requiredMembers = formData.competition === 'POD' ? 4 : 3;
-  const requiredMemberIndices = formData.competition === 'POD' ? [1, 2, 3] : [1, 2];
-  const optionalMemberIndices = formData.competition === 'POD' ? [4] : [];
+  const activeMemberRule = formData.competition
+    ? MEMBER_RULES[formData.competition] ?? { required: [], optional: [] }
+    : { required: [], optional: [] };
+  const requiredMemberIndices = activeMemberRule.required;
+  const optionalMemberIndices = activeMemberRule.optional;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -290,14 +305,54 @@ const RegistrationForm = forwardRef<RegistrationFormHandle, RegistrationFormProp
     setError(null);
   };
 
+  const normalizeFormByCompetition = (data: FormData): FormData => {
+    const normalized: FormData = { ...data };
+    const rule = data.competition
+      ? MEMBER_RULES[data.competition] ?? { required: [], optional: [] }
+      : { required: [], optional: [] };
+
+    const optionalSet = new Set(rule.optional);
+
+    for (let i = 1; i <= 4; i++) {
+      const nameKey = `member${i}_name` as keyof FormData;
+      const emailKey = `member${i}_email` as keyof FormData;
+      const phoneKey = `member${i}_phone` as keyof FormData;
+
+      const isAllowed = rule.required.includes(i) || rule.optional.includes(i);
+      if (!isAllowed) {
+        normalized[nameKey] = '';
+        normalized[emailKey] = '';
+        normalized[phoneKey] = '';
+        continue;
+      }
+
+      if (!optionalSet.has(i)) {
+        continue;
+      }
+
+      const memberName = normalized[nameKey].toString().trim();
+      if (!memberName) {
+        // Optional member without a name is treated as not participating.
+        normalized[nameKey] = '';
+        normalized[emailKey] = '';
+        normalized[phoneKey] = '';
+      }
+    }
+
+    return normalized;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
     setLoading(true);
 
     try {
+      const normalizedFormData = normalizeFormByCompetition(formData);
+      setFormData(normalizedFormData);
+
       // Validate on frontend first
-      const validationError = validateRegistrationForm(formData, requiredMembers);
+      const validationError = validateRegistrationForm(normalizedFormData);
       if (validationError) {
         setError(validationError);
         setLoading(false);
@@ -325,7 +380,7 @@ const RegistrationForm = forwardRef<RegistrationFormHandle, RegistrationFormProp
       // Preview mode: skip API fetch and force success modal.
       const result = PREVIEW_SUCCESS_MODAL
         ? { success: true as const }
-        : await uploadRegistration(formData, files);
+        : await uploadRegistration(normalizedFormData, files);
 
       if (result.success) {
         // Clear localStorage on successful submission
@@ -374,10 +429,8 @@ const RegistrationForm = forwardRef<RegistrationFormHandle, RegistrationFormProp
         const email = formData[`member${memberNum}_email` as keyof FormData].toString().trim();
         const phone = formData[`member${memberNum}_phone` as keyof FormData].toString().trim();
 
-        const hasAnyInput = name || email || phone;
-        if (!hasAnyInput) continue;
+        if (!name) continue;
 
-        if (!name) return `Member ${memberNum} name is required`;
         if (!validateEmail(email)) return `Member ${memberNum} email is invalid`;
         if (!validatePhone(phone)) {
           return `Member ${memberNum} phone number is invalid (numbers only, 10-13 digits)`;
@@ -582,7 +635,7 @@ const RegistrationForm = forwardRef<RegistrationFormHandle, RegistrationFormProp
                   name="captain_email"
                   value={formData.captain_email}
                   onChange={handleInputChange}
-                  placeholder="Email"
+                  placeholder="captain@email.com"
                   className={inputClassName}
                   required
                 />
@@ -628,7 +681,7 @@ const RegistrationForm = forwardRef<RegistrationFormHandle, RegistrationFormProp
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <div className={sectionClassName}>
-            <h5 className="border-b border-neutral-300 pb-2 text-xs font-bold text-neutral-1000">Competition&apos;s Fee</h5>
+            <h5 className="border-b border-neutral-300 pb-2 text-xs font-bold text-neutral-1000">Competition Fee</h5>
             <p className="mt-3 text-xs text-neutral-800">
               The registration fee for {formData.competition ? COMPETITION_LABELS[formData.competition as keyof typeof COMPETITION_LABELS] : 'Competition Name'} is as follows:
             </p>
@@ -716,15 +769,16 @@ const RegistrationForm = forwardRef<RegistrationFormHandle, RegistrationFormProp
       </div>
 
       {/* Error Message */}
-      {error && (
-        <div className="mb-5 rounded-lg border border-red-100 bg-red-100/20 p-3">
-          <p className="text-red-200 text-xs font-semibold">{error}</p>
-        </div>
-      )}
 
       <div className="space-y-5">
         {renderStepContent()}
       </div>
+
+      {error && (
+        <div className="mt-5 rounded-lg border border-red-100 bg-red-100/20 p-3">
+          <p className="text-red-200 text-xs font-semibold">{error}</p>
+        </div>
+      )}
 
       <div className="mt-7 flex w-full">
         {currentStep < STEPS.length - 1 ? (

@@ -6,6 +6,18 @@ import (
 	"strings"
 )
 
+type competitionRule struct {
+	MinMembers int
+	MaxMembers int
+}
+
+type memberInput struct {
+	Role  string
+	Name  string
+	Email string
+	Phone string
+}
+
 type RegistrationInput struct {
 	TeamName    string
 	Institution string
@@ -41,6 +53,14 @@ var validCompetitions = map[string]bool{
 	"PPC":        true,
 }
 
+var competitionRules = map[string]competitionRule{
+	"SCML":       {MinMembers: 1, MaxMembers: 2},
+	"POD":        {MinMembers: 2, MaxMembers: 4},
+	"BCC":        {MinMembers: 0, MaxMembers: 2},
+	"Petrosmart": {MinMembers: 2, MaxMembers: 2},
+	"PPC":        {MinMembers: 1, MaxMembers: 2},
+}
+
 func validateInput(input RegistrationInput) error {
 	// validasi team
 	if strings.TrimSpace(input.TeamName) == "" {
@@ -58,37 +78,46 @@ func validateInput(input RegistrationInput) error {
 		return err
 	}
 
-	// validasi member 1 & 2 (semua lomba)
-	if err := validateMember("Member 1", input.Member1Name, input.Member1Email, input.Member1Phone); err != nil {
-		return err
-	}
-	if err := validateMember("Member 2", input.Member2Name, input.Member2Email, input.Member2Phone); err != nil {
-		return err
+	rule, ok := competitionRules[input.Competition]
+	if !ok {
+		return fmt.Errorf("aturan jumlah member untuk kompetisi %s tidak ditemukan", input.Competition)
 	}
 
-	// validasi jumlah member
-	if input.Competition == "POD" {
-		// POD requires member 3
-		if err := validateMember("Member 3", input.Member3Name, input.Member3Email, input.Member3Phone); err != nil {
+	members := []memberInput{
+		{Role: "Member 1", Name: input.Member1Name, Email: input.Member1Email, Phone: input.Member1Phone},
+		{Role: "Member 2", Name: input.Member2Name, Email: input.Member2Email, Phone: input.Member2Phone},
+		{Role: "Member 3", Name: input.Member3Name, Email: input.Member3Email, Phone: input.Member3Phone},
+		{Role: "Member 4", Name: input.Member4Name, Email: input.Member4Email, Phone: input.Member4Phone},
+	}
+
+	providedMembers := 0
+	for _, member := range members {
+		if !isMemberProvided(member.Name, member.Email, member.Phone) {
+			continue
+		}
+
+		if err := validateMember(member.Role, member.Name, member.Email, member.Phone); err != nil {
 			return err
 		}
-		// Member 4 is optional for POD, but if provided must be valid
-		if strings.TrimSpace(input.Member4Name) != "" {
-			if err := validateMember("Member 4", input.Member4Name, input.Member4Email, input.Member4Phone); err != nil {
-				return err
-			}
-		}
-	} else {
-		// Non-POD tidak boleh ada member 3 & 4
-		if strings.TrimSpace(input.Member3Name) != "" {
-			return fmt.Errorf("kompetisi %s hanya boleh 3 anggota (captain + 2 member)", input.Competition)
-		}
-		if strings.TrimSpace(input.Member4Name) != "" {
-			return fmt.Errorf("kompetisi %s hanya boleh 3 anggota (captain + 2 member)", input.Competition)
-		}
+
+		providedMembers++
+	}
+
+	if providedMembers < rule.MinMembers {
+		return fmt.Errorf("kompetisi %s butuh minimal %d member (di luar captain)", input.Competition, rule.MinMembers)
+	}
+
+	if providedMembers > rule.MaxMembers {
+		return fmt.Errorf("kompetisi %s maksimal %d member (di luar captain)", input.Competition, rule.MaxMembers)
 	}
 
 	return nil
+}
+
+func isMemberProvided(name, email, phone string) bool {
+	_ = email
+	_ = phone
+	return strings.TrimSpace(name) != ""
 }
 
 func validateMember(role, name, email, phone string) error {
