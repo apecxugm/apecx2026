@@ -148,11 +148,11 @@ type MemberRule = {
 };
 
 const MEMBER_RULES: Record<string, MemberRule> = {
-  SCML: { required: [1], optional: [2] },
+  SCML: { required: [], optional: [1, 2] },
   PPC: { required: [1], optional: [2] },
   Petrosmart: { required: [1, 2], optional: [] },
   BCC: { required: [], optional: [1, 2] },
-  POD: { required: [1, 2], optional: [3, 4] },
+  POD: { required: [1, 2, 3], optional: [4] },
 };
 
 const RegistrationForm = forwardRef<RegistrationFormHandle, RegistrationFormProps>(function RegistrationForm({ }, ref) {

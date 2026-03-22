@@ -60,11 +60,11 @@ export function validateRegistrationForm(formData: FormData): string | null {
     string,
     { required: number[]; optional: number[] }
   > = {
-    SCML: { required: [1], optional: [2] },
+    SCML: { required: [], optional: [1, 2] },
     PPC: { required: [1], optional: [2] },
     Petrosmart: { required: [1, 2], optional: [] },
     BCC: { required: [], optional: [1, 2] },
-    POD: { required: [1, 2], optional: [3, 4] },
+    POD: { required: [1, 2, 3], optional: [4] },
   };
 
   const rule = memberRules[formData.competition] ?? {

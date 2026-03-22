@@ -54,8 +54,8 @@ var validCompetitions = map[string]bool{
 }
 
 var competitionRules = map[string]competitionRule{
-	"SCML":       {MinMembers: 1, MaxMembers: 2},
-	"POD":        {MinMembers: 2, MaxMembers: 4},
+	"SCML":       {MinMembers: 0, MaxMembers: 2},
+	"POD":        {MinMembers: 3, MaxMembers: 4},
 	"BCC":        {MinMembers: 0, MaxMembers: 2},
 	"Petrosmart": {MinMembers: 2, MaxMembers: 2},
 	"PPC":        {MinMembers: 1, MaxMembers: 2},

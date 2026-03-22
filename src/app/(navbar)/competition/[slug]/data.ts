@@ -578,7 +578,7 @@ export const COMPETITION: CompetitionData[] = [
       },
     ],
     guidebook:
-      "https://drive.google.com/file/d/1f8uGPhTDb8mOlVaf-MQZMRR5W4reru2F/view?usp=sharing",
+      "https://drive.google.com/file/d/1aB38KPND5EUIQ4T-XfE0AxcBICUIvBa2/view?usp=sharing",
     themeGuidebook:
       "A strategic challenge to transform conventional logistics into environmentally responsible, net-zero networks that remain adaptive and resilient against global disruptions.",
     themeBreakdown: [
