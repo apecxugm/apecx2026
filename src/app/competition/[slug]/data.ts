@@ -3,6 +3,10 @@ export interface TimelineItem {
   title: string;
 }
 
+export interface FaqItem {
+  question: string;
+  answer: string;
+}
 export interface CompetitionData {
   slug: string;
   title: string;
@@ -11,6 +15,18 @@ export interface CompetitionData {
   themeDesc: string;
   timeline: TimelineItem[];
   bestThing?: string;
+  themeGuidebook?: string;
+  themeBreakdown?: string[];
+  guidebook: string;
+  rules: string[];
+  abstractCriteria?: string[];
+  preliminaryCriteria?: string[];
+  finalCriteria?: string[];
+  requiredDocument: string[];
+  preliminaryPayment: string[];
+  faq: FaqItem[];
+  contactPerson: string;
+  cpLink: string;
 }
 
 export const COMPETITION: CompetitionData[] = [
@@ -45,6 +61,24 @@ export const COMPETITION: CompetitionData[] = [
       },
     ],
     bestThing: "Innovative Solution",
+    guidebook: "",
+    themeGuidebook: "",
+    themeBreakdown: ["a", "b", "c"],
+    rules: ["a", "b", "c"],
+    abstractCriteria: [],
+    preliminaryCriteria: [],
+    finalCriteria: [],
+    requiredDocument: [],
+    preliminaryPayment: [],
+    faq: [
+      {
+        question: "Can I submit multiple papers?",
+        answer:
+          "No, each participant can only submit one paper for the competition.",
+      },
+    ],
+    contactPerson: "",
+    cpLink: "",
   },
   {
     slug: "bcc",
@@ -53,6 +87,24 @@ export const COMPETITION: CompetitionData[] = [
     theme: "",
     themeDesc: "",
     timeline: [],
+    guidebook: "",
+    themeGuidebook: "",
+    themeBreakdown: ["a", "b", "c"],
+    rules: ["a", "b", "c"],
+    abstractCriteria: [],
+    preliminaryCriteria: [],
+    finalCriteria: [],
+    requiredDocument: [],
+    preliminaryPayment: [],
+    faq: [
+      {
+        question: "Can I submit multiple papers?",
+        answer:
+          "No, each participant can only submit one paper for the competition.",
+      },
+    ],
+    contactPerson: "",
+    cpLink: "",
   },
   {
     slug: "petrosmart",
@@ -61,6 +113,24 @@ export const COMPETITION: CompetitionData[] = [
     theme: "",
     themeDesc: "",
     timeline: [],
+    guidebook: "",
+    themeGuidebook: "",
+    themeBreakdown: ["a", "b", "c"],
+    rules: ["a", "b", "c"],
+    abstractCriteria: [],
+    preliminaryCriteria: [],
+    finalCriteria: [],
+    requiredDocument: [],
+    preliminaryPayment: [],
+    faq: [
+      {
+        question: "Can I submit multiple papers?",
+        answer:
+          "No, each participant can only submit one paper for the competition.",
+      },
+    ],
+    contactPerson: "",
+    cpLink: "",
   },
   {
     slug: "pod",
@@ -69,6 +139,24 @@ export const COMPETITION: CompetitionData[] = [
     theme: "",
     themeDesc: "",
     timeline: [],
+    guidebook: "",
+    themeGuidebook: "",
+    themeBreakdown: ["a", "b", "c"],
+    rules: ["a", "b", "c"],
+    abstractCriteria: [],
+    preliminaryCriteria: [],
+    finalCriteria: [],
+    requiredDocument: [],
+    preliminaryPayment: [],
+    faq: [
+      {
+        question: "Can I submit multiple papers?",
+        answer:
+          "No, each participant can only submit one paper for the competition.",
+      },
+    ],
+    contactPerson: "",
+    cpLink: "",
   },
   {
     slug: "scml",
@@ -77,5 +165,23 @@ export const COMPETITION: CompetitionData[] = [
     theme: "",
     themeDesc: "",
     timeline: [],
+    guidebook: "",
+    themeGuidebook: "",
+    themeBreakdown: ["a", "b", "c"],
+    rules: ["a", "b", "c"],
+    abstractCriteria: [],
+    preliminaryCriteria: [],
+    finalCriteria: [],
+    requiredDocument: [],
+    preliminaryPayment: [],
+    faq: [
+      {
+        question: "Can I submit multiple papers?",
+        answer:
+          "No, each participant can only submit one paper for the competition.",
+      },
+    ],
+    contactPerson: "",
+    cpLink: "",
   },
 ];
