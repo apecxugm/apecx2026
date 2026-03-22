@@ -15,9 +15,11 @@ export interface CompetitionData {
   themeDesc: string;
   timeline: TimelineItem[];
   bestThing?: string;
-  themeGuidebook?: string;
-  themeBreakdown?: string[];
   guidebook: string;
+  themeGuidebook?: string;
+  coreTheme?: string;
+  subTheme?: string[];
+  themeBreakdown?: string[];
   rules: string[];
   abstractCriteria?: string[];
   preliminaryCriteria?: string[];
@@ -62,12 +64,10 @@ export const COMPETITION: CompetitionData[] = [
     ],
     bestThing: "Innovative Solution",
     guidebook: "",
-    themeGuidebook: "",
-    themeBreakdown: ["a", "b", "c"],
+    coreTheme: "",
+    subTheme: ["a", "b", "c", "d", "e"],
     rules: ["a", "b", "c"],
     abstractCriteria: [],
-    preliminaryCriteria: [],
-    finalCriteria: [],
     requiredDocument: [],
     preliminaryPayment: [],
     faq: [
@@ -91,7 +91,6 @@ export const COMPETITION: CompetitionData[] = [
     themeGuidebook: "",
     themeBreakdown: ["a", "b", "c"],
     rules: ["a", "b", "c"],
-    abstractCriteria: [],
     preliminaryCriteria: [],
     finalCriteria: [],
     requiredDocument: [],
