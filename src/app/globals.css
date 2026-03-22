@@ -126,6 +126,32 @@ body {
   animation: black-to-current 2s cubic-bezier(0.22, 1, 0.36, 1) 1 forwards;
 }
 
+@keyframes marquee-x {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-wrapper {
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 10%,
+    black 90%,
+    transparent
+  );
+}
+
+.marquee-track {
+  width: max-content;
+  display: flex;
+  align-items: center;
+  animation: marquee-x 22s linear infinite;
+}
+
 h1 {
   font-size: 32px;
   font-weight: 800;

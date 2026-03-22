@@ -419,7 +419,7 @@ export const COMPETITION: CompetitionData[] = [
     theme:
       "Securing the Future: Maximizing Recovery from Mature Field  through Advanced Reservoir Technologies",
     themeDesc:
-      "APECX 2026 invites **undergraduates** to compete in a Plan of Development Competition focused on maximizing oil and gas recovery. Participants will **develop comprehensive field strategies to optimize reservoir performance** and propose practical, innovative solutions** for the long-term energy security of the upstream sector.",
+      "APECX 2026 invites **undergraduates** to compete in a Plan of Development Competition focused on maximizing oil and gas recovery. Participants will **develop comprehensive field strategies to optimize reservoir performance** and **propose practical, innovative solutions** for the long-term energy security of the upstream sector.",
     timeline: [
       {
         date: "22-31 March",
@@ -534,7 +534,7 @@ export const COMPETITION: CompetitionData[] = [
     theme:
       "Redefining Logistics Systems: Advancing the Green Transition and Building Net-Zero Emission, Resilient Supply Chains",
     themeDesc:
-      "APECX 2026 invites **undergraduates** to compete in the Supply Chain and Management Logistics Competition focused on redefining resilient and net-zero systems. Participants will develop **innovative, data-driven strategies to advance the green transition** and **drive the long-term sustainability of the logistics sector.",
+      "APECX 2026 invites **undergraduates** to compete in the Supply Chain and Management Logistics Competition focused on redefining resilient and net-zero systems. Participants will develop **innovative, data-driven strategies to advance the green transition** and **drive the long-term sustainability** of the logistics sector.",
     timeline: [
       {
         date: "22-31 March",

@@ -58,10 +58,42 @@ const FAQ = ({ faq, contactPerson, cpLink }: FAQProps) => {
               </AccordionItem>
             ))
           ) : (
-            <p className="rounded-lg border border-neutral-300 bg-white px-4 py-3 text-sm text-neutral-900 md:text-base">
-              FAQ details will be announced soon.
-            </p>
+            <AccordionItem
+              key="6"
+              value={`faq-6`}
+              className=""
+            >
+              <AccordionTrigger className="">
+                FAQ details will be announced soon.
+              </AccordionTrigger>
+              <AccordionContent className="">
+                Stay tuned for updates on our FAQ section, where we will provide answers to common questions about the competition. We are working hard to compile all the necessary information to assist you in your journey with us. In the meantime, if you have any urgent inquiries, please feel free to reach out to our support team for assistance.
+              </AccordionContent>
+            </AccordionItem>
           )}
+
+          <AccordionItem
+            key="common-resources"
+            value="faq-common"
+            className=""
+          >
+            <AccordionTrigger className="">
+              How long is the payment confirmation process?
+
+            </AccordionTrigger>
+            <AccordionContent className="">
+              <div className="space-y-4">
+                <p>Confirmation will be sent to the team captain&apos;s email within a maximum of 2x24 hours. If you haven&apos;t received it after this period, please reach out to our designated confirmation contact person.</p>
+                <div className="pt-4 space-y-2">
+                  <Link className="text-normal" href="https://wa.me/62895639314478">
+                    <Button variant="dark-blue" size="fit" className="!text-sm">
+                      <Chat size={20} /> Ara (+62 895 6393 14478)
+                    </Button>
+                  </Link>
+                </div>
+              </div>
+            </AccordionContent>
+          </AccordionItem>
         </Accordion>
 
         <div className="md:hidden bg-primary-1000 p-5 space-y-10">
@@ -73,7 +105,7 @@ const FAQ = ({ faq, contactPerson, cpLink }: FAQProps) => {
           </Link>
         </div>
       </Container>
-    </section>
+    </section >
   )
 }
 

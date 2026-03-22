@@ -2,21 +2,36 @@ import { Button } from "@/src/components/ui/button";
 import Container from "@/src/components/ui/container";
 import HeroBackground from "@/src/components/hero/hero-background";
 import Image from "next/image";
+import Link from "next/link";
 
 const PAST_SPONSORS = [
   {
     name: "Dummy 1",
-    logo: "/dummy.webp",
+    logo: "/past-sponsor/pertamina-ep.webp",
   },
   {
     name: "Dummy 2",
-    logo: "/dummy.webp",
+    logo: "/past-sponsor/pertamina.webp",
   },
   {
     name: "Dummy 3",
-    logo: "/dummy.webp",
+    logo: "/past-sponsor/pertamina-kilang.webp",
+  },
+  {
+    name: "Dummy 1",
+    logo: "/past-sponsor/exonmobil.webp",
+  },
+  {
+    name: "Dummy 2",
+    logo: "/past-sponsor/jasamarga.webp",
+  },
+  {
+    name: "Dummy 3",
+    logo: "/past-sponsor/skkmigas.webp",
   },
 ]
+
+const MARQUEE_SPONSORS = [...PAST_SPONSORS, ...PAST_SPONSORS];
 
 const Hero = () => {
   return (
@@ -32,19 +47,23 @@ const Hero = () => {
               <p className="text-base md:text-[22px]">Join UGM’s top energy competition. Collaborate and lead the next big shift in the global energy industry.</p>
             </div>
             <div className="flex flex-col md:flex-row gap-[10px] justify-center w-full px-3 md:gap-6">
-              <Button variant="default">Register Now!</Button>
+              <Link href="/registration">
+                <Button variant="default">Register Now!</Button>
+              </Link>
               <Button variant="disabled">Invitation Letter</Button>
             </div>
           </div>
 
           <div className="z-10 text-center flex flex-col gap-5">
             <p>Previous Partner</p>
-            <div className="flex flex-wrap justify-center gap-6">
-              {PAST_SPONSORS.map((sponsor, index) => (
-                <div key={index} className="flex items-center justify-center">
-                  <Image src={sponsor.logo} alt={sponsor.name} height={64} width={0} className="h-16 w-auto" />
-                </div>
-              ))}
+            <div className="marquee-wrapper w-full max-w-6xl overflow-hidden">
+              <div className="marquee-track">
+                {MARQUEE_SPONSORS.map((sponsor, index) => (
+                  <div key={`${sponsor.name}-${index}`} className="flex items-center justify-center px-6">
+                    <Image src={sponsor.logo} alt={sponsor.name} height={64} width={160} className="h-16 w-auto shrink-0" />
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
