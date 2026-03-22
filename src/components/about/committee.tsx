@@ -5,33 +5,33 @@ const BOE = [
   {
     name: "Cakrayudha Adhi Phalagama",
     position: "Project Officer",
-    image: "/committee/po.webp",
+    image: "/committee/po.jpg",
   },
   {
     name: "Syifa Alifah Nuraini",
     position: "Vice Project Officer",
-    image: "/committee/vpo.webp",
+    image: "/committee/vpo.jpg",
   },
   {
     name: "Carissa Sijabat",
     position: "Secretary 1",
     name2: "Marsya Salsabila",
     position2: "Secretary 2",
-    image: "/committee/sekre.webp",
+    image: "/committee/secretary.jpg",
   },
   {
     name: "Shafiya Iman",
     position: "Treasurer 1",
     name2: "Frieti Josefa Purba",
     position2: "Treasurer 2",
-    image: "/committee/bendahara.webp",
+    image: "/committee/treasurer.jpg",
   }
 ]
 
 const DIVISION = [
   {
     division: "Event",
-    image: "/committee/event.webp",
+    image: "/committee/event.jpg",
     members: [
       {
         name: "Agatha Aniela Candraningtyas",
@@ -53,7 +53,7 @@ const DIVISION = [
   },
   {
     division: "Competition",
-    image: "/committee/competition.webp",
+    image: "/committee/competition.jpg",
     members: [
       {
         name: "Chessa Audreynanta",
@@ -83,7 +83,7 @@ const DIVISION = [
   },
   {
     division: "External",
-    image: "/committee/external.webp",
+    image: "/committee/external.jpg",
     members: [
       {
         name: "Ana Chadizahra",
@@ -105,7 +105,7 @@ const DIVISION = [
   },
   {
     division: "Finance",
-    image: "/committee/finance.webp",
+    image: "/committee/finance.jpg",
     members: [
       {
         name: "Arib Razaq Wibowo",
@@ -123,7 +123,7 @@ const DIVISION = [
   },
   {
     division: "Creative Media",
-    image: "/committee/creative-media.webp",
+    image: "/committee/creative-media.jpg",
     members: [
       {
         name: "Shinosuke Alexander Swandjaya",
@@ -145,7 +145,7 @@ const DIVISION = [
   },
   {
     division: "Operation",
-    image: "/committee/operation.webp",
+    image: "/committee/operation.jpg",
     members: [
       {
         name: "Guliver Van Gultom",

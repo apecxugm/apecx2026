@@ -1,5 +1,5 @@
 import Navbar from '@/src/components/ui/navbar';
-import Footer from '@/src/modules/landing-page/footer';
+import Footer from '@/src/components/ui/footer';
 
 export default function NavbarLayout({
   children,

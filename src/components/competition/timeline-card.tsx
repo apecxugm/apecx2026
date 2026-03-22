@@ -1,4 +1,4 @@
-import type { TimelineItem } from "@/src/app/competition/[slug]/data";
+import type { TimelineItem } from "@/src/app/(navbar)/competition/[slug]/data";
 import Image from "next/image";
 
 interface TimelineCardProps {

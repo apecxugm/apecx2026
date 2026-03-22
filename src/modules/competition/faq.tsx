@@ -1,6 +1,6 @@
 import Container from "@/src/components/ui/container";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/src/components/ui/accordion";
-import type { FaqItem } from "@/src/app/competition/[slug]/data";
+import type { FaqItem } from "@/src/app/(navbar)/competition/[slug]/data";
 import Link from "next/link";
 import { Button } from "@/src/components/ui/button";
 import { Chat } from "@phosphor-icons/react/dist/ssr";

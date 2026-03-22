@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { usePathname } from 'next/navigation';
-import Footer from '@/src/modules/landing-page/footer';
+import Footer from '@/src/components/ui/footer';
 import Navbar from '@/src/components/ui/navbar';
 
 interface AppChromeProps {

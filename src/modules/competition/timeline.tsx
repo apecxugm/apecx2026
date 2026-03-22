@@ -4,7 +4,7 @@ import * as React from "react";
 import { CaretLeft, CaretRight } from "@phosphor-icons/react";
 import { Carousel, CarouselContent, CarouselItem, type CarouselApi } from "@/src/components/ui/carousel";
 import Container from "@/src/components/ui/container";
-import type { TimelineItem } from "@/src/app/competition/[slug]/data";
+import type { TimelineItem } from "@/src/app/(navbar)/competition/[slug]/data";
 import TimelineCard from "@/src/components/competition/timeline-card";
 import PrizeCard from "@/src/components/competition/prize-card";
 import { Button } from "@/src/components/ui/button";

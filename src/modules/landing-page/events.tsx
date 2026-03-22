@@ -23,13 +23,13 @@ const COMPETITION = [
     logo: "/logo/petrosmart.svg"
   },
   {
-    title: "Plan of Development",
+    title: "Plan of Development Competition",
     type: "competition",
     slug: "pod",
     logo: "/logo/pod.svg"
   },
   {
-    title: "Supply Chain Management & Logistics",
+    title: "Supply Chain Management & Logistics Competition",
     type: "competition",
     slug: "scml",
     logo: "/logo/scml.svg"

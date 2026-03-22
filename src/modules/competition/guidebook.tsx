@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import Container from "@/src/components/ui/container";
 import { Button } from "@/src/components/ui/button";
-import type { CompetitionData } from "@/src/app/competition/[slug]/data";
+import type { CompetitionData } from "@/src/app/(navbar)/competition/[slug]/data";
 import { ReactNode } from "react";
 
 type GuidebookTabId = "themes" | "rules" | "registration";

@@ -92,7 +92,8 @@ export const COMPETITION: CompetitionData[] = [
       },
     ],
     bestThing: "Best Poster",
-    guidebook: "",
+    guidebook:
+      "https://drive.google.com/file/d/1iaIaSN7D5zMSU0gRSXchiPWgCDxm6RT4/view?usp=sharing",
     coreTheme:
       "**Strategic Optimization of Integrated Energy System to Enhance Efficiency, Resilience, and Long-Term Sustainability in the Oil and Gas Industry** -  Maximizing efficiency, resilience, and sustainability across the oil and gas value chain.",
     subTheme: [
@@ -126,6 +127,8 @@ export const COMPETITION: CompetitionData[] = [
       "Student ID Card or an active enrollment certificate for each participant.",
       "Proof of following the Instagram account @apecx2026.",
       "Proof of posting the official twibbon.",
+      "Proof of sharing the post on instagram story",
+      "Proof of sharing the instagram post to 3 Whatsapp Group",
     ],
     preliminaryPayment: [
       "Early Bird: IDR 50,000 / USD 4 per team.",
@@ -156,7 +159,7 @@ export const COMPETITION: CompetitionData[] = [
       {
         question: "Can team members be replaced after registration?",
         answer:
-          "Yes, changes to team members are allowed before the abstract submission deadline. After the abstract has been submitted, no further changes to the team composition will be permitted.",
+          "No, team members cannot be replaced after registration. Please make sure that all participants are fully committed and willing to take part in the competition until its completion.",
       },
     ],
     contactPerson: "Nindhy (+62 858 5343 1866)",
@@ -211,7 +214,8 @@ export const COMPETITION: CompetitionData[] = [
         title: "Awarding Night",
       },
     ],
-    guidebook: "",
+    guidebook:
+      "https://drive.google.com/file/d/1tKz48cYw3wGfqC9vU1NfNkfgCRfQeDrc/view?usp=sharing",
     themeGuidebook:
       "A challenge to move past conventional energy models and design integrated, sustainable business strategies that balance economic growth with environmental and social impact.",
     themeBreakdown: [
@@ -241,6 +245,8 @@ export const COMPETITION: CompetitionData[] = [
       "Student ID Card or an active enrollment certificate for each participant.",
       "Proof of following the Instagram account @apecx2026.",
       "Proof of posting the official twibbon.",
+      "Proof of sharing the post on instagram story",
+      "Proof of sharing the instagram post to 3 Whatsapp Group",
     ],
     preliminaryPayment: [
       "Early Bird: IDR 100,000 / USD 6 per team.",
@@ -251,7 +257,17 @@ export const COMPETITION: CompetitionData[] = [
       {
         question: "Who can participate in the Business Case Competition?",
         answer:
-          "The competition is open to undergraduate students from all majors who are interested in solving business and industry related challenges.",
+          "The competition is open to undergraduate students from all majors who are interested in solving business and industry related challenges",
+      },
+      {
+        question: "What will participants do in this competition?",
+        answer:
+          "Participants will analyze real-world business cases, develop strategic solutions, and present their recommendations to a panel of judges.",
+      },
+      {
+        question: "Will participants receive the case beforehand?",
+        answer:
+          "Yes, participants will receive the case in advance and be given a designated period to thoroughly analyze the problem and develop a well-structured strategy.",
       },
       {
         question: "Is there a registration fee?",
@@ -261,7 +277,7 @@ export const COMPETITION: CompetitionData[] = [
       {
         question: "Can team members be replaced after registration?",
         answer:
-          "Yes, changes to team members are allowed before the preliminary submission deadline. After the abstract has been submitted, no further changes to the team composition will be permitted.",
+          "No, team members cannot be replaced after registration. Please make sure that all participants are fully committed and willing to take part in the competition until its completion.",
       },
     ],
     contactPerson: "Tama (+62 895 0426 9819)",
@@ -316,7 +332,8 @@ export const COMPETITION: CompetitionData[] = [
         title: "Awarding Night",
       },
     ],
-    guidebook: "",
+    guidebook:
+      "https://drive.google.com/file/d/1wRnow3DgaXtsRCHb2WGbSQ3eA92k1PSq/view?usp=sharing",
     themeGuidebook:
       "A high-stakes intellectual challenge designed to test comprehensive petroleum knowledge, shifting from basic theory to complex, multi-perspective problem solving.",
     themeBreakdown: [
@@ -357,6 +374,8 @@ export const COMPETITION: CompetitionData[] = [
       "Student ID Card or an active enrollment certificate for each participant.",
       "Proof of following the Instagram account @apecx2026.",
       "Proof of posting the official twibbon.",
+      "Proof of sharing the post on instagram story",
+      "Proof of sharing the instagram post to 3 Whatsapp Group",
     ],
     preliminaryPayment: [
       "Early Bird: IDR 150,000 / USD 9 per team.",
@@ -365,7 +384,12 @@ export const COMPETITION: CompetitionData[] = [
     ],
     faq: [
       {
-        question: " Will the competition be conducted online or offline?",
+        question: "Who can participate in the Petrosmart Competition?",
+        answer:
+          "The competition is open to undergraduate students from all majors who have a strong interest in the oil and gas industry.",
+      },
+      {
+        question: "Will the competition be conducted online or offline?",
         answer:
           "The format of the competition will be announced in the official guideline and may include online preliminary rounds followed by an onsite final round.",
       },
@@ -375,16 +399,14 @@ export const COMPETITION: CompetitionData[] = [
           "The questions will generally cover topics related to the oil and gas industry, including oil and gas terminology, basic geology concepts, petroleum engineering fundamentals, and other related subjects within the energy sector. Participants are expected to have a broad understanding of these areas.",
       },
       {
-        question: "",
-        answer: "",
+        question: "Can team members be replaced after registration?",
+        answer:
+          "No, team members cannot be replaced after registration. Please make sure that all participants are fully committed and willing to take part in the competition until its completion.",
       },
       {
-        question: "",
-        answer: "",
-      },
-      {
-        question: "",
-        answer: "",
+        question: "Is there a registration fee?",
+        answer:
+          "Yes, please refer to the specific competition guidebook for detailed information regarding the pricing.",
       },
     ],
     contactPerson: "Stella (+62 881 3995 130)",
@@ -436,7 +458,8 @@ export const COMPETITION: CompetitionData[] = [
         title: "Awarding Night",
       },
     ],
-    guidebook: "",
+    guidebook:
+      "https://drive.google.com/file/d/1t_SZ6QTKnQAteWP1oUHpsHaY2jxgNi2n/view?usp=drive_link",
     themeGuidebook:
       "A technical challenge to revitalize aging reservoirs and strengthen energy security through advanced optimization, strategic innovation, and responsible resource management.",
     themeBreakdown: [
@@ -467,6 +490,8 @@ export const COMPETITION: CompetitionData[] = [
       "Student ID Card or an active enrollment certificate for each participant.",
       "Proof of following the Instagram account @apecx2026.",
       "Proof of posting the official twibbon.",
+      "Proof of sharing the post on instagram story",
+      "Proof of sharing the instagram post to 3 Whatsapp Group",
     ],
     preliminaryPayment: [
       "Early Bird: IDR 100,000 / USD 6 per team.",
@@ -475,9 +500,14 @@ export const COMPETITION: CompetitionData[] = [
     ],
     faq: [
       {
-        question: "What is the competition theme?",
+        question: "What is the Plan of Development Competition?",
         answer:
           "This competition challenges participants to design a development strategy for an oil and gas field based on technical and economic considerations.",
+      },
+      {
+        question: "Who can participate in the Plan of Development Competition?",
+        answer:
+          "The competition is open to undergraduate students from all majors who have a strong interest in the oil and gas industry, particularly in field development planning and reservoir management.",
       },
       {
         question: "Is there a registration fee?",
@@ -487,7 +517,11 @@ export const COMPETITION: CompetitionData[] = [
       {
         question: "Can team members be replaced after registration?",
         answer:
-          "Yes, changes to team members are allowed before the preliminary submission deadline. After the abstract has been submitted, no further changes to the team composition will be permitted.",
+          "No, team members cannot be replaced after registration. Please make sure that all participants are fully committed and willing to take part in the competition until its completion.",
+      },
+      {
+        question: "How many members are allowed in one team?",
+        answer: "Each team consists of four to five members.",
       },
     ],
     contactPerson: "Lutvi (+62 821 3534 6308)",
@@ -543,7 +577,8 @@ export const COMPETITION: CompetitionData[] = [
         title: "Awarding Night",
       },
     ],
-    guidebook: "",
+    guidebook:
+      "https://drive.google.com/file/d/1f8uGPhTDb8mOlVaf-MQZMRR5W4reru2F/view?usp=sharing",
     themeGuidebook:
       "A strategic challenge to transform conventional logistics into environmentally responsible, net-zero networks that remain adaptive and resilient against global disruptions.",
     themeBreakdown: [
@@ -585,6 +620,8 @@ export const COMPETITION: CompetitionData[] = [
       "Student ID Card or an active enrollment certificate for each participant.",
       "Proof of following the Instagram account @apecx2026.",
       "Proof of posting the official twibbon.",
+      "Proof of sharing the post on instagram story",
+      "Proof of sharing the instagram post to 3 Whatsapp Group",
     ],
     preliminaryPayment: [
       "Early Bird: IDR 100,000 / USD 6 per team.",
@@ -604,7 +641,7 @@ export const COMPETITION: CompetitionData[] = [
       },
       {
         question: "How many members are allowed in one team?",
-        answer: "Each team consists of up to three members.",
+        answer: "Each team consists of two to three members.",
       },
       {
         question: "Is there a registration fee?",
