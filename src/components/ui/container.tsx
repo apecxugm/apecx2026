@@ -4,7 +4,7 @@ const Container = ({ className, children }: { className?: string; children?: Rea
   return (
     <section
       className={cn(
-        `mx-auto flex w-full max-w-7xl flex-col gap-4 overflow-hidden px-4 md:px-8 xl:px-12`,
+        `mx-auto flex w-full max-w-[1296px] flex-col gap-4 overflow-hidden px-4 md:px-8 xl:px-12`,
         className
       )}
     >
