@@ -1,7 +1,7 @@
 import Container from '@/src/components/ui/container';
 import { Button } from '@/src/components/ui/button';
 import Image from 'next/image';
-import { InstagramLogoIcon, LinkedinLogoIcon, TiktokLogoIcon, XLogoIcon, YoutubeLogoIcon } from '@phosphor-icons/react/ssr';
+import { InstagramLogoIcon, LinkedinLogoIcon, TiktokLogoIcon } from '@phosphor-icons/react/ssr';
 import Link from 'next/link';
 
 const Footer = () => {
@@ -14,7 +14,7 @@ const Footer = () => {
         <div className="grid w-full grid-cols-1 lg:grid-cols-[1fr_2fr] gap-12 lg:gap-20 w-full justify-items-stretch">
           {/* Brand Section */}
           <div className="flex flex-col gap-4">
-            <Image src="/logo/logo-light.svg" alt="apecx" width={157} height={146} />
+            <Image src="/logo/logo-light.svg" alt="apecx" width={157} height={146} className='w-25 md:w-32'/>
             <h5 className="text-sm mdtext-secondary-100 text-justify text-sm md:text-[15px] lg:text-base font-normal md:font-medium:text-base text-secondary-100 w-full">
               APECX is the flagship annual event hosted by the SPE UGM Student Chapter. For over 15 year
             </h5>
@@ -27,34 +27,34 @@ const Footer = () => {
               <h5 className="text-secondary-100 text-justify text-sm md:text-[15px] lg:text-base font-normal md:font-medium" style={{ fontWeight: 700 }}>General Info</h5>
               <ul className="flex flex-col gap-2">
                 <li>
-                  <a href="/about" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
+                  <Link href="/about" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
                     About SPE UGM
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#theme" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
+                  <Link href="/#theme" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
                     Theme
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#events" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
+                  <Link href="/#events" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
                     Timeline
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#events" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
+                  <Link href="/#events" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
                     Competitions
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#events" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
+                  <Link href="/#events" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
                     Events
-                  </a>
+                  </Link>
                 </li>
                 {/* <li>
-                  <a href="#game" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
+                  <Link href="#game" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
                     Games
-                  </a>
+                  </Link>
                 </li> */}
               </ul>
             </div>
@@ -64,29 +64,29 @@ const Footer = () => {
               <h5 className="text-secondary-100 text-justify text-sm md:text-[15px] lg:text-base font-normal md:font-medium" style={{ fontWeight: 700 }}>Events</h5>
               <ul className="flex flex-col gap-2">
                 <li>
-                  <a href="/event/social-event" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
+                  <Link href="/event/social-event" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
                     Social Event
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="/event/company-visit" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
+                  <Link href="/event/company-visit" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
                     Company Visit
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="/event/talkshow" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
+                  <Link href="/event/talkshow" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
                     Talkshow
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="/event/exhibition" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
+                  <Link href="/event/exhibition" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
                     Exhibition
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="/event/awarding-night" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
+                  <Link href="/event/awarding-night" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
                     Awarding Night
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -97,22 +97,22 @@ const Footer = () => {
               <div className="flex flex-col gap-3">
                 <ul className="flex flex-col gap-2">
                   <li>
-                    <Link href="/competition/business-case" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
+                    <Link href="/competition/bcc" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
                       Business Case Competition
                     </Link>
                   </li>
                   <li>
-                    <Link href="/competition/paper-and-poster" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
+                    <Link href="/competition/ppc" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
                       Paper and Poster
                     </Link>
                   </li>
                   <li>
-                    <Link href="/competition/plan-of-development" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
+                    <Link href="/competition/pod" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
                       Plan of Development
                     </Link>
                   </li>
                   <li>
-                    <Link href="/competition/supply-chain-management-logistics" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
+                    <Link href="/competition/scml" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
                       Supply Chain Management and Logistic
                     </Link>
                   </li>
@@ -130,14 +130,19 @@ const Footer = () => {
               <h5 className="text-secondary-100 text-justify text-sm md:text-[15px] lg:text-base font-normal md:font-medium" style={{ fontWeight: 700 }}>Contact Us</h5>
               <ul className="flex flex-col gap-2">
                 <li>
-                  <a href="#home" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
-                    Participant
-                  </a>
+                  <Link href="https://wa.me/62895639314478" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
+                    General
+                  </Link>
                 </li>
                 <li>
-                  <a href="#sponsor-cta" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
-                    Partnership
-                  </a>
+                  <Link href="/#sponsor-cta" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
+                    Sponsorship
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/#sponsor-cta" className="text-secondary-100 text-sm md:text-[15px] lg:text-base cursor-pointer">
+                    Media Partner
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -150,7 +155,7 @@ const Footer = () => {
         {/* Footer Bottom */}
         <div className="flex flex-col flex-col-reverse md:flex-row md:items-center md:justify-between gap-4">
           <p className="text-secondary-100 text-xs md:text-sm">
-            &copy; {currentYear}Copyright - Universitas Gadjah Mada SPE Student Chapter. All rights reserved.
+            &copy; {currentYear} Copyright - Universitas Gadjah Mada SPE Student Chapter. All rights reserved.
           </p>
           <div className="flex gap-4">
             <Link href="https://www.instagram.com/apecx2026/">
