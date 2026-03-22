@@ -31,7 +31,7 @@ const CompetitionTheme = ({ title, theme, themeDesc }: { title: string, theme: s
           This Year&apos;s Theme
         </p>
         <div className="flex flex-col md:flex-row gap-3 md:gap-15">
-          <p className="text-[22px] md:text-[26px] font-bold text-secondary-1000">{theme}</p>
+          <p className="max-w-lg text-[22px] md:text-[26px] font-bold text-secondary-1000">{theme}</p>
           <div>
             <p className="text-black text-justify text-base w-full max-w-3xl font-normal md:font-medium">
               {renderBoldText(themeDesc)}
