@@ -4,8 +4,21 @@ import { useMemo, useState } from "react";
 import Container from "@/src/components/ui/container";
 import { Button } from "@/src/components/ui/button";
 import type { CompetitionData } from "@/src/app/competition/[slug]/data";
+import { ReactNode } from "react";
 
 type GuidebookTabId = "themes" | "rules" | "registration";
+
+interface ContentSectionGroup {
+  title: string;
+  items: string[];
+}
+
+interface ContentSection {
+  heading: string;
+  items?: string[];
+  groups?: ContentSectionGroup[];
+  note?: string;
+}
 
 interface GuidebookProps {
   guidebook: CompetitionData["guidebook"];
@@ -14,7 +27,10 @@ interface GuidebookProps {
   subTheme?: CompetitionData["subTheme"];
   themeBreakdown?: CompetitionData["themeBreakdown"];
   rules: CompetitionData["rules"];
+  assessmentCriteriaGroups?: CompetitionData["assessmentCriteriaGroups"];
+  assessmentCriteriaNote?: CompetitionData["assessmentCriteriaNote"];
   abstractCriteria?: CompetitionData["abstractCriteria"];
+  fullPaperCriteria?: CompetitionData["fullPaperCriteria"];
   preliminaryCriteria?: CompetitionData["preliminaryCriteria"];
   finalCriteria?: CompetitionData["finalCriteria"];
   requiredDocument: CompetitionData["requiredDocument"];
@@ -27,6 +43,26 @@ const TAB_LABELS: { id: GuidebookTabId; label: string }[] = [
   { id: "registration", label: "Registration & Fee" },
 ];
 
+function renderBoldText(content: ReactNode) {
+  if (typeof content !== "string") {
+    return content;
+  }
+
+  const parts = content.split(/(\*\*[^*]+\*\*)/g);
+
+  return parts.map((part, index) => {
+    if (part.startsWith("**") && part.endsWith("**")) {
+      return (
+        <strong key={index} className="font-bold">
+          {part.slice(2, -2)}
+        </strong>
+      );
+    }
+
+    return <span key={index}>{part}</span>;
+  });
+}
+
 const Guidebook = ({
   guidebook,
   themeGuidebook,
@@ -34,7 +70,10 @@ const Guidebook = ({
   subTheme,
   themeBreakdown,
   rules,
+  assessmentCriteriaGroups,
+  assessmentCriteriaNote,
   abstractCriteria,
+  fullPaperCriteria,
   preliminaryCriteria,
   finalCriteria,
   requiredDocument,
@@ -82,32 +121,63 @@ const Guidebook = ({
       const hasAbstract = Boolean(abstractCriteria && abstractCriteria.length > 0);
       const hasPreliminary = Boolean(preliminaryCriteria && preliminaryCriteria.length > 0);
       const hasFinal = Boolean(finalCriteria && finalCriteria.length > 0);
+      const hasFullPaper = Boolean(fullPaperCriteria && fullPaperCriteria.length > 0);
+      const hasCustomGroupedCriteria = Boolean(assessmentCriteriaGroups && assessmentCriteriaGroups.length > 0);
 
-      const ruleSections = [
+      const ruleSections: ContentSection[] = [
         {
           heading: "Competition Rules",
           items: rules.length > 0 ? rules : ["Rules will be announced soon."],
         },
       ];
 
-      if (hasPreliminary || hasFinal) {
+      if (hasCustomGroupedCriteria) {
+        ruleSections.push({
+          heading: "Assessment Criteria",
+          groups: assessmentCriteriaGroups,
+          note: assessmentCriteriaNote,
+        });
+      } else if (hasPreliminary || hasFinal) {
+        const assessmentGroups: ContentSectionGroup[] = [];
+
         if (hasPreliminary) {
-          ruleSections.push({
-            heading: "Preliminary Criteria",
+          assessmentGroups.push({
+            title: "Preliminary Stage",
             items: preliminaryCriteria as string[],
           });
         }
 
         if (hasFinal) {
-          ruleSections.push({
-            heading: "Final Criteria",
+          assessmentGroups.push({
+            title: "Final Stage",
             items: finalCriteria as string[],
           });
         }
-      } else if (hasAbstract) {
+
         ruleSections.push({
           heading: "Assessment Criteria",
-          items: abstractCriteria as string[],
+          groups: assessmentGroups,
+        });
+      } else if (hasAbstract || hasFullPaper) {
+        const assessmentGroups: ContentSectionGroup[] = [];
+
+        if (hasAbstract) {
+          assessmentGroups.push({
+            title: "Abstract (Preliminary Stage)",
+            items: abstractCriteria as string[],
+          });
+        }
+
+        if (hasFullPaper) {
+          assessmentGroups.push({
+            title: "Full Paper (Semifinal Stage)",
+            items: fullPaperCriteria as string[],
+          });
+        }
+
+        ruleSections.push({
+          heading: "Assessment Criteria",
+          groups: assessmentGroups,
         });
       } else {
         ruleSections.push({
@@ -150,7 +220,10 @@ const Guidebook = ({
     subTheme,
     themeBreakdown,
     rules,
+    assessmentCriteriaGroups,
+    assessmentCriteriaNote,
     abstractCriteria,
+    fullPaperCriteria,
     preliminaryCriteria,
     finalCriteria,
     requiredDocument,
@@ -187,18 +260,35 @@ const Guidebook = ({
         </div>
 
         <div className="overflow-hidden bg-secondary-1000">
-          <div className="p-6 space-y-2 h-[450px] overflow-y-scroll">
+          <div className="p-6 space-y-3 h-[450px] overflow-y-scroll">
             <h3 className="font-bold text-secondary-100">{content.title}</h3>
-            <p className="text-secondary-100">{content.description}</p>
+            <p className="text-secondary-100 text-lg">{renderBoldText(content.description)}</p>
 
             {content.sections.map((section) => (
               <div className="" key={section.heading}>
                 <h5 className="text-lg font-semibold text-secondary-100 ">{section.heading}</h5>
-                <ul className="list-disc pl-6 text-secondary-100 text-lg">
-                  {section.items.map((item) => (
-                    <li key={item}>{item}</li>
-                  ))}
-                </ul>
+
+                {section.groups && section.groups.length > 0 ? (
+                  <div className="space-y-2 mt-1">
+                    {section.groups.map((group) => (
+                      <div key={group.title}>
+                        <p className="text-secondary-100 text-lg">{group.title}</p>
+                        <ul className="list-disc pl-6 text-secondary-100 text-lg">
+                          {group.items.map((item) => (
+                            <li key={`${group.title}-${item}`}>{item}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                    {section.note ? <p className="text-secondary-100 text-lg">{section.note}</p> : null}
+                  </div>
+                ) : (
+                  <ul className="list-disc pl-6 text-secondary-100 text-lg">
+                    {section.items?.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                )}
               </div>
             ))}
           </div>

@@ -33,7 +33,10 @@ const Page = async ({ params }: { params: Promise<Params> }) => {
         subTheme={data.subTheme}
         themeBreakdown={data.themeBreakdown}
         rules={data.rules}
+        assessmentCriteriaGroups={data.assessmentCriteriaGroups}
+        assessmentCriteriaNote={data.assessmentCriteriaNote}
         abstractCriteria={data.abstractCriteria}
+        fullPaperCriteria={data.fullPaperCriteria}
         preliminaryCriteria={data.preliminaryCriteria}
         finalCriteria={data.finalCriteria}
         requiredDocument={data.requiredDocument}

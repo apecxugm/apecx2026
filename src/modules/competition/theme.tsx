@@ -33,11 +33,11 @@ const CompetitionTheme = ({ title, theme, themeDesc }: { title: string, theme: s
         <div className="flex flex-col md:flex-row gap-3 md:gap-15">
           <p className="text-[22px] md:text-[26px] font-bold text-secondary-1000">{theme}</p>
           <div>
-            <p className="text-black text-justify text-base font-normal md:font-medium">
+            <p className="text-black text-justify text-base w-full max-w-3xl font-normal md:font-medium">
               {renderBoldText(themeDesc)}
             </p>
             <div className="flex flex-col md:flex-row items-end gap-[10px] mt-6 ml-auto md:ml-0 lg:self-start self-end">
-              <Link href="https://wa.me/6281390422049">
+              <Link href="/registration">
                 <Button variant="dark-blue" size="fit" className="!text-sm">
                   Register for {title}!
                 </Button>
