@@ -9,11 +9,11 @@ import { cn } from '@/src/lib/utils';
 import { CaretDownIcon, CaretRightIcon, ListIcon, XIcon } from '@phosphor-icons/react/dist/ssr';
 
 const LINKS = [
-  { name: 'Theme', href: '#theme' },
-  { name: 'Timeline', href: '#events' },
-  { name: 'Events', href: '#events', hasDropdown: true },
-  { name: 'Competitions', href: '#competitions', hasDropdown: true },
-  { name: 'Game', href: '#game', disabled: true },
+  { name: 'Theme', href: '/#theme' },
+  { name: 'Timeline', href: '/#timeline' },
+  { name: 'Events', href: '/#events', hasDropdown: true },
+  { name: 'Competitions', href: '/#competitions', hasDropdown: true },
+  { name: 'Game', href: '/#game', disabled: true },
 ];
 
 const COMPETITION_LINKS = [
@@ -193,7 +193,7 @@ const Navbar = () => {
 
           <div className="flex items-center gap-2">
             <div className="hidden lg:flex items-center gap-2">
-              <Link href="#events">
+              <Link href="/social-event">
                 <Button
                   variant="dark-blue"
                   size="fit"
@@ -202,7 +202,7 @@ const Navbar = () => {
                   Social Events
                 </Button>
               </Link>
-              <Link href="#events">
+              <Link href="/registration">
                 <Button
                   variant="dark-blue"
                   size="fit"
@@ -219,7 +219,7 @@ const Navbar = () => {
                 onClick={() => setIsOpen(!isOpen)}
                 className={cn(
                   'relative z-60 p-2 transition-colors duration-300',
-                  isScrolled || isOpen ? 'text-black' : 'text-white',
+                  isScrolled || isOpen || isDetailPage ? 'text-black' : 'text-white',
                 )}
                 aria-label="Toggle Menu"
               >
@@ -335,7 +335,7 @@ const Navbar = () => {
           )}
 
           <div className="flex flex-col gap-2 pt-2 pb-3 ">
-            <Link href="#events" onClick={() => setIsOpen(false)}>
+            <Link href="/social-event" onClick={() => setIsOpen(false)}>
               <Button
                 variant="dark-blue"
                 size="default"
@@ -345,7 +345,7 @@ const Navbar = () => {
                 Social Events
               </Button>
             </Link>
-            <Link href="#events" onClick={() => setIsOpen(false)}>
+            <Link href="/registration" onClick={() => setIsOpen(false)}>
               <Button
                 variant="dark-blue"
                 size="default"

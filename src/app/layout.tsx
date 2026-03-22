@@ -8,7 +8,7 @@ const plusJakartaSans = Plus_Jakarta_Sans({
   variable: "--font-plus-jakarta-sans",
   weight: ["400", "700", "800"],
   subsets: ["latin"],
-}) 
+})
 
 export const metadata: Metadata = {
   title: "APECX 2026",
@@ -26,8 +26,6 @@ export default function RootLayout({
         className={`${plusJakartaSans.variable} antialiased`}
       >
         {children}
-        <Navbar />
-        <Footer />
       </body>
     </html>
   );
