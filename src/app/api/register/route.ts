@@ -2,14 +2,24 @@ import { NextResponse } from "next/server";
 
 const BACKEND_URL = process.env.BACKEND_URL;
 const BACKEND_FALLBACK_URL = process.env.BACKEND_FALLBACK_URL;
+const IS_PRODUCTION = process.env.NODE_ENV === "production";
 
 function getBackendCandidates() {
-  const candidates = [
-    BACKEND_URL,
-    "http://localhost:8080",
-    BACKEND_FALLBACK_URL,
-  ].filter((url): url is string => Boolean(url));
-  return [...new Set(candidates.map((url) => url.replace(/\/$/, "")))];
+  const candidates = [BACKEND_URL, BACKEND_FALLBACK_URL];
+
+  if (!IS_PRODUCTION) {
+    candidates.push("http://localhost:8080");
+  }
+
+  const resolved = candidates.filter((url): url is string => Boolean(url));
+
+  if (resolved.length === 0) {
+    throw new Error(
+      "No backend URL configured. Set BACKEND_URL (and optionally BACKEND_FALLBACK_URL).",
+    );
+  }
+
+  return [...new Set(resolved.map((url) => url.replace(/\/$/, "")))];
 }
 
 export async function POST(request: Request) {
