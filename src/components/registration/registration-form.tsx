@@ -72,7 +72,7 @@ const COMPETITION_FEE_INFO: Record<(typeof COMPETITIONS)[number], { earlyBird: s
   POD: { earlyBird: 'IDR 100,000 / USD 6', normal: 'IDR 150,000 / USD 9' },
   BCC: { earlyBird: 'IDR 100,000 / USD 6', normal: 'IDR 150,000 / USD 9' },
   Petrosmart: { earlyBird: 'IDR 150,000 / USD 9', normal: 'IDR 175,000 / USD 11' },
-  PPC: { earlyBird: '[Amount]', normal: '[Amount]' },
+  PPC: { earlyBird: 'IDR 50,000 / USD 3', normal: 'IDR 75,000 / USD 5' },
 };
 
 const PAYMENT_ACCOUNT = {
@@ -686,7 +686,7 @@ const RegistrationForm = forwardRef<RegistrationFormHandle, RegistrationFormProp
               The registration fee for {formData.competition ? COMPETITION_LABELS[formData.competition as keyof typeof COMPETITION_LABELS] : 'Competition Name'} is as follows:
             </p>
             <ul className="mt-1 list-disc pl-5 text-xs text-neutral-900">
-              <li>Early Bird Rate: {formData.competition ? COMPETITION_FEE_INFO[formData.competition as keyof typeof COMPETITION_FEE_INFO].earlyBird : '[Amount]'} per team</li>
+              <li className='font-bold'>Early Bird Rate: {formData.competition ? COMPETITION_FEE_INFO[formData.competition as keyof typeof COMPETITION_FEE_INFO].earlyBird : '[Amount]'} per team</li>
               <li>Normal Rate: {formData.competition ? COMPETITION_FEE_INFO[formData.competition as keyof typeof COMPETITION_FEE_INFO].normal : '[Amount]'} per team</li>
             </ul>
           </div>

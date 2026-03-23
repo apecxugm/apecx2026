@@ -93,7 +93,7 @@ export const COMPETITION: CompetitionData[] = [
     ],
     bestThing: "Best Poster",
     guidebook:
-      "https://drive.google.com/file/d/1iaIaSN7D5zMSU0gRSXchiPWgCDxm6RT4/view?usp=sharing",
+      "https://drive.google.com/file/d/17Rt_st1M003eUhDhyIDNAxFa9hlPEHdC/view?usp=sharing",
     coreTheme:
       "**Strategic Optimization of Integrated Energy System to Enhance Efficiency, Resilience, and Long-Term Sustainability in the Oil and Gas Industry** -  Maximizing efficiency, resilience, and sustainability across the oil and gas value chain.",
     subTheme: [
@@ -215,7 +215,7 @@ export const COMPETITION: CompetitionData[] = [
       },
     ],
     guidebook:
-      "https://drive.google.com/file/d/1tKz48cYw3wGfqC9vU1NfNkfgCRfQeDrc/view?usp=sharing",
+      "https://drive.google.com/file/d/19-wg3G6fYPtB6UzsaNxEKVV7qKgToG5M/view?usp=sharing",
     themeGuidebook:
       "A challenge to move past conventional energy models and design integrated, sustainable business strategies that balance economic growth with environmental and social impact.",
     themeBreakdown: [
@@ -333,7 +333,7 @@ export const COMPETITION: CompetitionData[] = [
       },
     ],
     guidebook:
-      "https://drive.google.com/file/d/1wRnow3DgaXtsRCHb2WGbSQ3eA92k1PSq/view?usp=sharing",
+      "https://drive.google.com/file/d/1m0IHAA04mTPSpWDYja8W6GOCdlXbBFA1/view?usp=sharing",
     themeGuidebook:
       "A high-stakes intellectual challenge designed to test comprehensive petroleum knowledge, shifting from basic theory to complex, multi-perspective problem solving.",
     themeBreakdown: [
@@ -459,7 +459,7 @@ export const COMPETITION: CompetitionData[] = [
       },
     ],
     guidebook:
-      "https://drive.google.com/file/d/1t_SZ6QTKnQAteWP1oUHpsHaY2jxgNi2n/view?usp=drive_link",
+      "https://drive.google.com/file/d/1RTgIoJ_-vQxCn9MmlppnyJkkz3LiZdTq/view?usp=sharing",
     themeGuidebook:
       "A technical challenge to revitalize aging reservoirs and strengthen energy security through advanced optimization, strategic innovation, and responsible resource management.",
     themeBreakdown: [
@@ -578,7 +578,7 @@ export const COMPETITION: CompetitionData[] = [
       },
     ],
     guidebook:
-      "https://drive.google.com/file/d/1aB38KPND5EUIQ4T-XfE0AxcBICUIvBa2/view?usp=sharing",
+      "https://drive.google.com/file/d/1JJuqL2byKkqew1m2MqjJc5p_JWzwNJkR/view?usp=sharing",
     themeGuidebook:
       "A strategic challenge to transform conventional logistics into environmentally responsible, net-zero networks that remain adaptive and resilient against global disruptions.",
     themeBreakdown: [
