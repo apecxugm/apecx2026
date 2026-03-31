@@ -43,7 +43,7 @@ func main() {
 
 	rate := limiter.Rate{
 		Period: 1 * time.Minute,
-		Limit:  5,
+		Limit:  20,
 	}
 
 	store := memory.NewStore()
@@ -225,25 +225,25 @@ func appendToSheet(sheetName string, row []interface{}) error {
 
 // upload file ke minio, return public URL
 func uploadFile(c *gin.Context, fieldName string) (string, error) {
-    file, header, err := c.Request.FormFile(fieldName)
-    if err != nil {
-        return "", err
-    }
-    defer file.Close()
+	file, header, err := c.Request.FormFile(fieldName)
+	if err != nil {
+		return "", err
+	}
+	defer file.Close()
 
-    contentType := header.Header.Get("Content-Type")
-    if contentType == "" {
-        contentType = "application/octet-stream"
-    }
+	contentType := header.Header.Get("Content-Type")
+	if contentType == "" {
+		contentType = "application/octet-stream"
+	}
 
-    fileName := fmt.Sprintf("%d_%s", time.Now().UnixNano(), header.Filename)
+	fileName := fmt.Sprintf("%d_%s", time.Now().UnixNano(), header.Filename)
 
-    url, err := uploadFileToStorage(file, fileName, contentType, header.Size)
-    if err != nil {
-        return "", err
-    }
+	url, err := uploadFileToStorage(file, fileName, contentType, header.Size)
+	if err != nil {
+		return "", err
+	}
 
-    return url, nil
+	return url, nil
 }
 
 func setupSheetsService() (*sheets.Service, error) {
