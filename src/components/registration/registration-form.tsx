@@ -686,8 +686,8 @@ const RegistrationForm = forwardRef<RegistrationFormHandle, RegistrationFormProp
               The registration fee for {formData.competition ? COMPETITION_LABELS[formData.competition as keyof typeof COMPETITION_LABELS] : 'Competition Name'} is as follows:
             </p>
             <ul className="mt-1 list-disc pl-5 text-xs text-neutral-900">
-              <li className='font-bold'>Early Bird Rate: {formData.competition ? COMPETITION_FEE_INFO[formData.competition as keyof typeof COMPETITION_FEE_INFO].earlyBird : '[Amount]'} per team</li>
-              <li>Normal Rate: {formData.competition ? COMPETITION_FEE_INFO[formData.competition as keyof typeof COMPETITION_FEE_INFO].normal : '[Amount]'} per team</li>
+              <li>Early Bird Rate: {formData.competition ? COMPETITION_FEE_INFO[formData.competition as keyof typeof COMPETITION_FEE_INFO].earlyBird : '[Amount]'} per team</li>
+              <li className='font-bold'>Normal Rate: {formData.competition ? COMPETITION_FEE_INFO[formData.competition as keyof typeof COMPETITION_FEE_INFO].normal : '[Amount]'} per team</li>
             </ul>
           </div>
 
