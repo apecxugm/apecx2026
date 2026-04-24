@@ -51,7 +51,7 @@ const Hero = ({ title, logo }: { title: string, logo: string }) => {
       <Container className="z-3 h-full justify-end flex flex-col px-0 md:px-8 xl:px-12">
         <div className="w-full md:max-w-[70vw] z-10 flex md:flex-row flex-col md:items-end md:justify-between items-start md:bg-transparent bg-secondary-100 px-4 py-8 space-y-3">
           <h2 className="min-w-70 font-bold text-transparent bg-clip-text bg-gradient-to-b from-tertiary-400 z-10 to-tertiary-800">{title}</h2>
-          <RegistrationCountdowm targetDate={"2026-05-30T23:59:59"} />
+          <RegistrationCountdowm targetDate={"2026-05-23T23:59:59"} />
         </div>
       </Container>
     </section>
