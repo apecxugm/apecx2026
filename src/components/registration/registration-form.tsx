@@ -1,11 +1,11 @@
 'use client';
 
 import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
-import { CaretRight, Check, CopySimple } from '@phosphor-icons/react';
+import { CaretRight, Check, CopySimple, Tag, X, SpinnerGap } from '@phosphor-icons/react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/src/components/ui/button';
 import FileUploadField from '@/src/components/registration/file-upload-field';
-import { uploadRegistration } from '@/src/lib/api';
+import { uploadRegistration, validateVoucher } from '@/src/lib/api';
 import { validateEmail, validatePhone } from '@/src/lib/validation';
 import { validateRegistrationForm } from '@/src/lib/validation';
 
@@ -67,13 +67,16 @@ const COMPETITION_LABELS: Record<(typeof COMPETITIONS)[number], string> = {
   Petrosmart: 'Petrosmart Competition',
   PPC: 'Paper and Poster Competition',
 };
-const COMPETITION_FEE_INFO: Record<(typeof COMPETITIONS)[number], { earlyBird: string; normal: string }> = {
-  SCML: { earlyBird: 'IDR 100,000 / USD 6', normal: 'IDR 150,000 / USD 9' },
-  POD: { earlyBird: 'IDR 100,000 / USD 6', normal: 'IDR 150,000 / USD 9' },
-  BCC: { earlyBird: 'IDR 100,000 / USD 6', normal: 'IDR 150,000 / USD 9' },
-  Petrosmart: { earlyBird: 'IDR 150,000 / USD 9', normal: 'IDR 175,000 / USD 11' },
-  PPC: { earlyBird: 'IDR 50,000 / USD 3', normal: 'IDR 75,000 / USD 5' },
+const COMPETITION_FEE_INFO: Record<(typeof COMPETITIONS)[number], { earlyBird: string; normal: string; earlyBirdIDR: number; normalIDR: number; earlyBirdUSD: number; normalUSD: number }> = {
+  SCML: { earlyBird: 'IDR 100,000 / USD 6', normal: 'IDR 150,000 / USD 9', earlyBirdIDR: 100000, normalIDR: 150000, earlyBirdUSD: 6, normalUSD: 9 },
+  POD: { earlyBird: 'IDR 100,000 / USD 6', normal: 'IDR 150,000 / USD 9', earlyBirdIDR: 100000, normalIDR: 150000, earlyBirdUSD: 6, normalUSD: 9 },
+  BCC: { earlyBird: 'IDR 100,000 / USD 6', normal: 'IDR 150,000 / USD 9', earlyBirdIDR: 100000, normalIDR: 150000, earlyBirdUSD: 6, normalUSD: 9 },
+  Petrosmart: { earlyBird: 'IDR 150,000 / USD 9', normal: 'IDR 175,000 / USD 11', earlyBirdIDR: 150000, normalIDR: 175000, earlyBirdUSD: 9, normalUSD: 11 },
+  PPC: { earlyBird: 'IDR 50,000 / USD 3', normal: 'IDR 75,000 / USD 5', earlyBirdIDR: 50000, normalIDR: 75000, earlyBirdUSD: 3, normalUSD: 5 },
 };
+
+const formatIDR = (amount: number) => `IDR ${amount.toLocaleString('id-ID')}`;
+const formatUSD = (amount: number) => `USD ${amount}`;
 
 const PAYMENT_ACCOUNT = {
   bank: 'BNI',
@@ -194,6 +197,11 @@ const RegistrationForm = forwardRef<RegistrationFormHandle, RegistrationFormProp
   const [currentStep, setCurrentStep] = useState(0);
   const [isHydrated, setIsHydrated] = useState(false);
   const [copiedPayment, setCopiedPayment] = useState(false);
+  const [voucherCode, setVoucherCode] = useState('');
+  const [voucherApplied, setVoucherApplied] = useState(false);
+  const [voucherAppliedCode, setVoucherAppliedCode] = useState('');
+  const [voucherError, setVoucherError] = useState<string | null>(null);
+  const [voucherLoading, setVoucherLoading] = useState(false);
   const copiedTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
@@ -342,6 +350,55 @@ const RegistrationForm = forwardRef<RegistrationFormHandle, RegistrationFormProp
     return normalized;
   };
 
+  const handleApplyVoucher = async () => {
+    if (!voucherCode.trim()) {
+      setVoucherError('Please enter a voucher code');
+      return;
+    }
+
+    setVoucherLoading(true);
+    setVoucherError(null);
+
+    try {
+      const result = await validateVoucher(voucherCode.trim());
+      if (result.valid) {
+        setVoucherApplied(true);
+        setVoucherAppliedCode(voucherCode.trim());
+        setVoucherError(null);
+      } else {
+        setVoucherError(result.error || 'Invalid voucher code');
+        setVoucherApplied(false);
+        setVoucherAppliedCode('');
+      }
+    } catch {
+      setVoucherError('Failed to validate voucher');
+    } finally {
+      setVoucherLoading(false);
+    }
+  };
+
+  const handleRemoveVoucher = () => {
+    setVoucherApplied(false);
+    setVoucherAppliedCode('');
+    setVoucherCode('');
+    setVoucherError(null);
+  };
+
+  const getDiscountedFeeDisplay = (comp: string) => {
+    const fee = COMPETITION_FEE_INFO[comp as keyof typeof COMPETITION_FEE_INFO];
+    if (!fee) return null;
+
+    const discountedEarlyBirdIDR = Math.round(fee.earlyBirdIDR * 0.9);
+    const discountedNormalIDR = Math.round(fee.normalIDR * 0.9);
+    const discountedEarlyBirdUSD = Math.round(fee.earlyBirdUSD * 0.9 * 100) / 100;
+    const discountedNormalUSD = Math.round(fee.normalUSD * 0.9 * 100) / 100;
+
+    return {
+      earlyBird: `${formatIDR(discountedEarlyBirdIDR)} / ${formatUSD(discountedEarlyBirdUSD)}`,
+      normal: `${formatIDR(discountedNormalIDR)} / ${formatUSD(discountedNormalUSD)}`,
+    };
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
@@ -380,7 +437,7 @@ const RegistrationForm = forwardRef<RegistrationFormHandle, RegistrationFormProp
       // Preview mode: skip API fetch and force success modal.
       const result = PREVIEW_SUCCESS_MODAL
         ? { success: true as const }
-        : await uploadRegistration(normalizedFormData, files);
+        : await uploadRegistration(normalizedFormData, files, voucherApplied ? voucherAppliedCode : undefined);
 
       if (result.success) {
         // Clear localStorage on successful submission
@@ -675,6 +732,8 @@ const RegistrationForm = forwardRef<RegistrationFormHandle, RegistrationFormProp
       );
     }
 
+    const discountedFee = voucherApplied && formData.competition ? getDiscountedFeeDisplay(formData.competition) : null;
+
     return (
       <>
         <h5 className="text-center text-[26px] font-bold text-tertiary-800">Document Upload</h5>
@@ -686,9 +745,31 @@ const RegistrationForm = forwardRef<RegistrationFormHandle, RegistrationFormProp
               The registration fee for {formData.competition ? COMPETITION_LABELS[formData.competition as keyof typeof COMPETITION_LABELS] : 'Competition Name'} is as follows:
             </p>
             <ul className="mt-1 list-disc pl-5 text-xs text-neutral-900">
-              <li>Early Bird Rate: {formData.competition ? COMPETITION_FEE_INFO[formData.competition as keyof typeof COMPETITION_FEE_INFO].earlyBird : '[Amount]'} per team</li>
-              <li className='font-bold'>Normal Rate: {formData.competition ? COMPETITION_FEE_INFO[formData.competition as keyof typeof COMPETITION_FEE_INFO].normal : '[Amount]'} per team</li>
+              <li>
+                Early Bird Rate:{' '}
+                {formData.competition ? COMPETITION_FEE_INFO[formData.competition as keyof typeof COMPETITION_FEE_INFO].earlyBird : '[Amount]'} per team
+              </li>
+              <li className="font-bold">
+                Normal Rate:{' '}
+                {formData.competition ? (
+                  voucherApplied && discountedFee ? (
+                    <>
+                      <span className="line-through text-neutral-600 font-normal">{COMPETITION_FEE_INFO[formData.competition as keyof typeof COMPETITION_FEE_INFO].normal}</span>
+                      {' '}
+                      <span className="font-bold text-green-700">{discountedFee.normal}</span>
+                    </>
+                  ) : (
+                    COMPETITION_FEE_INFO[formData.competition as keyof typeof COMPETITION_FEE_INFO].normal
+                  )
+                ) : '[Amount]'} per team
+              </li>
             </ul>
+            {voucherApplied && (
+              <div className="mt-2 inline-flex items-center gap-1.5 rounded-full bg-green-100 px-2.5 py-1 text-[10px] font-semibold text-green-800">
+                <Tag size={12} weight="bold" />
+                10% Discount Applied
+              </div>
+            )}
           </div>
 
           <div className={sectionClassName}>
@@ -714,6 +795,63 @@ const RegistrationForm = forwardRef<RegistrationFormHandle, RegistrationFormProp
               </button>
             </div>
           </div>
+        </div>
+
+        {/* Voucher Code Section */}
+        <div className={sectionClassName}>
+          <h5 className="border-b border-neutral-300 pb-2 text-xs font-bold text-neutral-1000">Voucher Code</h5>
+          <p className="mt-3 text-xs text-neutral-800">Have a voucher code? Enter it below to get a 10% discount.</p>
+
+          {voucherApplied ? (
+            <div className="mt-2 flex items-center justify-between gap-3 rounded-lg border border-green-300 bg-green-50 px-3 py-2.5">
+              <div className="flex items-center gap-2">
+                <Tag size={16} weight="bold" className="text-green-700" />
+                <div>
+                  <p className="text-xs font-semibold text-green-800">{voucherAppliedCode}</p>
+                  <p className="text-[10px] text-green-700">10% discount applied</p>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={handleRemoveVoucher}
+                className="rounded-full p-1 text-green-700 hover:bg-green-200/50 transition-colors"
+                title="Remove voucher"
+              >
+                <X size={16} weight="bold" />
+              </button>
+            </div>
+          ) : (
+            <div className="mt-2">
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  value={voucherCode}
+                  onChange={(e) => { setVoucherCode(e.target.value); setVoucherError(null); }}
+                  placeholder="Enter voucher code"
+                  className={inputClassName}
+                  disabled={voucherLoading}
+                />
+                <button
+                  type="button"
+                  onClick={handleApplyVoucher}
+                  disabled={voucherLoading || !voucherCode.trim()}
+                  className="shrink-0 rounded-lg bg-primary-700 px-4 py-2 text-xs font-semibold text-white hover:bg-primary-800 disabled:cursor-not-allowed disabled:opacity-50 transition-colors flex items-center gap-1.5"
+                >
+                  {voucherLoading ? (
+                    <>
+                      <SpinnerGap size={14} weight="bold" className="animate-spin" />
+                      Checking...
+                    </>
+                  ) : (
+                    'Apply'
+                  )}
+                </button>
+              </div>
+              {voucherError && (
+                <p className="mt-1.5 text-[11px] font-medium text-red-200">{voucherError}</p>
+              )}
+            </div>
+          )}
         </div>
 
         <div className={sectionClassName}>

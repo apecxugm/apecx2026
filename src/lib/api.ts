@@ -33,6 +33,7 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "/api";
 export async function uploadRegistration(
   formData: FormData,
   files: FileData,
+  voucherCode?: string,
 ): Promise<{ success: boolean; error?: string }> {
   try {
     const multipartData = new FormData();
@@ -41,6 +42,11 @@ export async function uploadRegistration(
     Object.entries(formData).forEach(([key, value]) => {
       multipartData.append(key, value || "");
     });
+
+    // Add voucher code if provided
+    if (voucherCode) {
+      multipartData.append("voucher_code", voucherCode);
+    }
 
     // Add files
     Object.entries(files).forEach(([key, file]) => {
@@ -78,3 +84,28 @@ export async function uploadRegistration(
     };
   }
 }
+
+export async function validateVoucher(
+  code: string,
+): Promise<{ valid: boolean; remaining?: number; error?: string }> {
+  try {
+    const response = await fetch(`${API_BASE_URL}/voucher/validate`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ code }),
+    });
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Voucher validation error:", error);
+    return {
+      valid: false,
+      error:
+        error instanceof Error
+          ? error.message
+          : "Failed to validate voucher",
+    };
+  }
+}
+

@@ -2,9 +2,11 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -20,6 +22,51 @@ var (
 	sheetsService *sheets.Service
 	spreadsheetID string
 )
+
+const maxVoucherUses = 10
+
+var validVouchers = map[string]bool{
+	"APECX2026ROADSHOWUGM":                 true,
+	"APECX2026ROADSHOWUPNVYK":              true,
+	"APECX2026ROADSHOWUII":                 true,
+	"APECX2026ROADSHOWUNY":                 true,
+	"APECX2026ROADSHOWUINSUKA":             true,
+	"APECX2026ROADSHOWITNY":                true,
+	"APECX2026ROADSHOWAKPRIND":             true,
+	"APECX2026ROADSHOWUTY":                 true,
+	"APECX2026ROADSHOWUAD":                 true,
+	"APECX2026ROADSHOWSTIEYKPN":            true,
+	"APECX2026ROADSHOWSADHAR":              true,
+	"APECX2026ROADSHOWUMY":                 true,
+	"APECX2026ROADSHOWATMAJAYA":            true,
+	"APECX2026ROADSHOWITB":                 true,
+	"APECX2026ROADSHOWUNPAD":               true,
+	"APECX2026ROADSHOWUI":                  true,
+	"APECX2026ROADSHOWITERA":               true,
+	"APECX2026ROADSHOWUPI":                 true,
+	"APECX2026ROADSHOWUNPER":               true,
+	"APECX2026ROADSHOWTRISAKTI":            true,
+	"APECX2026ROADSHOWUPNVJAKARTA":         true,
+	"APECX2026ROADSHOWPRESIDENTUNIVERSITY": true,
+	"APECX2026ROADSHOWTELKOMUNIVERSITY":    true,
+	"APECX2026ROADSHOWBINUS":               true,
+	"APECX2026ROADSHOWUNSIKA":              true,
+	"APECX2026ROADSHOWUNJANI":              true,
+	"APECX2026ROADSHOWUNISBA":              true,
+	"APECX2026ROADSHOWPASUNDAN":            true,
+	"APECX2026ROADSHOWUB":                  true,
+	"APECX2026ROADSHOWUNESA":               true,
+	"APECX2026ROADSHOWUPNVJT":              true,
+	"APECX2026ROADSHOWUNNES":               true,
+	"APECX2026ROADSHOWITS":                 true,
+	"APECX2026ROADSHOWUNDIP":               true,
+	"APECX2026ROADSHOWUNAIR":               true,
+	"APECX2026ROADSHOWUNSOED":              true,
+	"APECX2026ROADSHOWUNS":                 true,
+	"APECX2026ROADSHOWUNEJ":                true,
+	"APECX2026ROADSHOWAKAMIGAS":            true,
+	"APECX2026ROADSHOWSPEJAVA":             true,
+}
 
 func main() {
 	godotenv.Load()
@@ -66,6 +113,7 @@ func main() {
 	})
 
 	r.POST("/register", handleRegister)
+	r.POST("/voucher/validate", handleVoucherValidate)
 
 	fmt.Println("Server jalan di http://localhost:8080")
 	r.Run(":8080")
@@ -91,6 +139,7 @@ func handleRegister(c *gin.Context) {
 		Member4Name:  c.PostForm("member4_name"),
 		Member4Email: c.PostForm("member4_email"),
 		Member4Phone: c.PostForm("member4_phone"),
+		VoucherCode: c.PostForm("voucher_code"),
 	}
 
 	if err := validateInput(input); err != nil {
@@ -156,6 +205,25 @@ func handleRegister(c *gin.Context) {
 		return
 	}
 
+	// Validate voucher if provided (case-sensitive)
+	voucherCode := strings.TrimSpace(input.VoucherCode)
+	if voucherCode != "" {
+		if !validVouchers[voucherCode] {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Kode voucher tidak valid"})
+			return
+		}
+		usageCount, err := getVoucherUsageCount(voucherCode)
+		if err != nil {
+			fmt.Println("ERROR cek voucher:", err)
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Gagal memvalidasi voucher: " + err.Error()})
+			return
+		}
+		if usageCount >= maxVoucherUses {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Voucher sudah mencapai batas penggunaan maksimal"})
+			return
+		}
+	}
+
 	// input ke sheets
 	timestamp := time.Now().Format("02-01-2006 15:04:05")
 	row := []interface{}{
@@ -167,6 +235,7 @@ func handleRegister(c *gin.Context) {
 		input.Member3Name, input.Member3Email, input.Member3Phone,
 		input.Member4Name, input.Member4Email, input.Member4Phone,
 		paymentURL, studentIDURL, followProofURL, twibbonURL, storyURL, whatsappURL,
+		voucherCode,
 	}
 
 	sheetName := getSheetName(input.Competition)
@@ -175,6 +244,14 @@ func handleRegister(c *gin.Context) {
 		fmt.Println("ERROR Google Sheets:", err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Gagal menyimpan data: " + err.Error()})
 		return
+	}
+
+	// Track voucher usage after successful registration
+	if voucherCode != "" {
+		if err := trackVoucherUsage(voucherCode, input.TeamName); err != nil {
+			fmt.Println("WARNING: Gagal tracking voucher:", err)
+			// Don't fail the registration, just log the warning
+		}
 	}
 
 	c.JSON(http.StatusOK, gin.H{"message": "Registrasi berhasil!"})
@@ -277,4 +354,111 @@ func getSheetName(competition string) string {
 	default:
 		return "Sheet1"
 	}
+}
+
+// --- Voucher helpers ---
+
+func getVoucherUsageCount(code string) (int, error) {
+	resp, err := sheetsService.Spreadsheets.Values.
+		Get(spreadsheetID, "Vouchers!C:C").
+		Do()
+	if err != nil {
+		return 0, fmt.Errorf("gagal baca sheet Vouchers: %w", err)
+	}
+
+	count := 0
+	for _, row := range resp.Values {
+		if len(row) > 0 {
+			if fmt.Sprintf("%v", row[0]) == code {
+				count++
+			}
+		}
+	}
+	return count, nil
+}
+
+func trackVoucherUsage(code string, teamName string) error {
+	timestamp := time.Now().Format("02-01-2006 15:04:05")
+	row := []interface{}{timestamp, code, teamName}
+
+	// Find the next available row
+	resp, err := sheetsService.Spreadsheets.Values.
+		Get(spreadsheetID, "Vouchers!B2:B").
+		Do()
+	if err != nil {
+		return fmt.Errorf("gagal baca sheet Vouchers: %w", err)
+	}
+
+	nextRow := len(resp.Values) + 2
+	writeRange := fmt.Sprintf("Vouchers!B%d", nextRow)
+	valueRange := &sheets.ValueRange{
+		Values: [][]interface{}{row},
+	}
+
+	_, err = sheetsService.Spreadsheets.Values.
+		Update(spreadsheetID, writeRange, valueRange).
+		ValueInputOption("RAW").
+		Do()
+
+	if err != nil {
+		return fmt.Errorf("gagal tulis ke sheet Vouchers: %w", err)
+	}
+
+	// Write auto-number formula in column A
+	formulaRange := fmt.Sprintf("Vouchers!A%d", nextRow)
+	formulaValue := &sheets.ValueRange{
+		Values: [][]interface{}{
+			{fmt.Sprintf(`=IF(B%d<>"",ROW()-1,"")`, nextRow)},
+		},
+	}
+
+	_, err = sheetsService.Spreadsheets.Values.
+		Update(spreadsheetID, formulaRange, formulaValue).
+		ValueInputOption("USER_ENTERED").
+		Do()
+
+	if err != nil {
+		return fmt.Errorf("gagal tulis formula kolom A Vouchers: %w", err)
+	}
+
+	fmt.Printf("Voucher %s digunakan oleh tim %s\n", code, teamName)
+	return nil
+}
+
+type voucherValidateRequest struct {
+	Code string `json:"code"`
+}
+
+func handleVoucherValidate(c *gin.Context) {
+	var req voucherValidateRequest
+	if err := json.NewDecoder(c.Request.Body).Decode(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"valid": false, "error": "Request body tidak valid"})
+		return
+	}
+
+	code := strings.TrimSpace(req.Code)
+	if code == "" {
+		c.JSON(http.StatusBadRequest, gin.H{"valid": false, "error": "Kode voucher wajib diisi"})
+		return
+	}
+
+	if !validVouchers[code] {
+		c.JSON(http.StatusOK, gin.H{"valid": false, "error": "Kode voucher tidak ditemukan"})
+		return
+	}
+
+	usageCount, err := getVoucherUsageCount(code)
+	if err != nil {
+		fmt.Println("ERROR cek voucher:", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"valid": false, "error": "Gagal memvalidasi voucher"})
+		return
+	}
+
+	if usageCount >= maxVoucherUses {
+		c.JSON(http.StatusOK, gin.H{"valid": false, "error": "Voucher sudah mencapai batas penggunaan maksimal"})
+		return
+	}
+
+	remaining := maxVoucherUses - usageCount
+	c.JSON(http.StatusOK, gin.H{"valid": true, "remaining": remaining})
 }

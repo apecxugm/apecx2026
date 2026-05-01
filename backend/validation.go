@@ -43,6 +43,8 @@ type RegistrationInput struct {
 	Member4Name  string
 	Member4Email string
 	Member4Phone string
+
+	VoucherCode string
 }
 
 var validCompetitions = map[string]bool{
