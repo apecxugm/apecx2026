@@ -23,7 +23,7 @@ var (
 	spreadsheetID string
 )
 
-const maxVoucherUses = 10
+const maxVoucherUses = 15
 
 var validVouchers = map[string]bool{
 	"APECX2026ROADSHOWUGM":                 true,
@@ -66,6 +66,7 @@ var validVouchers = map[string]bool{
 	"APECX2026ROADSHOWUNEJ":                true,
 	"APECX2026ROADSHOWAKAMIGAS":            true,
 	"APECX2026ROADSHOWSPEJAVA":             true,
+	"KODEBUATTESTDOANG":                     true,
 }
 
 func main() {

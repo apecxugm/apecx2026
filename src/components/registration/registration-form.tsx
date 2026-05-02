@@ -67,16 +67,15 @@ const COMPETITION_LABELS: Record<(typeof COMPETITIONS)[number], string> = {
   Petrosmart: 'Petrosmart Competition',
   PPC: 'Paper and Poster Competition',
 };
-const COMPETITION_FEE_INFO: Record<(typeof COMPETITIONS)[number], { earlyBird: string; normal: string; earlyBirdIDR: number; normalIDR: number; earlyBirdUSD: number; normalUSD: number }> = {
-  SCML: { earlyBird: 'IDR 100,000 / USD 6', normal: 'IDR 150,000 / USD 9', earlyBirdIDR: 100000, normalIDR: 150000, earlyBirdUSD: 6, normalUSD: 9 },
-  POD: { earlyBird: 'IDR 100,000 / USD 6', normal: 'IDR 150,000 / USD 9', earlyBirdIDR: 100000, normalIDR: 150000, earlyBirdUSD: 6, normalUSD: 9 },
-  BCC: { earlyBird: 'IDR 100,000 / USD 6', normal: 'IDR 150,000 / USD 9', earlyBirdIDR: 100000, normalIDR: 150000, earlyBirdUSD: 6, normalUSD: 9 },
-  Petrosmart: { earlyBird: 'IDR 150,000 / USD 9', normal: 'IDR 175,000 / USD 11', earlyBirdIDR: 150000, normalIDR: 175000, earlyBirdUSD: 9, normalUSD: 11 },
-  PPC: { earlyBird: 'IDR 50,000 / USD 3', normal: 'IDR 75,000 / USD 5', earlyBirdIDR: 50000, normalIDR: 75000, earlyBirdUSD: 3, normalUSD: 5 },
+const COMPETITION_FEE_INFO: Record<(typeof COMPETITIONS)[number], { earlyBird: string; normal: string; normalIDR: number; voucherIDR: number }> = {
+  SCML: { earlyBird: 'IDR 100,000 / USD 6', normal: 'IDR 150,000 / USD 9', normalIDR: 150000, voucherIDR: 135000 },
+  POD: { earlyBird: 'IDR 100,000 / USD 6', normal: 'IDR 150,000 / USD 9', normalIDR: 150000, voucherIDR: 135000 },
+  BCC: { earlyBird: 'IDR 100,000 / USD 6', normal: 'IDR 150,000 / USD 9', normalIDR: 150000, voucherIDR: 135000 },
+  Petrosmart: { earlyBird: 'IDR 150,000 / USD 9', normal: 'IDR 175,000 / USD 11', normalIDR: 175000, voucherIDR: 160000 },
+  PPC: { earlyBird: 'IDR 50,000 / USD 3', normal: 'IDR 75,000 / USD 5', normalIDR: 75000, voucherIDR: 68000 },
 };
 
 const formatIDR = (amount: number) => `IDR ${amount.toLocaleString('id-ID')}`;
-const formatUSD = (amount: number) => `USD ${amount}`;
 
 const PAYMENT_ACCOUNT = {
   bank: 'BNI',
@@ -388,14 +387,8 @@ const RegistrationForm = forwardRef<RegistrationFormHandle, RegistrationFormProp
     const fee = COMPETITION_FEE_INFO[comp as keyof typeof COMPETITION_FEE_INFO];
     if (!fee) return null;
 
-    const discountedEarlyBirdIDR = Math.round(fee.earlyBirdIDR * 0.9);
-    const discountedNormalIDR = Math.round(fee.normalIDR * 0.9);
-    const discountedEarlyBirdUSD = Math.round(fee.earlyBirdUSD * 0.9 * 100) / 100;
-    const discountedNormalUSD = Math.round(fee.normalUSD * 0.9 * 100) / 100;
-
     return {
-      earlyBird: `${formatIDR(discountedEarlyBirdIDR)} / ${formatUSD(discountedEarlyBirdUSD)}`,
-      normal: `${formatIDR(discountedNormalIDR)} / ${formatUSD(discountedNormalUSD)}`,
+      normal: formatIDR(fee.voucherIDR),
     };
   };
 
@@ -767,7 +760,7 @@ const RegistrationForm = forwardRef<RegistrationFormHandle, RegistrationFormProp
             {voucherApplied && (
               <div className="mt-2 inline-flex items-center gap-1.5 rounded-full bg-green-100 px-2.5 py-1 text-[10px] font-semibold text-green-800">
                 <Tag size={12} weight="bold" />
-                10% Discount Applied
+                Voucher Discount Applied
               </div>
             )}
           </div>
@@ -800,7 +793,7 @@ const RegistrationForm = forwardRef<RegistrationFormHandle, RegistrationFormProp
         {/* Voucher Code Section */}
         <div className={sectionClassName}>
           <h5 className="border-b border-neutral-300 pb-2 text-xs font-bold text-neutral-1000">Voucher Code</h5>
-          <p className="mt-3 text-xs text-neutral-800">Have a voucher code? Enter it below to get a 10% discount.</p>
+          <p className="mt-3 text-xs text-neutral-800">Have a voucher code? Enter it below to get a discount.</p>
 
           {voucherApplied ? (
             <div className="mt-2 flex items-center justify-between gap-3 rounded-lg border border-green-300 bg-green-50 px-3 py-2.5">
@@ -808,7 +801,7 @@ const RegistrationForm = forwardRef<RegistrationFormHandle, RegistrationFormProp
                 <Tag size={16} weight="bold" className="text-green-700" />
                 <div>
                   <p className="text-xs font-semibold text-green-800">{voucherAppliedCode}</p>
-                  <p className="text-[10px] text-green-700">10% discount applied</p>
+                  <p className="text-[10px] text-green-700">Voucher discount applied</p>
                 </div>
               </div>
               <button
