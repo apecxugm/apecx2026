@@ -50,7 +50,9 @@ const Hero = () => {
               <Link href="/registration">
                 <Button variant="default">Register Now!</Button>
               </Link>
-              <Button variant="disabled">Invitation Letter</Button>
+              <Link href="https://drive.google.com/file/d/14ZKwVmq-VjTvzIinqIFWJS8IiGymAdsK/view?usp=sharing" target="_blank" rel="noopener noreferrer">
+                <Button variant="light">Invitation Letter</Button>
+              </Link>
             </div>
           </div>
 
