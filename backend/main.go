@@ -23,50 +23,60 @@ var (
 	spreadsheetID string
 )
 
-const maxVoucherUses = 15
-
-var validVouchers = map[string]bool{
-	"APECX2026ROADSHOWUGM":                 true,
-	"APECX2026ROADSHOWUPNVYK":              true,
-	"APECX2026ROADSHOWUII":                 true,
-	"APECX2026ROADSHOWUNY":                 true,
-	"APECX2026ROADSHOWUINSUKA":             true,
-	"APECX2026ROADSHOWITNY":                true,
-	"APECX2026ROADSHOWAKPRIND":             true,
-	"APECX2026ROADSHOWUTY":                 true,
-	"APECX2026ROADSHOWUAD":                 true,
-	"APECX2026ROADSHOWSTIEYKPN":            true,
-	"APECX2026ROADSHOWSADHAR":              true,
-	"APECX2026ROADSHOWUMY":                 true,
-	"APECX2026ROADSHOWATMAJAYA":            true,
-	"APECX2026ROADSHOWITB":                 true,
-	"APECX2026ROADSHOWUNPAD":               true,
-	"APECX2026ROADSHOWUI":                  true,
-	"APECX2026ROADSHOWITERA":               true,
-	"APECX2026ROADSHOWUPI":                 true,
-	"APECX2026ROADSHOWUNPER":               true,
-	"APECX2026ROADSHOWTRISAKTI":            true,
-	"APECX2026ROADSHOWUPNVJAKARTA":         true,
-	"APECX2026ROADSHOWPRESIDENTUNIVERSITY": true,
-	"APECX2026ROADSHOWTELKOMUNIVERSITY":    true,
-	"APECX2026ROADSHOWBINUS":               true,
-	"APECX2026ROADSHOWUNSIKA":              true,
-	"APECX2026ROADSHOWUNJANI":              true,
-	"APECX2026ROADSHOWUNISBA":              true,
-	"APECX2026ROADSHOWPASUNDAN":            true,
-	"APECX2026ROADSHOWUB":                  true,
-	"APECX2026ROADSHOWUNESA":               true,
-	"APECX2026ROADSHOWUPNVJT":              true,
-	"APECX2026ROADSHOWUNNES":               true,
-	"APECX2026ROADSHOWITS":                 true,
-	"APECX2026ROADSHOWUNDIP":               true,
-	"APECX2026ROADSHOWUNAIR":               true,
-	"APECX2026ROADSHOWUNSOED":              true,
-	"APECX2026ROADSHOWUNS":                 true,
-	"APECX2026ROADSHOWUNEJ":                true,
-	"APECX2026ROADSHOWAKAMIGAS":            true,
-	"APECX2026ROADSHOWSPEJAVA":             true,
-	"KODEBUATTESTDOANG":                     true,
+var validVouchers = map[string]int{
+	"APECX2026ROADSHOWUGM": 15,
+	"APECX2026ROADSHOWUPNVYK": 15,
+	"APECX2026ROADSHOWUII": 15,
+	"APECX2026ROADSHOWUNY": 15,
+	"APECX2026ROADSHOWUINSUKA": 15,
+	"APECX2026ROADSHOWITNY": 15,
+	"APECX2026ROADSHOWAKPRIND": 15,
+	"APECX2026ROADSHOWUTY": 15,
+	"APECX2026ROADSHOWUAD": 15,
+	"APECX2026ROADSHOWSTIEYKPN": 15,
+	"APECX2026ROADSHOWSADHAR": 15,
+	"APECX2026ROADSHOWUMY": 15,
+	"APECX2026ROADSHOWATMAJAYA": 15,
+	"APECX2026ROADSHOWITB": 15,
+	"APECX2026ROADSHOWUNPAD": 15,
+	"APECX2026ROADSHOWUI": 15,
+	"APECX2026ROADSHOWITERA": 15,
+	"APECX2026ROADSHOWUPI": 15,
+	"APECX2026ROADSHOWUNPER": 15,
+	"APECX2026ROADSHOWTRISAKTI": 15,
+	"APECX2026ROADSHOWUPNVJAKARTA": 15,
+	"APECX2026ROADSHOWPRESIDENTUNIVERSITY": 15,
+	"APECX2026ROADSHOWTELKOMUNIVERSITY": 15,
+	"APECX2026ROADSHOWBINUS": 15,
+	"APECX2026ROADSHOWUNSIKA": 15,
+	"APECX2026ROADSHOWUNJANI": 15,
+	"APECX2026ROADSHOWUNISBA": 15,
+	"APECX2026ROADSHOWPASUNDAN": 15,
+	"APECX2026ROADSHOWUB": 15,
+	"APECX2026ROADSHOWUNESA": 15,
+	"APECX2026ROADSHOWUPNVJT": 15,
+	"APECX2026ROADSHOWUNNES": 15,
+	"APECX2026ROADSHOWITS": 15,
+	"APECX2026ROADSHOWUNDIP": 15,
+	"APECX2026ROADSHOWUNAIR": 15,
+	"APECX2026ROADSHOWUNSOED": 15,
+	"APECX2026ROADSHOWUNS": 15,
+	"APECX2026ROADSHOWUNEJ": 15,
+	"APECX2026ROADSHOWAKAMIGAS": 15,
+	"APECX2026ROADSHOWSPEJAVA": 15,
+	"KODEBUATTESTDOANG": 15,
+	"TNTFUGM_DISCOUNT": 5,
+	"TSLUGM_DISCOUNT": 5,
+	"TMESINUGM_DISCOUNT": 5,
+	"PWKUGM_DISCOUNT": 5,
+	"TGEOLUGM_DISCOUNT": 5,
+	"ARSIUGM_DISCOUNT": 5,
+	"MENEUGM_DISCOUNT": 5,
+	"AKUNTUGM_DISCOUNT": 5,
+	"MKPUGM_DISCOUNT": 5,
+	"HIUGM_DISCOUNT": 5,
+	"ILKOMUGM_DISCOUNT": 5,
+	"HMTIUGM_DISCOUNT": 5,
 }
 
 func main() {
@@ -209,7 +219,8 @@ func handleRegister(c *gin.Context) {
 	// Validate voucher if provided (case-sensitive)
 	voucherCode := strings.TrimSpace(input.VoucherCode)
 	if voucherCode != "" {
-		if !validVouchers[voucherCode] {
+		maxUses, exists := validVouchers[voucherCode]
+		if !exists {
 			c.JSON(http.StatusBadRequest, gin.H{"error": "Kode voucher tidak valid"})
 			return
 		}
@@ -219,7 +230,7 @@ func handleRegister(c *gin.Context) {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "Gagal memvalidasi voucher: " + err.Error()})
 			return
 		}
-		if usageCount >= maxVoucherUses {
+		if usageCount >= maxUses {
 			c.JSON(http.StatusBadRequest, gin.H{"error": "Voucher sudah mencapai batas penggunaan maksimal"})
 			return
 		}
@@ -443,7 +454,8 @@ func handleVoucherValidate(c *gin.Context) {
 		return
 	}
 
-	if !validVouchers[code] {
+	maxUses, exists := validVouchers[code]
+	if !exists {
 		c.JSON(http.StatusOK, gin.H{"valid": false, "error": "Kode voucher tidak ditemukan"})
 		return
 	}
@@ -455,11 +467,11 @@ func handleVoucherValidate(c *gin.Context) {
 		return
 	}
 
-	if usageCount >= maxVoucherUses {
+	if usageCount >= maxUses {
 		c.JSON(http.StatusOK, gin.H{"valid": false, "error": "Voucher sudah mencapai batas penggunaan maksimal"})
 		return
 	}
 
-	remaining := maxVoucherUses - usageCount
+	remaining := maxUses - usageCount
 	c.JSON(http.StatusOK, gin.H{"valid": true, "remaining": remaining})
 }
