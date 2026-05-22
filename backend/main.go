@@ -68,6 +68,7 @@ var validVouchers = map[string]int{
 
 	"KODEBUATTESTDOANG": 15,
 
+	"TETIUGM_DISCOUNT": 5,
 	"TNTFUGM_DISCOUNT": 5,
 	"TSLUGM_DISCOUNT": 5,
 	"TMESINUGM_DISCOUNT": 5,
