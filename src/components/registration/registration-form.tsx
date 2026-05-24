@@ -68,11 +68,11 @@ const COMPETITION_LABELS: Record<(typeof COMPETITIONS)[number], string> = {
   PPC: 'Paper and Poster Competition',
 };
 const COMPETITION_FEE_INFO: Record<(typeof COMPETITIONS)[number], { earlyBird: string; normal: string; normalIDR: number; voucherIDR: number }> = {
-  SCML: { earlyBird: 'IDR 100,000 / USD 6', normal: 'IDR 150,000 / USD 9', normalIDR: 150000, voucherIDR: 135000 },
-  POD: { earlyBird: 'IDR 100,000 / USD 6', normal: 'IDR 150,000 / USD 9', normalIDR: 150000, voucherIDR: 135000 },
-  BCC: { earlyBird: 'IDR 100,000 / USD 6', normal: 'IDR 150,000 / USD 9', normalIDR: 150000, voucherIDR: 135000 },
-  Petrosmart: { earlyBird: 'IDR 150,000 / USD 9', normal: 'IDR 175,000 / USD 11', normalIDR: 175000, voucherIDR: 160000 },
-  PPC: { earlyBird: 'IDR 50,000 / USD 3', normal: 'IDR 75,000 / USD 5', normalIDR: 75000, voucherIDR: 68000 },
+  SCML: { earlyBird: 'IDR 200,000 / USD 6', normal: 'IDR 200,000 / USD 12', normalIDR: 150000, voucherIDR: 180000 },
+  POD: { earlyBird: 'IDR 200,000 / USD 6', normal: 'IDR 200,000 / USD 12', normalIDR: 150000, voucherIDR: 180000 },
+  BCC: { earlyBird: 'IDR 200,000 / USD 6', normal: 'IDR 200,000 / USD 12',normalIDR: 150000, voucherIDR: 180000 },
+  Petrosmart: { earlyBird: 'IDR 200,000 / USD 9', normal: '200,000 / USD 12', normalIDR: 175000, voucherIDR: 180000 },
+  PPC: { earlyBird: 'IDR 50,000 / USD 3', normal: 'IDR 100,000 / USD 6', normalIDR: 100000, voucherIDR: 90000 },
 };
 
 const formatIDR = (amount: number) => `IDR ${amount.toLocaleString('id-ID')}`;
