@@ -32,7 +32,8 @@ export default function RegistrationPage() {
 
       <main className="relative z-20 min-h-screen py-8 md:py-12 w-full flex items-center justify-center">
         <Container className="mx-auto h-full">
-          <div className="md:absolute flex w-full justify-start pb-4 md:pb-8">
+          Registration is closed. Check our social media for updates!
+          {/* <div className="md:absolute flex w-full justify-start pb-4 md:pb-8">
             <Button
               size="fit"
               variant="light"
@@ -45,7 +46,7 @@ export default function RegistrationPage() {
           </div>
           <div>
             <RegistrationForm ref={formRef} />
-          </div>
+          </div> */}
         </Container>
       </main>
     </div>

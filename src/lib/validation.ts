@@ -4,8 +4,11 @@ export function validateEmail(email: string): boolean {
 }
 
 export function validatePhone(phone: string): boolean {
+  // Remove all non-digit characters (spaces, dashes, plus signs, etc.)
+  const cleanedPhone = phone.replace(/\D/g, "");
+  // Accept 10-13 digits (covers various Indonesian phone formats)
   const re = /^[0-9]{10,13}$/;
-  return re.test(phone);
+  return re.test(cleanedPhone);
 }
 
 export interface FormData {
@@ -53,7 +56,7 @@ export function validateRegistrationForm(formData: FormData): string | null {
   }
 
   if (!validatePhone(formData.captain_phone)) {
-    return "Captain phone number is invalid (numbers only, 10-13 digits)";
+    return "Captain phone number is invalid (accept formats like: 08123456789, 0812-3456-789, +62-812-345-6789)";
   }
 
   const memberRules: Record<
@@ -89,7 +92,7 @@ export function validateRegistrationForm(formData: FormData): string | null {
     }
 
     if (!validatePhone(phone)) {
-      return `Member ${i} phone number is invalid (numbers only, 10-13 digits)`;
+      return `Member ${i} phone number is invalid (accept formats like: 08123456789, 0812-3456-789, +62-812-345-6789)`;
     }
   }
 
@@ -101,8 +104,17 @@ export function validateRegistrationForm(formData: FormData): string | null {
     const phone =
       formData[`member${i}_phone` as keyof FormData]?.toString().trim() || "";
 
-    if (!name) {
+    // Check if any field is filled
+    const hasAnyData = name || email || phone;
+
+    // If no data filled, skip this optional member
+    if (!hasAnyData) {
       continue;
+    }
+
+    // If any data is filled, all fields must be complete and valid
+    if (!name) {
+      return `Member ${i} name is required`;
     }
 
     if (!validateEmail(email)) {
@@ -110,7 +122,7 @@ export function validateRegistrationForm(formData: FormData): string | null {
     }
 
     if (!validatePhone(phone)) {
-      return `Member ${i} phone number is invalid (numbers only, 10-13 digits)`;
+      return `Member ${i} phone number is invalid (accept formats like: 08123456789, 0812-3456-789, +62-812-345-6789)`;
     }
   }
 
