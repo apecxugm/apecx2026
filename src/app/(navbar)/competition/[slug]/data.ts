@@ -459,7 +459,7 @@ export const COMPETITION: CompetitionData[] = [
       },
     ],
     guidebook:
-      "https://drive.google.com/file/d/1RTgIoJ_-vQxCn9MmlppnyJkkz3LiZdTq/view?usp=sharing",
+      "https://drive.google.com/file/d/1rL2EQm3-pN-BdIeO71aNsHocEGsZEIWe/view?usp=sharing",
     themeGuidebook:
       "A technical challenge to revitalize aging reservoirs and strengthen energy security through advanced optimization, strategic innovation, and responsible resource management.",
     themeBreakdown: [
