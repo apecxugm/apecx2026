@@ -11,7 +11,7 @@ export default function Home() {
       <Hero />
       <AboutUs />
       <Theme />
-      <Gallery />
+      <Gallery/>
       <Events />
       <SponsorCta />
     </>
